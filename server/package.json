@@ -5,10 +5,9 @@
   "main": "index.js",
   "author": "Bernard_Li",
   "license": "MIT",
-
   "scripts": {
-    "start" : "node index.js",
-    "dev" : "nodemon index.js",
+    "start": "node index.js",
+    "dev:server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
