@@ -1,20 +1,28 @@
 import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Homepage from "./components/Homepage";
 
+import NavigationBar from "./components/NavigationBar";
+
+import AuthProfile from "./auth0provider/Profile";
 const App = () =>{
 
-  useEffect(() =>{
-    fetch('/hi')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-    })
-}, [])
   
   return (
-    <>
-      <h1>This is Swivy!</h1>
-      
-    </>
+    <BrowserRouter>
+      <NavigationBar />
+      <Routes>
+      <Route 
+        exact path="/" 
+        element={ <Homepage /> }>
+      </Route>
+      <Route
+        path="/profile"
+        element={ <AuthProfile /> }>  
+      </Route>
+
+      </Routes>
+    </BrowserRouter>
   )
 }
 
