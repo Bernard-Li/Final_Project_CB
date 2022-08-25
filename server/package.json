@@ -6,9 +6,7 @@
   "author": "Bernard_Li",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
-    "dev:server": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "dotenv": "^16.0.1",
