@@ -5,8 +5,9 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res) =>{
-  res.send('Server has started');
+app.get('/hi', (req, res) =>{
+  
+  res.status(200).json({status: 'success', data: 'here is the index'})
 })
 
 const server = app.listen(PORT, () =>{
