@@ -26,6 +26,7 @@ const createUser = async (req, res) =>{
 
     const existingUser = await db.collection('userData').findOne({email: validateByEmail});
     if(existingUser){
+      console.log('existing user has just logged in...');
       res.status(200).json({status: 200, status: "User logging in, validating by email: ", existingUser})
     }
     else {
@@ -37,7 +38,17 @@ const createUser = async (req, res) =>{
       firstName: userBody.given_name,
       language: userBody.locale,
       userIcon: userBody.picture,
-      userDate: userBody.updated_at
+      userDate: userBody.updated_at,
+      // quickLog: [
+      //   {
+
+      //   }
+      // ],
+      // travelCards: [
+      //   {
+
+      //   }
+      // ]
     };
     
     console.log(data);
@@ -56,4 +67,4 @@ console.log('disconnected from client');
 };
 
 
-module.exports={ createUser }
+module.exports = { createUser };
