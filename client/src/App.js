@@ -4,6 +4,7 @@ import Homepage from "./components/Homepage";
 
 import NavigationBar from "./components/NavigationBar";
 import QuickLog from "./components/QuickLog";
+import LoginPage from "./components/LoginPage";
 
 import AuthProfile from "./auth0provider/Profile";
 import TravelCard from "./components/TravelCard";
@@ -22,6 +23,10 @@ const App = () =>{
       <Route 
         exact path="/" 
         element={ <Homepage /> }>
+      </Route>
+      <Route 
+        exact path="/login" 
+        element={ <LoginPage /> }>
       </Route>
       <Route
         path="/profile"

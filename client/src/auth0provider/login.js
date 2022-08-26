@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 
 const LoginButton = () => {
   const { loginWithRedirect , user} = useAuth0();
-  console.log(user);
+  
   useEffect(() => {
     
       fetch(`/create-user`,{

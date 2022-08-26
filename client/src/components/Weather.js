@@ -7,43 +7,42 @@ import styled from "styled-components";
 const Weather = () =>{
   //loading state to allow the rendering of the weather below. Fetch from frontend => backend => api
   const [ loading, setLoading ] = useState(false);
+  const [refreshBtn, setRefreshBtn ] = useState(false);
   //use an object called currentWeather to store the information
   const [ currentWeatherObject, setCurrentWeatherObject ] = useState(null);
+  //function to avoid API call every single time the homepage is refreshed. Will only update the weather information onClick
+  
   //fetching the api call data from the back-end
   useEffect(() =>{
-    fetch(`/currentweather`)
-    .then(res => res.json())
-    .then(data =>{
-      //reducing the amount of repeated data.data writing, precising which object key to access in returned response
-      const currentWeather = data.data.current;
-      const condition = data.data.current.condition;
-      const location = data.data.location;
+    // fetch(`/currentweather`)
+    // .then(res => res.json())
+    // .then(data =>{
+    //   //reducing the amount of repeated data.data writing, precising which object key to access in returned response
+    //   const currentWeather = data.data.current;
+    //   const condition = data.data.current.condition;
+    //   const location = data.data.location;
 
-      setCurrentWeatherObject({...currentWeather, 
-        condition: condition.text,
-        conditionIcon: condition.icon,
-        temperatureC: currentWeather.feelslike,
-        windSpeed: currentWeather.wind_kph,
-        windDir: currentWeather.wind_dir,
-        precipitation: currentWeather.precip_mm,
-        humidity: currentWeather.humidity,
-        pressure: currentWeather.pressure_mb,
-        uv: currentWeather.uv,
-        city: location.name,
-        region: location.region,
-        country: location.country,
-        localTime: location.locationTime,
-        lastUpdate: currentWeather.last_updated,  
-      })
-      setLoading(true);
-    })
-  },[])
+    //   setCurrentWeatherObject({...currentWeather, 
+    //     condition: condition.text,
+    //     conditionIcon: condition.icon,
+    //     temperatureC: currentWeather.feelslike,
+    //     windSpeed: currentWeather.wind_kph,
+    //     windDir: currentWeather.wind_dir,
+    //     precipitation: currentWeather.precip_mm,
+    //     humidity: currentWeather.humidity,
+    //     pressure: currentWeather.pressure_mb,
+    //     uv: currentWeather.uv,
+    //     city: location.name,
+    //     region: location.region,
+    //     country: location.country,
+    //     localTime: location.locationTime,
+    //     lastUpdate: currentWeather.last_updated,  
+    //   })
+      // setLoading(true);
+    // })
+    console.log('mimic data weather fetching here...')
+  },[refreshBtn])
   
-  console.log('is the weather component rendering? ' + loading);
-  if (setLoading){
-    console.log(currentWeatherObject.lastUpdate);
-  }
-
   return (
     <>
       { loading ?
@@ -52,11 +51,21 @@ const Weather = () =>{
         <div>
           <p>{currentWeatherObject.condition}</p>
           <img alt='weather icon' src={currentWeatherObject.conditionIcon} />
+          <p>{currentWeatherObject.lastUpdate}</p>
         </div>
+        <button onClick={() => {
+        setRefreshBtn(prevCheck => !prevCheck)
+        console.log(refreshBtn)}
+        }>Refresh</button>
       </WeatherContainer>
         :
-        <p>Loading...</p>
-
+        <>
+        <p>Weather widget palceholder</p>
+        <button onClick={() => {
+        setRefreshBtn(prevCheck => !prevCheck)
+        console.log(refreshBtn)}
+        }>Refresh</button>
+        </>
       }
     </>
   )
