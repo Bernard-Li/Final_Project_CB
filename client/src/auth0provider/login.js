@@ -3,20 +3,17 @@ import React, { useEffect } from "react";
 
 const LoginButton = () => {
   const { loginWithRedirect , user} = useAuth0();
-  
+  console.log(user);
   useEffect(() => {
-    const createNewUser = async () =>{
-      await fetch(`/create-user`,{
+    
+      fetch(`/create-user`,{
         method: "POST",
         body: JSON.stringify(user),
         headers: {
           "Content-Type" : "application/json",
         }
       })
-    }
-    createNewUser();
-  }, [])
-
+    }, [])
   return <button onClick={() => loginWithRedirect()}>Log In</button>;
 };
 

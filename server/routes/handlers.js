@@ -15,18 +15,23 @@ const options = {
 //create a function that will allow a user to create an account 
 const createUser = async (req, res) =>{
   try {
-
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     console.log('connected to client...');
+
     const db = client.db('SwivyUsers');
-    
-    
     const _id = uuidv4();
-    const userBody = req.body;
-    console.log(req.body);
-    const data = {
-      _id: _id,
+    const userBody = await req.body;
+    const validateByEmail = await req.body.email;
+
+    const existingUser = await db.collection('userData').findOne({email: validateByEmail});
+    if(existingUser){
+      res.status(200).json({status: 200, status: "User logging in, validating by email: ", existingUser})
+    }
+    else {
+
+      const data = {
+        _id: _id,
       email: userBody.email,
       lastName: userBody.family_name,
       firstName: userBody.given_name,
@@ -35,20 +40,20 @@ const createUser = async (req, res) =>{
       userDate: userBody.updated_at
     };
     
-    await db.collection('userData').insertOne(data);
     console.log(data);
-    res.status(200).json({status: 201, _id, stats: "User created successfully", data: data})
-
+    db.collection('userData').insertOne(data);
+    res.status(200).json({status: 201, _id, status: "User created successfully", data: data})
   }
-  catch (err){
-    console.log(err.message);
-    res.stats(400).json({status: "error", error: err.message})
-  }
+  
+}
+catch (err){
+  console.log(err.message);
+  res.status(400).json({status: "error", error: err.message})
+}
 
-  client.close();
-  console.log('disconnected from client');
+// client.close();
+console.log('disconnected from client');
 };
-//create a function that will go to the database and grab the current user? Double check with how Auth0 works
-const currentUser = () =>{};
 
-module.exports={ createUser, currentUser }
+
+module.exports={ createUser }
