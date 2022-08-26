@@ -26,7 +26,7 @@ const createUser = async (req, res) =>{
 
     const existingUser = await db.collection('userData').findOne({email: validateByEmail});
     if(existingUser){
-      console.log('existing user has just logged in...');
+      // console.log('existing user has just logged in...');
       res.status(200).json({status: 200, status: "User logging in, validating by email: ", existingUser})
     }
     else {
