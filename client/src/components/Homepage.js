@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import Weather from "./Weather";
 
 const Homepage = () =>{
   const { user, isAuthenticated } = useAuth0();
@@ -16,6 +17,8 @@ const Homepage = () =>{
       <NavLink to="/travelcard">
         <button>Travel Card</button>
       </NavLink>
+
+      <Weather />
     </Wrapper>
       :
     //everything below this statement is the default homepage

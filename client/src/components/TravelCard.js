@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const TravelCard = () =>{
   return (
     <>
-      <h1>Travel card placeholder</h1>
+      <h1>You have no travel cards yet!</h1>
     </>
   )
 }
