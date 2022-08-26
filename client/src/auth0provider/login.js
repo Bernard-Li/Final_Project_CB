@@ -14,7 +14,13 @@ const LoginButton = () => {
         }
       })
     }, [])
-  return <button onClick={() => loginWithRedirect()}>Log In</button>;
+  return (
+  <>
+  {!user &&
+  <button onClick={() => loginWithRedirect()}>Log In</button>
+  }
+  </>
+  )
 };
 
 export default LoginButton;

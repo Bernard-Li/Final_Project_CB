@@ -3,6 +3,7 @@ import ReactDom from 'react-dom/client';
 import App from './App';
 
 import { Auth0Provider} from "@auth0/auth0-react";
+import GlobalStyles from './components/GlobalStyles';
 
 
 const root = ReactDom.createRoot(document.getElementById('root'));
@@ -15,6 +16,7 @@ root.render(
     clientId={clientId}
     redirectUri='http://localhost:3000' //put user page or home page here?
     >
+    
     <App />
     </Auth0Provider>
 );
