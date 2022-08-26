@@ -9,6 +9,7 @@ import LoginPage from "./components/LoginPage";
 import AuthProfile from "./auth0provider/Profile";
 import TravelCard from "./components/TravelCard";
 import GlobalStyles from "./components/GlobalStyles";
+import Footer from "./components/Footer";
 
 import styled from "styled-components";
 const App = () =>{
@@ -40,8 +41,8 @@ const App = () =>{
         path="/travelcard"
         element={ <TravelCard /> }>  
       </Route>
-
       </Routes>
+      <Footer />
     </BrowserRouter>
     </Wrapper>
   )

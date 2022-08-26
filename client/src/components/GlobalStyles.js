@@ -7,11 +7,15 @@ export default createGlobalStyle`
   --color-vermillion: #D84727;
   --color-crayola-yellow: #FAA916;
   --color-dodge-blue: #4392F1;
+  --max-height: 55px;
 }
 
 
 body {
+  margin: 0px;
+  padding: 0px;
   background-color:  #A3C4BC;
+
 }
 
 html, div, span, applet, object, iframe,
@@ -27,8 +31,10 @@ html, div, span, applet, object, iframe,
   figure, figcaption, footer, header, hgroup,
   menu, nav, output, ruby, section, summary,
   time, mark, audio, video {
-
-    color: #042A2B;
+    padding: 0px;
+    margin: 0px;
+    //color: #042A2B;
+    color: white;
 
 
   }
@@ -37,7 +43,7 @@ button {
   border: none;
   border-radius: 5px;
   padding: 10px;
-  //background-color: #D84727;
+  background-color: #D77A61;
 }
 
 `
