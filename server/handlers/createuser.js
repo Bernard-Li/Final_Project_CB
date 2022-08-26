@@ -14,10 +14,10 @@ const options = {
 }
 //create a function that will allow a user to create an account 
 const createUser = async (req, res) =>{
+  const client = new MongoClient(MONGO_URI, options);
+  await client.connect();
   try {
-    const client = new MongoClient(MONGO_URI, options);
-    await client.connect();
-    console.log('connected to client...');
+    // console.log('connected to client...');
 
     const db = client.db('SwivyUsers');
     const _id = uuidv4();
@@ -51,7 +51,7 @@ const createUser = async (req, res) =>{
       // ]
     };
     
-    console.log(data);
+    // console.log(data);
     db.collection('userData').insertOne(data);
     res.status(200).json({status: 201, _id, status: "User created successfully", data: data})
   }
@@ -62,8 +62,8 @@ catch (err){
   res.status(400).json({status: "error", error: err.message})
 }
 
-// client.close();
-console.log('disconnected from client');
+client.close();
+// console.log('disconnected from client');
 };
 
 
