@@ -21,7 +21,7 @@ const Weather = () =>{
     //   const currentWeather = data.data.current;
     //   const condition = data.data.current.condition;
     //   const location = data.data.location;
-
+    //   console.log(currentWeather);
     //   setCurrentWeatherObject({...currentWeather, 
     //     condition: condition.text,
     //     conditionIcon: condition.icon,
@@ -38,9 +38,9 @@ const Weather = () =>{
     //     localTime: location.locationTime,
     //     lastUpdate: currentWeather.last_updated,  
     //   })
-      // setLoading(true);
+    //   setLoading(true);
     // })
-    console.log('mimic data weather fetching here...')
+    // console.log('mimic data weather fetching here...')
   },[refreshBtn])
   
   return (

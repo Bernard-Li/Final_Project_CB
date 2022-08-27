@@ -31,4 +31,9 @@ const Homepage = () =>{
 export default Homepage;
 
 const Wrapper = styled.div`
+
+button {
+  padding: 10px;
+
+}
 `
