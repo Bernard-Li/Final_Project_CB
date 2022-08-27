@@ -39,16 +39,21 @@ const createUser = async (req, res) =>{
       language: userBody.locale,
       userIcon: userBody.picture,
       userDate: userBody.updated_at,
-      // quickLog: [
-      //   {
+      //quickLog is condensed version of travelCard
+      quickLog: [
+        {
+          destination: null,
+          imageSrc: null,
+          weatherCapture: null,
 
-      //   }
-      // ],
-      // travelCards: [
-      //   {
-
-      //   }
-      // ]
+        }
+      ],
+      //elaborate form containing all the information in quickLog + more
+      travelCards: [
+        {
+          imageSrc: null
+        }
+      ]
     };
     
     // console.log(data);
@@ -62,7 +67,7 @@ catch (err){
   res.status(400).json({status: "error", error: err.message})
 }
 
-client.close();
+// client.close();
 // console.log('disconnected from client');
 };
 
