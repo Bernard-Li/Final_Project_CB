@@ -7,7 +7,7 @@ const LoginButton = () => {
   
   useEffect(() => {
     
-    fetch(`/create-user`,{
+    fetch(`/api/create-user`,{
       method: "POST",
       body: JSON.stringify(user),
       headers: {

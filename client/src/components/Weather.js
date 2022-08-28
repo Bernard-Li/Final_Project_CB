@@ -14,7 +14,7 @@ const Weather = () =>{
   
   //fetching the api call data from the back-end
   useEffect(() =>{
-    // fetch(`/currentweather`)
+    // fetch(`/api/currentweather`)
     // .then(res => res.json())
     // .then(data =>{
     //   //reducing the amount of repeated data.data writing, precising which object key to access in returned response
