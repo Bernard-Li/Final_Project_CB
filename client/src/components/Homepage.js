@@ -18,7 +18,7 @@ const Homepage = () =>{
   //email will the be used to check if they are already stored in the database.
   useEffect(() => {
     //Prevents the fetch from running every single time the homepage component is rendered
-    if(!user){
+    
       fetch(`/api/create-user`,{
         method: "POST",
         body: JSON.stringify(user),
@@ -27,13 +27,7 @@ const Homepage = () =>{
       }
     })
     // console.log(`user is : ${user}`);
-  }
-  //***REMOVE**** 
-  else if(user) {
-      console.log('profile is mounted to db, in login');
-    }
-  //to be removed after final pass ^
-  }, [])
+  }, [user])
 
   return (
     <>
@@ -52,7 +46,10 @@ const Homepage = () =>{
     </Wrapper>
       :
     //everything below this statement is the default homepage
-      <h2> This is the homepage palceholder </h2>
+    <>
+      <h2> Welcome to Swivy! </h2>
+      <p>Please login to begin travel logging.</p>
+    </>
     }
     </>
   )
