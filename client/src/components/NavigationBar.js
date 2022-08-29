@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 
+
 const NavigationBar = () => {
   return (
     <Wrapper>
@@ -26,7 +27,10 @@ export default NavigationBar;
 const Wrapper = styled.div`
 display: flex;
 justify-content: space-evenly;
-background-color: #071013;
+//background-color: #071013;
+background-color: transparent;
 padding: 10px;
 max-height: var(--max-height);
+
+
 `

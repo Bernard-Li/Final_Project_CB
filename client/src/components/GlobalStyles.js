@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-
+import NinaW_climbs from "B:/ConcordiaBootcamp/Final_Project_CB/client/src/images/NinaW_climbs.jpg";
 export default createGlobalStyle`
 :root{
   --color-main-opal: #A3C4BC;
@@ -15,7 +15,7 @@ body {
   margin: 0px;
   padding: 0px;
   background-color:  #A3C4BC;
-
+  background-image: url(${NinaW_climbs});
 }
 
 html, div, span, applet, object, iframe,

@@ -13,7 +13,11 @@ const options = {
 const uploadImage = async (req, res) =>{
   try {
     const fileStr = await req.body.data;
-    console.log(fileStr);
+    const uploadedReponse = await cloudinary.uploader.upload(fileStr, {
+      upload_preset: 'swivy_uploads'
+    })
+    console.log(uploadedReponse);
+    res.status(200).json({status: 'success', message: 'Image upload to Cloudinary complete'});
 
   } catch (error) {
     console.log(error.message);

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Weather from "./Weather";
 
+
 const Homepage = () =>{
   const { user, isAuthenticated } = useAuth0();
   return (
@@ -31,6 +32,7 @@ const Homepage = () =>{
 export default Homepage;
 
 const Wrapper = styled.div`
+
 
 button {
   padding: 10px;
