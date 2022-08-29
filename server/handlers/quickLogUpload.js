@@ -1,3 +1,4 @@
+const {v4: uuidv4 } = require('uuid');
 const { MongoClient } = require('mongodb');
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -52,9 +53,10 @@ const quickLogUpload = async (req, res) =>{
     */
     await client.connect();
     const db = client.db('SwivyUsers');
-
+    const uniqueId = uuidv4();
     db.collection('quickLog').insertOne({
-      _id: currentUser, //email of the current user through request
+      _id: uniqueId, 
+      user_id: currentUser, //email of the current user through request
       media: uploadedReponse.url, //public url of the uploaded photo through request
       data: {
         destination: 'Test location: Montreal. Should retrieve from weather api?',
