@@ -26,7 +26,7 @@ const Homepage = () =>{
         "Content-Type" : "application/json",
       }
     })
-    console.log(`user is : ${user}`);
+    // console.log(`user is : ${user}`);
   }
   //***REMOVE**** 
   else if(user) {

@@ -19,7 +19,7 @@ The folder is named "Swivy_uploads" and it stored under the upload_presets in MY
 const QuickLog = () => {
   //need to get the currently logged in user
   const { user } = useAuth0();
-  console.log(user);
+  // console.log(user);
   const [fileState, setFileState] = useState('');
   //previewSource will store a base64 encoded version of the image the user uploads
   const [previewSource, setPreviewSource] = useState('');
@@ -47,7 +47,7 @@ const QuickLog = () => {
   //function that will handle the final submission of the image, form submission
   const handleSubmit = (e) => {
     // console.log(user);
-    console.log(previewSource);
+    // console.log(previewSource);
     e.preventDefault();
     //if no image is selected to be preview, do not trigger the upload image function
     if(!previewSource){
