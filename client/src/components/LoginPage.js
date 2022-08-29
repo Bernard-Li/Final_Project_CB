@@ -1,3 +1,4 @@
+//****REMOVE >? Function representing a login page, not sure if final product will keep
 const LoginPage = () =>{
   return (
     <>

@@ -2,7 +2,18 @@ import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 
+/* Main feature of the website: 
+The following function will allow the user to store pertinent 
+information about their trip, and send the form to the database.
+
+This page also handles the image upload to the Cloudinary API. The database will receive the image URL in the backend handlers,
+and the POST method here will send the actual file (image e.g. jpeg, png, etc.) to the Cloudinary Database.
+The folder is named "Swivy_uploads" and it stored under the upload_presets in MY cloudinary account. Limit 1GB of storage - free version
+*/
+
 const QuickLog = () => {
+  //need to get the currently logged in user
+  const { user } = useAuth0;
   
   const [fileState, setFileState] = useState('');
   //previewSource will store a base64 encoded version of the image the user uploads
@@ -25,10 +36,13 @@ const QuickLog = () => {
     reader.onloadend = () =>{
         //stores the encoded image into the state previewSource
         setPreviewSource(reader.result);
+        
     }
   }
   //function that will handle the final submission of the image, form submission
   const handleSubmit = (e) => {
+    // console.log(user);
+    console.log(previewSource);
     e.preventDefault();
     //if no image is selected to be preview, do not trigger the upload image function
     if(!previewSource){
@@ -44,7 +58,7 @@ const QuickLog = () => {
     try {
       await fetch('/api/upload', {
         method: 'POST',
-        body: JSON.stringify({ data: encodedImage}),
+        body: JSON.stringify({ data: encodedImage, user: user}),
         headers: {
           'Content-type' : 'application/json'
         }

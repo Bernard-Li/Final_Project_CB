@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 const PORT = 8000;
 
 const { createUser } = require("./handlers/createuser");
@@ -9,7 +10,7 @@ const app = express();
 //higher limit to allow uploading of greater sized data
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-
+app.use(morgan('tiny'));
 //test end point to see if backend is listening => functional in insomnia
 app.get('/testlogin', (req, res) =>{
   res.status(200).json({status: 'success', data: 'here is the index'})

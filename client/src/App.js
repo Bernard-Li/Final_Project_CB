@@ -12,8 +12,10 @@ import GlobalStyles from "./components/GlobalStyles";
 import Footer from "./components/Footer";
 
 import styled from "styled-components";
+import { useAuth0 } from "@auth0/auth0-react";
 const App = () =>{
-
+  const { isAuthenticated, user } = useAuth0;
+  
   
   return (
     <Wrapper>

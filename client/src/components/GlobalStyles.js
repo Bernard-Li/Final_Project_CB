@@ -1,5 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import NinaW_climbs from "B:/ConcordiaBootcamp/Final_Project_CB/client/src/images/NinaW_climbs.jpg";
+
+//Global Styles file that will store colors and certain presets dimensions
 export default createGlobalStyle`
 :root{
   --color-main-opal: #A3C4BC;
@@ -9,7 +11,6 @@ export default createGlobalStyle`
   --color-dodge-blue: #4392F1;
   --max-height: 55px;
 }
-
 
 body {
   margin: 0px;
@@ -35,8 +36,6 @@ html, div, span, applet, object, iframe,
     margin: 0px;
     //color: #042A2B;
     color: white;
-
-
   }
 
 button {
@@ -44,9 +43,7 @@ button {
   border-radius: 5px;
   padding: 10px;
   background-color: #D77A61;
-}
-
-`
+}`
 
 
 

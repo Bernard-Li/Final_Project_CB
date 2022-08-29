@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import GlobalStyles from "./GlobalStyles"
 
-const Footer = () =>{
+//Create a footer to assist the navigation of different pages - home, profile (insert others?)
+const Footer = () => {
   return (
     <Wrapper>
       <GlobalStyles />

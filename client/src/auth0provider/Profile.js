@@ -1,15 +1,14 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
-import { useEffect } from "react";
 
+//This function build the profile page once a user logs in. Details like account icon, profile name and email are displayed onto the profile page
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
-  
-
+  //Will conditionally render based on Auth0 state
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-
+  //referrerPolicy was preventing the loading of google account images. No-referrer property allowed the icons to be fetched from google icon URL
   return (
     isAuthenticated && (
       <div>
