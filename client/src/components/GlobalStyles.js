@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import NinaW_climbs from "B:/ConcordiaBootcamp/Final_Project_CB/client/src/images/NinaW_climbs.jpg";
+import NinaW_climbs from "../images/NinaW_climbs.jpg";
 
 //Global Styles file that will store colors and certain presets dimensions
 export default createGlobalStyle`

@@ -8,6 +8,7 @@ const Profile = () => {
   if (isLoading) {
     return <div>Loading ...</div>;
   }
+  console.log(user);
   //referrerPolicy was preventing the loading of google account images. No-referrer property allowed the icons to be fetched from google icon URL
   return (
     isAuthenticated && (
