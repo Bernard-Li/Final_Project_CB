@@ -1,11 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
-const PORT = 8000;
 
 const { createUser } = require("./handlers/createuser");
 const { getCurrentWeather } = require("./handlers/weatherapi");
-const { uploadImage } = require("./handlers/uploadimage");
+const { quickLogUpload } = require("./handlers/quickLogUpload");
+const { allQuickLogs } = require("./handlers/allQuickLogs");
+
 const app = express();
+const PORT = 8000;
 
 //higher limit to allow uploading of greater sized data
 app.use(express.json({ limit: '50mb' }));
@@ -17,10 +19,9 @@ app.get('/testlogin', (req, res) =>{
 })
 
 app.get('/api/currentweather', getCurrentWeather)
-
-
+app.get('/api/all-quicklogs', allQuickLogs);
 app.post('/api/create-user', createUser);
-app.post('/api/upload', uploadImage);
+app.post('/api/upload-quicklog', quickLogUpload);
 
 const server = app.listen(PORT, () =>{
   console.info("🌍 Listening on port: " + server.address().port);

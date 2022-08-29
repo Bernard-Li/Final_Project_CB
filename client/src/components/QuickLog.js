@@ -11,10 +11,15 @@ and the POST method here will send the actual file (image e.g. jpeg, png, etc.) 
 The folder is named "Swivy_uploads" and it stored under the upload_presets in MY cloudinary account. Limit 1GB of storage - free version
 */
 
+/*  IMPORTANT : the upload image button used for testing the image path - backend-cloudinary and mongoDB.
+    CHANGE: will replace the upload photo button to 'Submit QuickLog', handle submit function will take the
+    uploaded image AND form data and send it to the backend => towards mongoDB
+*/
+
 const QuickLog = () => {
   //need to get the currently logged in user
-  const { user } = useAuth0;
-  
+  const { user } = useAuth0();
+  console.log(user);
   const [fileState, setFileState] = useState('');
   //previewSource will store a base64 encoded version of the image the user uploads
   const [previewSource, setPreviewSource] = useState('');
@@ -56,7 +61,7 @@ const QuickLog = () => {
   const uploadImage = async (encodedImage) =>{
     // console.log(encodedImage);
     try {
-      await fetch('/api/upload', {
+      await fetch('/api/upload-quicklog', {
         method: 'POST',
         body: JSON.stringify({ data: encodedImage, user: user}),
         headers: {
