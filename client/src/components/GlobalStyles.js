@@ -16,7 +16,7 @@ body {
   margin: 0px;
   padding: 0px;
   background-color:  #A3C4BC;
-  background-image: url(${NinaW_climbs});
+  //background-image: url(${NinaW_climbs});
 }
 
 html, div, span, applet, object, iframe,
