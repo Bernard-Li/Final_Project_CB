@@ -8,15 +8,27 @@ const TravelCardSummary = () => {
 
   const navigate = useNavigate();
   return (
-    <>
-    <label>Search bar</label>
+    <Wrapper>
+    <label>Search cards
       <input></input>
-      <h1>placeholder for summary of all travel cards</h1>
+    </label>
+    <label>Filter
+      <select>
+        <option>by category</option>
+      
+      </select>
+    </label>
+      <h1>My Travel Cards</h1>
 
-      <button
-        onClick={() => navigate('/travelcardcreate')}> Create Card </button>
-    </>
+      <button className='newcard-btn'
+        onClick={() => navigate('/travelcardcreate')}> New Travel Card </button>
+    </Wrapper>
   )
 }
 
 export default TravelCardSummary;
+
+const Wrapper = styled.div`
+display: flex;
+flex-direction: column;
+`

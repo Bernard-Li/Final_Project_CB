@@ -3,6 +3,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "./userContext";
+//Import from an NPM packagee called react-datepicker @https://www.npmjs.com/package/react-datepicker
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 /* Main feature of the website: 
 The following function will allow the user to store pertinent 
 information about their trip, and send the form to the database.
@@ -18,53 +22,62 @@ The folder is named "Swivy_uploads" and it stored under the upload_presets in MY
 */
 
 const TravelCardCreate = () => {
-  //need to get the currently logged in user
-  const { user } = useAuth0();
-  //context to track which user is logged in instead of using useAuth0() everywhere
-  // const { currentUser } = useContext(UserContext);
-
-  const [fileState, setFileState] = useState('');
+  //useAuth0 to determine which user is logged in  
+  //formInput is a state that will store the user selected date in the input form below
   //previewSource will store a base64 encoded version of the image the user uploads
+  
+  const { user } = useAuth0();
+  const dateCreated = new Date(); 
+
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
+  const [formInput, setFormInput] = useState({
+    destination: null,
+    dateCreated: dateCreated, //date that the card was created - filter purposes
+    dateTraveled: null, //will use the date that user is uploading as the default date for the trip, assuming they are creating the card while on the trip
+    forecast: null,
+    activity: 'None selected',
+  })
+  const [fileState, setFileState] = useState('');
   const [previewSource, setPreviewSource] = useState('');
-  //function that will set the state file to the uploaded image, on change from the input field in the form below
+
+  //Function that will set the state file to the uploaded image, on change from the input field in the form below
+  //userImage will an object from the files array that contains key-value pairs providing information of the upload that the user made
+  //We want to: store the image into cloudinary, assign it a value to the backend as well ***** through what type of identifier?
   const handleChange = (e) => {
-    //userImage will an object from the files array that contains key-value pairs providing information of the upload that the user made
     const userImage = e.target.files[0];
-    //we want to: store the image into cloudinary, assign it a value to the backend as well ***** through what type of identifier?
     previewFile(userImage);
     setFileState(e.target.value);
+    
   }
-  //function that will allow the user to view the image preview before submitting it to cloudinary/their account travel card
+  //Function that will allow the user to view the image preview before submitting it to cloudinary/their account travel card
+  //Convert the choosen file into a string -base64 encoding and store the encoded image into the state previewSource
   const previewFile = (file) => {
-    //convert the choosen file into a string -base64 encoding
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () =>{
-        //stores the encoded image into the state previewSource
         setPreviewSource(reader.result);
         
     }
   }
-  //function that will handle the final submission of the image, form submission
+  //Function that will handle the final submission of the image, form submission. If no image is selected to be preview, do not trigger the upload image function 
+  //**CHANGE THIS** \\
   const handleSubmit = (e) => {
-    // console.log(user);
-    // console.log(previewSource);
     e.preventDefault();
-    //if no image is selected to be preview, do not trigger the upload image function
-    if(!previewSource){
-      console.log('no image selected');
-    }
-    else {
-      uploadImage(previewSource);
-    }
+    uploadTravelCard(previewSource);
+    // if(!previewSource){
+    //   console.log('no image selected');
+    // }
+    // else {
+    //   uploadTravelCard(previewSource);
+    // }
   }
-  //function that will take the encodedImage and POST to the backend
-  const uploadImage = async (encodedImage) =>{
-    // console.log(encodedImage);
+  //function that will take the encodedImage, formInput state and the user => POST to the backend
+  const uploadTravelCard = async (encodedImage) =>{
     try {
       await fetch('/api/upload-quicklog', {
         method: 'POST',
-        body: JSON.stringify({ data: encodedImage, user: user}),
+        body: JSON.stringify({ data: encodedImage, user: user, form: formInput}),
         headers: {
           'Content-type' : 'application/json'
         }
@@ -72,29 +85,64 @@ const TravelCardCreate = () => {
     } catch (error) {
       console.log(error.message);
     }
-
   }
 
   return (
     <Wrapper>
       <h1>This page is a travel card creation page</h1>
       <form onSubmit={handleSubmit}>
-        <input className="form-input"
+        <input className='form-input'
           type='file'
           value={fileState}
             onChange={handleChange}>
         </input>
-        <button className="upload-btn" 
-          type="submit">
+        <label
+          className='label-destiantion'>Destination
+          <input
+            type='text'
+            className='destination-input' 
+            placeholder='Enter a destination here'
+            onChange={(e) => {
+              setFormInput({...formInput, destination: e.target.value})
+              }}
+              ></input>
+        </label>
+        <label 
+          className='label-date'>
+          Date
+            <DatePicker
+              className='date-picker' 
+              closeOnScroll={true}
+              selectsRange={true}
+              startDate={startDate}
+              endDate={endDate}
+              onChange={(update) => {
+                console.log(update);
+                  setDateRange(update);
+                  setFormInput({...formInput, dateTraveled: update});
+                  }
+                }
+              isClearable={true}
+                />
+        </label>
+
+          <select onChange={(e) => {
+              setFormInput({...formInput, activity: e.target.value})
+              }}>
+            <option value='None selected'>-Activity-</option>
+            <option value='Hiking'>Hiking</option>
+            <option value='Hiking'>Hiking</option>
+            <option value='Hiking'>Hiking</option>
+            <option value='Hiking'>Hiking</option>
+
+          </select>
+        <button className='upload-btn' 
+          type='submit'>
           Create Card
         </button>
-        <label>Trip Type</label>
-          <select>
-            <option>-Nature-</option>
-          </select>
       </form>
       {previewSource &&
-        <img className="preview-img" alt='previewed user upload' src={previewSource} />
+        <img className='preview-img' alt='previewed user upload' src={previewSource} />
       }
     </Wrapper>
   )

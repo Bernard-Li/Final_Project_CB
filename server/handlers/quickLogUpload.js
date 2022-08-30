@@ -23,44 +23,30 @@ const quickLogUpload = async (req, res) =>{
     Emails are unique, and can be stored both in the user - Auth0 in the front end,
     as well as objects in the backend. */
     const currentUser = await req.body.user.email;
+
+    const formData = await req.body.form;
     //The following will retrieve the encoded image from the data key, and upload the file to the designated folder in cloudinary
     const fileStr = await req.body.data;
-    const uploadedReponse = await cloudinary.uploader.upload(fileStr, {
-      upload_preset: 'swivy_uploads'
-    })
+    // const uploadedReponse = await cloudinary.uploader.upload(fileStr, {
+    //   upload_preset: 'swivy_uploads'
+    // })
     //**REMOVE** Verification console.logs 
     // console.log(uploadedReponse);
     console.log(currentUser);
-    /*  format of the collection quickLog : { quickLog : [ {...}, {...}, ...] } 
-        EXAMPLE:
-        {
-          quickLog: [
-            { 
-              _id: email
-              media: photo_url
-              data: {
-                //information from the data form here
-              }
-            },
-            { 
-              _id: email
-              media: photo_url
-              data: {
-                //information from the data form here
-            },
-            { ... }
-          ]
-    */
+  
     await client.connect();
     const db = client.db('SwivyUsers');
     const uniqueId = uuidv4();
-    db.collection('quickLog').insertOne({
+    db.collection('travelCard').insertOne({
       _id: uniqueId, 
       user_id: currentUser, //email of the current user through request
-      media: uploadedReponse.url, //public url of the uploaded photo through request
+      media: 'uploadedReponse.url', //public url of the uploaded photo through request
       data: {
-        destination: 'Test location: Montreal. Should retrieve from weather api?',
-        information: 'Place holder for test, to be repalced with more precies key/value pairs'
+        destination: formData.destination,
+        created: formData.dateCreated,
+        date: [formData.dateTraveled],
+        forecast: formData.forecast,
+        activity: formData.activity,
       }
     })
     
