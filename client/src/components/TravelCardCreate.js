@@ -77,7 +77,7 @@ const TravelCardCreate = () => {
 
   return (
     <Wrapper>
-      <h1> Quicklog page, placehodler </h1>
+      <h1>This page is a travel card creation page</h1>
       <form onSubmit={handleSubmit}>
         <input className="form-input"
           type='file'
@@ -86,7 +86,7 @@ const TravelCardCreate = () => {
         </input>
         <button className="upload-btn" 
           type="submit">
-          Upload image
+          Create Card
         </button>
         <label>Trip Type</label>
           <select>

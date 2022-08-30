@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 import NavigationBar from "./components/NavigationBar";
 import TravelCardSummary from "./components/TravelCardSummary";
+import TravelCardCreate from "./components/TravelCardCreate";
 import LoginPage from "./components/LoginPage";
 
 import Profile from "./auth0provider/Profile";
@@ -55,6 +55,10 @@ const App = () =>{
         <Route
           path="/profile"
           element={ <Profile /> }>  
+        </Route>
+        <Route
+          path="/travelcardcreate"
+          element={ <TravelCardCreate /> }>  
         </Route>
       </Routes>
       <Footer />

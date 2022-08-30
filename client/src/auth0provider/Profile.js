@@ -20,12 +20,13 @@ const Profile = () => {
         <img src={user.picture} alt={user.name} referrerPolicy="no-referrer" />
         <h2>{user.name}</h2>
         <p>{user.email}</p>
+        <p>Add user preferences and settings here</p>
       </div>
       :
       <div>
         <h1>You must be logged in to view this page!</h1>
       </div>
-    };
+    }
     </Wrapper>
   )
 };

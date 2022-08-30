@@ -7,9 +7,9 @@ export const UserProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth0();
   const [currentUser, setCurrentUser] = useState("");
 
-  if(isAuthenticated){
-    setCurrentUser(user);
-  }
+  // if(isAuthenticated){
+  //   setCurrentUser(user);
+  // }
 
   return (
     <UserContext.Provider
