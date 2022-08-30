@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 import NavigationBar from "./components/NavigationBar";
-import TravelCard from "./components/TravelCard";
+import TravelCardSummary from "./components/TravelCardSummary";
 import LoginPage from "./components/LoginPage";
 
 import Profile from "./auth0provider/Profile";
@@ -26,8 +26,8 @@ const App = () =>{
   return (
     <Wrapper>
     <BrowserRouter>
-    { !isAuthenticated ?
-    
+    { //if not user is Authenticated, display the login page as the homepage. Profile component will also render, however it will ask the user to log in before viewing information on it
+      !isAuthenticated ?
     <Wrapper>
       <GlobalStyles />
       <NavigationBar />
@@ -47,9 +47,10 @@ const App = () =>{
     <GlobalStyles />
       <NavigationBar />
       <Routes>
-        <Route 
+        <Route
+        //Once logged in (and authenticated becomes true, the homepage will navigate to the travel card page)
           exact path="/" 
-          element={ <TravelCard /> }>
+          element={ <TravelCardSummary /> }>
         </Route>
         <Route
           path="/profile"
