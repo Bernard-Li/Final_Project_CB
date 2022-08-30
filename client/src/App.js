@@ -1,50 +1,64 @@
-import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Homepage from "./components/Homepage";
+
 
 import NavigationBar from "./components/NavigationBar";
-import QuickLog from "./components/QuickLog";
+import TravelCard from "./components/TravelCard";
 import LoginPage from "./components/LoginPage";
 
-import AuthProfile from "./auth0provider/Profile";
-import TravelCard from "./components/TravelCard";
+import Profile from "./auth0provider/Profile";
 import GlobalStyles from "./components/GlobalStyles";
 import Footer from "./components/Footer";
 
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useState } from "react";
+
+//Function that contains and displays components based on the URL (received from user navlink)
 const App = () =>{
-  const { isAuthenticated, user } = useAuth0;
-  
-  
+  const { isAuthenticated } = useAuth0();
+  const [ loading, setLoading ] = useState(false);
+
+  const setDelay = () => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 1500);
+  }
   return (
     <Wrapper>
-    <GlobalStyles />
     <BrowserRouter>
+    { !isAuthenticated ?
+    
+    <Wrapper>
+      <GlobalStyles />
       <NavigationBar />
       <Routes>
-      <Route 
-        exact path="/" 
-        element={ <Homepage /> }>
-      </Route>
-      <Route 
-        exact path="/login" 
-        element={ <LoginPage /> }>
-      </Route>
-      <Route
-        path="/profile"
-        element={ <AuthProfile /> }>  
-      </Route>
-      <Route
-        path="/quicklog"
-        element={ <QuickLog /> }>  
-      </Route>
-      <Route
-        path="/travelcard"
-        element={ <TravelCard /> }>  
-      </Route>
+        <Route 
+          exact path="/" 
+          element={ <LoginPage /> }>
+        </Route>
+        <Route
+          path="/profile"
+          element={ <Profile /> }>  
+        </Route>
+      </Routes>
+    </Wrapper>
+    :
+    <>
+    <GlobalStyles />
+      <NavigationBar />
+      <Routes>
+        <Route 
+          exact path="/" 
+          element={ <TravelCard /> }>
+        </Route>
+        <Route
+          path="/profile"
+          element={ <Profile /> }>  
+        </Route>
       </Routes>
       <Footer />
+    </>
+    }
     </BrowserRouter>
     </Wrapper>
   )
