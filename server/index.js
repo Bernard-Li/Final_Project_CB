@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const { createUser } = require("./handlers/createuser");
 const { getCurrentWeather } = require("./handlers/weatherapi");
 const { quickLogUpload } = require("./handlers/quickLogUpload");
-const { allQuickLogs } = require("./handlers/allQuickLogs");
+const { allTravelCards } = require("./handlers/allTravelCards");
 
 const app = express();
 const PORT = 8000;
@@ -19,7 +19,7 @@ app.get('/testlogin', (req, res) =>{
 })
 
 app.get('/api/currentweather', getCurrentWeather)
-app.get('/api/all-quicklogs', allQuickLogs);
+app.get('/api/all-travelcards', allTravelCards);
 app.post('/api/create-user', createUser);
 app.post('/api/upload-quicklog', quickLogUpload);
 

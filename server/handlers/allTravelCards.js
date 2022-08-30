@@ -8,15 +8,14 @@ const options = {
 }
 
 //Function handler that will retrieve all the quicklogs for a designated user
-const allQuickLogs = async (req, res) =>{
+const allTravelCards = async (req, res) =>{
   const client = new MongoClient(MONGO_URI, options);
   await client.connect();
   try {
     
     const db = client.db('SwivyUsers');
-    const quickLogArray = await db.collection('quickLog').find().toArray();
-    console.log(quickLogArray);
-    res.status(200).json({status: 200, data: quickLogArray});
+    const travelCardArray = await db.collection('travelCard').find().toArray();
+    res.status(200).json({status: 200, data: travelCardArray});
 
   } catch (error) {
       console.log(error.message);
@@ -25,4 +24,4 @@ const allQuickLogs = async (req, res) =>{
 
 
 }
-module.exports = { allQuickLogs };
+module.exports = { allTravelCards };
