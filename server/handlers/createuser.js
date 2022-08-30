@@ -39,35 +39,20 @@ const createUser = async (req, res) =>{
       language: userBody.locale,
       userIcon: userBody.picture,
       userDate: userBody.updated_at,
-      //quickLog is condensed version of travelCard - FOR ease of access, quickLog and travelCard will be represented by collections instead of nested array[objects] within the userData collections object
-      // quickLog: [
-      //   {
-      //     destination: null,
-      //     imageSrc: null,
-      //     weatherCapture: null,
-
-      //   }
-      // ],
-      // //elaborate form containing all the information in quickLog + more
-      // travelCards: [
-      //   {
-      //     imageSrc: null
-      //   }
-      // ]
     };
     
-    // console.log(data);
     db.collection('userData').insertOne(data);
     res.status(200).json({status: 201, _id, status: "User created successfully", data: data});
-    client.close();
+    // client.close();
   }
   
 }
 catch (err){
   console.log(err.message);
   res.status(400).json({status: "error", error: err.message});
-  client.close();
+  // client.close();
 }
+// client.close();
 };
 
 
