@@ -4,13 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
+import Modal from "./Modal";
 //This function will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
 const TravelCardSummary = () => {
   //State to store all the fetched cards from the database
   const [allCards, setAllCards] = useState(null);
   const [loading, setLoading] = useState(false);
-  const moment = require('moment');
+  const [openModal, setOpenModal] = useState(false);
+  const handleModal = () =>{
+    setOpenModal(!openModal);
+  }
   useEffect(() =>{
     const getAllCards = async () =>{
       try {
@@ -49,6 +53,7 @@ const TravelCardSummary = () => {
       </select>
     </label>
       <TravelCardDisplay>
+      <Modal openModal={openModal} setOpenModal={setOpenModal} />
     {
       
       loading ? allCards.map((card, index) =>{
@@ -60,7 +65,15 @@ const TravelCardSummary = () => {
           <li 
             className='li-travelcards'
             key={`Card# ${index}`}>
-            <a href="#">{card.data.destination} : {card.data.date + '-'}</a>
+            <Button
+              onClick={handleModal}>
+              <span className='span-title'>
+              {card.data.destination}
+              </span>
+              <span className='span-dates'>
+              {card.data.date[0][0] + ' to ' + card.data.date[0][1]}
+              </span>
+              </Button>
             </li>
         </ul>
           <div>
@@ -68,7 +81,7 @@ const TravelCardSummary = () => {
           </div>
         </>
       )
-      }) 
+      })
       :
       <>
         <CircularProgress />
@@ -86,7 +99,17 @@ export default TravelCardSummary;
 /* for search: Application adapted to iOS, needs responsive CSS. Testing phone size: https://kinsta.com/blog/responsive-web-design/
 STYLED COMPONENTS WILL REQUIRE mobile adapting 
 Currently adapted to 375 x 667 @ 100%, no throttling, portrait mode*/
+const Button = styled.button`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+max-width: 75vw;
 
+.span-title {
+  padding: 5px;
+}
+`
 const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
