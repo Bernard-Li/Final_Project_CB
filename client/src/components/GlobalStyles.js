@@ -5,7 +5,7 @@ import NinaW_climbs from "../images/NinaW_climbs.jpg";
 export default createGlobalStyle`
 :root{
   --color-main-opal: #A3C4BC;
-  --color-font-color: #042A2B;
+  --color-font-color: #042A2B; //color name: swamp
   --color-vermillion: #D84727;
   --color-crayola-yellow: #FAA916;
   --color-dodge-blue: #4392F1;

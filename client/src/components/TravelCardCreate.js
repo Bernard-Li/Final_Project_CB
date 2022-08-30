@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "./userContext";
 //Import from an NPM packagee called react-datepicker @https://www.npmjs.com/package/react-datepicker
@@ -28,6 +28,8 @@ const TravelCardCreate = () => {
   
   const { user } = useAuth0();
   const dateCreated = new Date(); 
+  //used to format date passed back by the datepicker into more legible data
+  const moment = require('moment');
 
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
@@ -49,6 +51,22 @@ const TravelCardCreate = () => {
     previewFile(userImage);
     setFileState(e.target.value);
     
+  }
+  //function that accept the selected date range from the form and return the format: year-month-day
+  const handleConversion = (date) => {
+    const validateArray = date.every((value) => { //this function checks the state of date, and once two dates are picked, it will run the conversion. 
+      return value;
+    })
+    if(validateArray){
+      const convertedArray = date.map((date) =>{
+        console.log(date);
+        const d = new Date(date);
+        const formatedDate = moment(d);
+        const returnDate = formatedDate.format("YYYY-MM-DD");
+        return returnDate;
+      })
+      setFormInput({...formInput, dateTraveled: convertedArray}); //stores the newly converted array of 2 'string' dates into the formInput, to be sent to the database.
+    }
   }
   //Function that will allow the user to view the image preview before submitting it to cloudinary/their account travel card
   //Convert the choosen file into a string -base64 encoding and store the encoded image into the state previewSource
@@ -117,9 +135,8 @@ const TravelCardCreate = () => {
               startDate={startDate}
               endDate={endDate}
               onChange={(update) => {
-                console.log(update);
-                  setDateRange(update);
-                  setFormInput({...formInput, dateTraveled: update});
+                handleConversion(update);
+                setDateRange(update);
                   }
                 }
               isClearable={true}
