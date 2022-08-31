@@ -31,9 +31,10 @@ const TravelCardCreate = () => {
   //used to format date passed back by the datepicker into more legible data
   const moment = require('moment');
 
-  const [dateRange, setDateRange] = useState([null, null]);
+  const [dateRange, setDateRange] = useState([]);
   const [startDate, endDate] = dateRange;
   const [dateForWeather, setDateForWeather]  = useState(null);
+  const [forecastInfo, setForecastInfo] = useState('');
   const [formInput, setFormInput] = useState({
     destination: null,
     dateCreated: dateCreated, //date that the card was created - filter purposes
@@ -96,23 +97,41 @@ const TravelCardCreate = () => {
   useEffect(() => {
     const showWeather = async (date, location) => {
       try {
-        await fetch('/api/getWeatherHistory',
-        { method: 'GET', 
-          body: JSON.stringify({ location: 'hardcoded city'}),
-          headers: {
-            'Content-type' : 'application/json'
-          }
-        })
+        await fetch(`/api/getWeatherHistory/${date}/${location}`)      //convert to query
         .then(res => res.json())
         .then(data => {
-          console.log(data);
+          console.log(data.data.forecast); //is the object that contains: maxtemp_c, avtemp_c, object: condition: { text, icon}, avghumidity, mintemp_c, maxwind_kph
+          setForecastInfo(data.data.forecast.forecastday[0].day);
         })
       } catch (error) {
         console.log(error.message);
       }
     }
-    // showWeather();
-  }, [])
+    if(dateRange.length > 1){
+      showWeather(dateRange[0], 'Montreal');
+    }
+  }, [dateRange])
+  // //this function will fetch the weather of the first day of the trip and display the average weather of the journey
+  // useEffect(() => {
+  //   const showWeather = async (date, location) => {
+  //     try {
+  //       await fetch(`/api/getWeatherHistory`,
+  //       { method: 'GET', 
+  //         body: JSON.stringify({ location: 'hardcoded city'}),
+  //         headers: {
+  //           'Content-type' : 'application/json'
+  //         }
+  //       })
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         console.log(data);
+  //       })
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   }
+  //   // showWeather();
+  // }, [])
   //function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async (encodedImage) =>{
     try {
@@ -159,6 +178,7 @@ const TravelCardCreate = () => {
               startDate={startDate}
               endDate={endDate}
               onChange={(update) => {
+                console.log('hello');
                 handleConversion(update);
                 setDateRange(update);
                   }
@@ -166,6 +186,10 @@ const TravelCardCreate = () => {
               isClearable={true}
                 />
         </label>
+        </div>
+        <div className="weather-div">
+          <p>Placeholder for weather temp</p>
+          <p>{forecastInfo.avgtemp_c}</p>
         </div>
         <div className="select-drop">
         <label>

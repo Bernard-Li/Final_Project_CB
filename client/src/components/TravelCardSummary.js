@@ -9,25 +9,26 @@ import { BiAddToQueue } from "react-icons/bi";
 //This function will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
 const TravelCardSummary = () => {
+  const navigate = useNavigate();
   //State to store all the fetched cards from the database
   const [allCards, setAllCards] = useState(null);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-
-  const [filter, setFilter] = useState(null);
+  //State to store what type of filter has been selected, based on the dropdown option values : none - by default is categorized based on date created, dateNewFirst, dateOldFirst, alphaSort 
+  const [filter, setFilter] = useState('none');
   const toggleModal = (e) => {
     
     setModal(!modal);
     }
 
   const handleFilter = (e) =>{
-    setFilter(e.target.value);
+    setFilter(e.target.value); //back end receiving the string filter and will sort the data based on what is received
   }
-
+  //request to get all the travel cards in the database based on the user. Will refetch if the filter is changed e.g. Alphabetical filter appliaed by the user
   useEffect(() =>{
     const getAllCards = async () =>{
       try {
-        await fetch('/api/all-travelcards')
+        await fetch(`/api/all-travelcards/${filter}`)
         .then(res => res.json())
         .then(data =>{
           // console.log(data);
@@ -39,8 +40,8 @@ const TravelCardSummary = () => {
       }
     }
     getAllCards();
-  }, [setFilter])
-  const navigate = useNavigate();
+  }, [filter])
+  
   return (
     <Wrapper>
     <div
@@ -56,11 +57,11 @@ const TravelCardSummary = () => {
       <select
         onChange={handleFilter}
         className="select-dropdown">
-        <option>-options-</option>
+        <option value="none">-options-</option>
         <option value='dateNewFirst'>Travel Date (newest - oldest)</option>
         <option value='dateOldFirst'>Travel Date (oldest - newest)</option>
         <option value='alphaSort'>A-Z</option>
-        <option value='dateCreated'>Date Added</option>      
+        <option value='alphaSortBackwards'>Z-A</option>
       </select>
     </label>
       <TravelCardDisplay>
@@ -83,7 +84,6 @@ const TravelCardSummary = () => {
       loading ? allCards.map((card, index) =>{
       return (
         <>
-        
         <ul
           className="ul-travelcards">
           <li 
@@ -102,7 +102,6 @@ const TravelCardSummary = () => {
               </Button>
             </li>
         </ul>
-        
         </>
       )
       })

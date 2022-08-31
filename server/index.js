@@ -20,8 +20,9 @@ app.get('/testlogin', (req, res) =>{
 })
 
 app.get('/api/currentweather', getCurrentWeather);
-app.get('/api/getWeatherHistory', getWeatherHistory);
-app.get('/api/all-travelcards', allTravelCards);
+// app.get('/api/getWeatherHistory', getWeatherHistory);
+app.get('/api/getWeatherHistory/:date/:location', getWeatherHistory);
+app.get('/api/all-travelcards/:filter', allTravelCards);
 app.post('/api/create-user', createUser);
 app.post('/api/upload-quicklog', quickLogUpload);
 
