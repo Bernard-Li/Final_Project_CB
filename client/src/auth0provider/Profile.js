@@ -14,15 +14,19 @@ const Profile = () => {
     <Wrapper>
     <GlobalStyles />
     { isAuthenticated ? 
-      <div>
-        <img src={user.picture} alt={user.name} referrerPolicy="no-referrer" />
-        <h2>{user.name}</h2>
+      <div className="profile-div">
+          <img className='user-icon' src={user.picture} alt={user.name} referrerPolicy="no-referrer" />
+        <div className="name-div">
+          <h2>{user.name}</h2>
+        </div>
+        <div className="email-div">
         <p>{user.email}</p>
+        </div>
         <p>Add user preferences and settings here</p>
       </div>
       :
-      <div>
-        <h1>You must be logged in to view this page!</h1>
+      <div className="no-user">
+        <h2>Please login to view profile</h2>
       </div>
     }
     </Wrapper>
@@ -32,4 +36,27 @@ const Profile = () => {
 export default Profile;
 
 const Wrapper = styled.div`
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+
+.profile-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.user-icon {
+  border-radius: 50px;
+  max-height: 100px;
+  max-width: 100px;
+  margin: 20px;
+}
+.no-user {
+  margin: 300px 10px;
+}
 `

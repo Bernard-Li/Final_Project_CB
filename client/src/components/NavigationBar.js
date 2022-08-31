@@ -1,5 +1,3 @@
-import LoginButton from "../auth0provider/login";
-import LogoutButton from "../auth0provider/logout";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
@@ -10,8 +8,10 @@ const NavigationBar = () => {
     <Wrapper>
     <GlobalStyles />
       <h2>Swivy</h2>
-      <LoginButton />
-      <LogoutButton />
+      {/* <LoginButton /> */ //Moved to the center of the login page
+      }
+      {/* <LogoutButton /> */ //Moved to Footer
+      }   
       <NavLink to="/">
         Home
       </NavLink>

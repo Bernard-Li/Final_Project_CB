@@ -4,24 +4,33 @@ import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
-import Modal from "./Modal";
+import { BiAddToQueue } from "react-icons/bi";
+
 //This function will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
 const TravelCardSummary = () => {
   //State to store all the fetched cards from the database
   const [allCards, setAllCards] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const handleModal = () =>{
-    setOpenModal(!openModal);
+  const [modal, setModal] = useState(false);
+
+  const [filter, setFilter] = useState(null);
+  const toggleModal = (e) => {
+    
+    setModal(!modal);
+    }
+
+  const handleFilter = (e) =>{
+    setFilter(e.target.value);
   }
+
   useEffect(() =>{
     const getAllCards = async () =>{
       try {
         await fetch('/api/all-travelcards')
         .then(res => res.json())
         .then(data =>{
-          console.log(data);
+          // console.log(data);
           setAllCards(data.data);
           setLoading(true);
         })
@@ -30,7 +39,7 @@ const TravelCardSummary = () => {
       }
     }
     getAllCards();
-  }, [])
+  }, [setFilter])
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -38,35 +47,52 @@ const TravelCardSummary = () => {
       className='header-title'>
       <h1 >My Travel Cards</h1>
     </div>
-    <label
+    {/* <label
       className='label-search'>Search cards
       <input
         className='input-search'></input>
-    </label>
+    </label> */}
     <label>Filter
-      <select>
+      <select
+        onChange={handleFilter}
+        className="select-dropdown">
         <option>-options-</option>
-        <option>Travel Date (newest - oldest)</option>
-        <option>Travel Date (oldest - newest)</option>
-        <option>A-Z</option>
-        <option>Date Added</option>      
+        <option value='dateNewFirst'>Travel Date (newest - oldest)</option>
+        <option value='dateOldFirst'>Travel Date (oldest - newest)</option>
+        <option value='alphaSort'>A-Z</option>
+        <option value='dateCreated'>Date Added</option>      
       </select>
     </label>
       <TravelCardDisplay>
-      <Modal openModal={openModal} setOpenModal={setOpenModal} />
+      <>
+    {/* <button className="btn-modal" onClick={toggleModal}>remove me, test button</button> */}
+    { modal &&
+    <ModalDiv>
+      <div className="modal"></div>
+        <div className="overlay"
+          onClick={toggleModal}></div>
+        <div className="modal-content">
+          <p>This is a modal for individual travel cards</p>
+        </div>
+        <button className="close-modal"
+          onClick={toggleModal}> X </button>
+    </ModalDiv>
+    }
+  </>
     {
-      
       loading ? allCards.map((card, index) =>{
-      
       return (
         <>
+        
         <ul
           className="ul-travelcards">
           <li 
             className='li-travelcards'
             key={`Card# ${index}`}>
             <Button
-              onClick={handleModal}>
+              value={card}
+              onClick={toggleModal}
+              >
               <span className='span-title'>
               {card.data.destination}
               </span>
@@ -76,9 +102,7 @@ const TravelCardSummary = () => {
               </Button>
             </li>
         </ul>
-          <div>
-            
-          </div>
+        
         </>
       )
       })
@@ -89,7 +113,9 @@ const TravelCardSummary = () => {
     }
     </TravelCardDisplay>
       <button className='newcard-btn'
-        onClick={() => navigate('/travelcardcreate')}> New Travel Card </button>
+        onClick={() => navigate('/travelcardcreate')}>
+          <BiAddToQueue />
+        </button>
     </Wrapper>
   )
 }
@@ -114,17 +140,21 @@ const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-
-
+h1 {
+  margin: 10px;
+}
+.select-dropdown {
+  margin: 10px;
+}
 .header-title {
   
 }
 .newcard-btn {
+  
   display: flex;
   position: fixed;
-  
   margin-top: 77vh;
-  
+  margin-right: 77vw;
   
 }`
 /*
@@ -151,3 +181,50 @@ max-height: 80%;
   color: var(--color-font-color);
 
 }`
+
+/* MODAL CSS */
+
+
+const ModalDiv = styled.div`
+body.active-modal {
+    overflow-y: hidden;
+}
+.modal, .overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+.overlay {
+  background: rgba(49,49,49,0.8);
+}
+.modal-content {
+  position: absolute;
+  color: var(--color-font-color);
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: var(--color-main-opal);
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 250px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 7px;
+}
+.btn-modal {
+  padding: 10px 20px;
+  display: block;
+  margin: 100px auto 0;
+  font-size: 18px;
+}
+`

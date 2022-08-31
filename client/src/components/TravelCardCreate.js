@@ -33,12 +33,14 @@ const TravelCardCreate = () => {
 
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
+  const [dateForWeather, setDateForWeather]  = useState(null);
   const [formInput, setFormInput] = useState({
     destination: null,
     dateCreated: dateCreated, //date that the card was created - filter purposes
     dateTraveled: null, //will use the date that user is uploading as the default date for the trip, assuming they are creating the card while on the trip
     forecast: null,
     activity: 'None selected',
+    notes: null,
   })
   const [fileState, setFileState] = useState('');
   const [previewSource, setPreviewSource] = useState('');
@@ -90,6 +92,27 @@ const TravelCardCreate = () => {
     //   uploadTravelCard(previewSource);
     // }
   }
+  //this function will fetch the weather of the first day of the trip and display the average weather of the journey
+  useEffect(() => {
+    const showWeather = async (date, location) => {
+      try {
+        await fetch('/api/getWeatherHistory',
+        { method: 'GET', 
+          body: JSON.stringify({ location: 'hardcoded city'}),
+          headers: {
+            'Content-type' : 'application/json'
+          }
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+        })
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    // showWeather();
+  }, [])
   //function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async (encodedImage) =>{
     try {
@@ -107,24 +130,25 @@ const TravelCardCreate = () => {
 
   return (
     <Wrapper>
-      <h1>This page is a travel card creation page</h1>
-      <form onSubmit={handleSubmit}>
-        <input className='form-input'
-          type='file'
-          value={fileState}
-            onChange={handleChange}>
-        </input>
+      <h1>New Travel Card</h1>
+      <form 
+        className='form'
+        onSubmit={handleSubmit}>
+      <div
+        className='first-div'>
         <label
           className='label-destiantion'>Destination
           <input
             type='text'
             className='destination-input' 
-            placeholder='Enter a destination here'
+            placeholder='Enter a city name or postalcode'
             onChange={(e) => {
               setFormInput({...formInput, destination: e.target.value})
               }}
               ></input>
         </label>
+        </div>
+        <div className='second-div'>
         <label 
           className='label-date'>
           Date
@@ -142,18 +166,40 @@ const TravelCardCreate = () => {
               isClearable={true}
                 />
         </label>
-
-          <select onChange={(e) => {
+        </div>
+        <div className="select-drop">
+        <label>
+          Activity
+        </label>
+          <select 
+            className="select-dropdown"
+            onChange={(e) => {
               setFormInput({...formInput, activity: e.target.value})
               }}>
-            <option value='None selected'>-Activity-</option>
-            <option value='Hiking'>Hiking</option>
-            <option value='Hiking'>Hiking</option>
-            <option value='Hiking'>Hiking</option>
-            <option value='Hiking'>Hiking</option>
-
+            <option value='None selected'>-Select Activity-</option>
+            <option value='Hiking & Camp'>Hike & Camp</option>
+            <option value='Bike'>Bike</option>
+            <option value='Water'>Water</option>
+            <option value='Climb'>Climb</option>
+            <option value='Run & Fitness'>Run & Fitness</option>
           </select>
+        </div>
+        <input className='form-input'
+          type='file'
+          value={fileState}
+            onChange={handleChange}>
+        </input>
+        <div className="text-input">
+          <textarea
+            placeholder="Add notes here"
+            onChange={(e) => {
+              setFormInput({...formInput, notes: e.target.value})
+              }}
+          />
+        </div>
+      {/* Should be the last item on the page - Create Card button */}
         <button className='upload-btn' 
+          
           type='submit'>
           Create Card
         </button>
@@ -170,7 +216,51 @@ export default TravelCardCreate;
 const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
+justify-content: space-between;
+align-items: center;
 
+h1 {
+  margin: 10px;
+}
+
+.first-div .second-div {
+  margin: 10px;
+}
+
+.destination-input {
+  margin-left: 20px;
+  max-width: 250px;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  margin: 10px;
+  
+}
+.date-div {
+  display: flex;
+  justify-content: flex-end;
+}
+.select-drop .select-dropdown {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 150px;
+  max-width: 300px;
+}
+.date-div {
+  display: flex;
+  flex-direction: row;
+}
+.date-picker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
 .preview-img {
   height: auto;
   width: 100vw;

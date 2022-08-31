@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
+import LoginButton from "../auth0provider/login";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Weather from "./Weather";
@@ -32,6 +33,9 @@ const Homepage = () =>{
     <>
       <h1>Welcome to Swivy!</h1>
       <p>🌍 Please login using google 🌍 </p>
+      <div className="login-btn">
+        <LoginButton />
+      </div>
     </>
     { isAuthenticated &&
     <>
@@ -45,7 +49,13 @@ const Homepage = () =>{
 export default Homepage;
 
 const Wrapper = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
 
+h1 {
+  margin: 10px;
+}
 button {
   padding: 10px;
 }
