@@ -5,7 +5,7 @@ import GlobalStyles from "../components/GlobalStyles";
 
 //This function build the profile page once a user logs in. Details like account icon, profile name and email are displayed onto the profile page
 const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   //Will conditionally render based on Auth0 state
   
   console.log(user);
@@ -54,7 +54,7 @@ align-items: center;
   border-radius: 50px;
   max-height: 100px;
   max-width: 100px;
-  margin: 20px;
+  margin: 80px 20px 20px 20px;
 }
 .no-user {
   margin: 300px 10px;

@@ -44,7 +44,7 @@ const App = () =>{
       !isAuthenticated ?
     <Wrapper>
       <GlobalStyles />
-      <NavigationBar />
+      <span className='navbar'><NavigationBar /></span>
       <Routes>
         <Route 
           exact path="/" 
@@ -59,7 +59,7 @@ const App = () =>{
     :
     <>
     <GlobalStyles />
-      <NavigationBar />
+    <span className='navbar'><NavigationBar /></span>
       <Routes>
         <Route
         //Once logged in (and authenticated becomes true, the homepage will navigate to the travel card page)
@@ -75,7 +75,7 @@ const App = () =>{
           element={ <TravelCardCreate /> }>  
         </Route>
       </Routes>
-      <Footer />
+      <span className='footer-span'><Footer /></span>
     </>
     }
     </BrowserRouter>
@@ -87,6 +87,18 @@ export default App;
 
 const Wrapper = styled.div`
 background-color: #A3C4BC;
+.navbar {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.footer-span {
+  overflow: auto;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 `
 const LoadingCircle = styled.div`
 margin-top: 20vh;

@@ -1,9 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
+import { GiMountaintop, GiFeather} from "react-icons/gi"
 
 //A function that renders the navigation bar, displaying the name of the app and storing the log in / log out buttons. Also has links to Home and Profile - TEMP 
 const NavigationBar = () => {
+  let navigate = useNavigate();
   return (
     <Wrapper>
     <GlobalStyles />
@@ -12,12 +14,27 @@ const NavigationBar = () => {
       }
       {/* <LogoutButton /> */ //Moved to Footer
       }   
-      <NavLink to="/">
+      <div>
+      <button 
+        className="home-btn"
+        onClick={() => navigate('/')}>
+          <GiMountaintop />
+          <span className="span-text">Home</span>
+      </button>
+      {/* <NavLink to="/">
+        <GiMountaintop />
         Home
-      </NavLink>
-      <NavLink to="/profile"> 
+      </NavLink> */}
+      </div>
+      <button
+        className="profile-btn"
+        onClick={() => navigate('/profile')}>
+        <GiFeather />
+        <span className="span-text">Profile</span>
+      </button>
+      {/* <NavLink to="/profile"> 
         Profile
-      </NavLink>
+      </NavLink> */}
     </Wrapper>
   )
 }
@@ -31,5 +48,14 @@ background-color: #071013;
 padding: 10px;
 max-height: var(--max-height);
 
-
-`
+.span-text {
+  margin-left: 5px;
+}
+.home-btn {
+  color: white;
+  width: 80px;
+}
+.profile-btn {
+  color: white;
+  width: 80px;
+}`

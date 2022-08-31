@@ -54,9 +54,10 @@ flex-direction: column;
 align-items: center;
 
 h1 {
-  margin: 10px;
+  margin: 80px 80px 0 80px;
 }
 button {
   padding: 10px;
+  
 }
 `

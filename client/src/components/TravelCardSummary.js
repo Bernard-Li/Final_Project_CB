@@ -10,16 +10,35 @@ import { BiAddToQueue } from "react-icons/bi";
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
 const TravelCardSummary = () => {
   const navigate = useNavigate();
+  const moment = require('moment');
   //State to store all the fetched cards from the database
   const [allCards, setAllCards] = useState(null);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
+  const [currentCard, setCurrentCard] = useState('no selection');
   //State to store what type of filter has been selected, based on the dropdown option values : none - by default is categorized based on date created, dateNewFirst, dateOldFirst, alphaSort 
   const [filter, setFilter] = useState('none');
-  const toggleModal = (e) => {
-    
+
+  const toggleModal = (e, value) => {
+    setCurrentCard(value);
     setModal(!modal);
+  }
+
+  //calculates the number of days that have elapsed on the trip. Function is called when the modal is toggled to true
+  const tripDuration = () => {
+    const start = new Date(currentCard.data.date[0][0]);
+    const end = new Date(currentCard.data.date[0][1]);
+    const diffTime = end.getTime() - start.getTime();
+    const numOfDays = diffTime / (1000*3600*24);
+    //Will return the number of days if the divison !== 0. 0 Means the it was a one day trip (same start and end date), which has no overnight. 
+    if(numOfDays){
+      return `${numOfDays} days`;
     }
+    else {
+      return 'Single day trip';
+    }
+  }
+
 
   const handleFilter = (e) =>{
     setFilter(e.target.value); //back end receiving the string filter and will sort the data based on what is received
@@ -40,7 +59,8 @@ const TravelCardSummary = () => {
       }
     }
     getAllCards();
-  }, [filter])
+    setLoading(false);
+  }, [filter]); //important dependency, will re-render the list, showing a loading animation before displaying the filtered data
   
   return (
     <Wrapper>
@@ -53,7 +73,8 @@ const TravelCardSummary = () => {
       <input
         className='input-search'></input>
     </label> */}
-    <label>Filter
+    <div className="filter-div">
+    <label className='filter-label'>Filter
       <select
         onChange={handleFilter}
         className="select-dropdown">
@@ -64,6 +85,7 @@ const TravelCardSummary = () => {
         <option value='alphaSortBackwards'>Z-A</option>
       </select>
     </label>
+    </div>
       <TravelCardDisplay>
       <>
     {/* <button className="btn-modal" onClick={toggleModal}>remove me, test button</button> */}
@@ -73,7 +95,18 @@ const TravelCardSummary = () => {
         <div className="overlay"
           onClick={toggleModal}></div>
         <div className="modal-content">
-          <p>This is a modal for individual travel cards</p>
+          <h2>{currentCard.data.destination}</h2>
+          <p>Arrival date: {
+            currentCard.data.date[0][0]
+            }</p>
+          <p>Duration of trip: {tripDuration()}</p>
+          { currentCard.data.activity !== 'None selected' &&
+          <p>Activity: {currentCard.data.activity}</p>
+          }
+          {/* { currentCard.data.activity !== 'None selected' &&
+          <p>Activity: {currentCard.data.activity}</p>
+          } */}
+          
         </div>
         <button className="close-modal"
           onClick={toggleModal}> X </button>
@@ -90,8 +123,8 @@ const TravelCardSummary = () => {
             className='li-travelcards'
             key={`Card# ${index}`}>
             <Button
-              value={card}
-              onClick={toggleModal}
+              
+              onClick={(e) => toggleModal(e, card)}
               >
               <span className='span-title'>
               {card.data.destination}
@@ -113,7 +146,7 @@ const TravelCardSummary = () => {
     </TravelCardDisplay>
       <button className='newcard-btn'
         onClick={() => navigate('/travelcardcreate')}>
-          <BiAddToQueue />
+          <span>+</span>
         </button>
     </Wrapper>
   )
@@ -140,7 +173,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 h1 {
-  margin: 10px;
+  margin: 80px 80px 0 80px;
 }
 .select-dropdown {
   margin: 10px;
@@ -152,8 +185,15 @@ h1 {
   
   display: flex;
   position: fixed;
-  margin-top: 77vh;
-  margin-right: 77vw;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  margin-top: 145%;
+  margin-right: 80%;
+  color: white;
+  font-size: 30px;
   
 }`
 /*
@@ -170,8 +210,9 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 padding: 10px;
+margin-bottom: 50px;
 
-border: 2px solid black;
+/* border: 2px solid black; */
 max-height: 80%;
 
 .ul-travelcards .li-travelcards{
@@ -179,7 +220,16 @@ max-height: 80%;
   margin: 5px;
   color: var(--color-font-color);
 
-}`
+}
+
+.filter-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+`
 
 /* MODAL CSS */
 
@@ -219,6 +269,7 @@ body.active-modal {
   top: 10px;
   right: 10px;
   padding: 5px 7px;
+  color: white;
 }
 .btn-modal {
   padding: 10px 20px;

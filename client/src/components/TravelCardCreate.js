@@ -111,27 +111,6 @@ const TravelCardCreate = () => {
       showWeather(dateRange[0], 'Montreal');
     }
   }, [dateRange])
-  // //this function will fetch the weather of the first day of the trip and display the average weather of the journey
-  // useEffect(() => {
-  //   const showWeather = async (date, location) => {
-  //     try {
-  //       await fetch(`/api/getWeatherHistory`,
-  //       { method: 'GET', 
-  //         body: JSON.stringify({ location: 'hardcoded city'}),
-  //         headers: {
-  //           'Content-type' : 'application/json'
-  //         }
-  //       })
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         console.log(data);
-  //       })
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   }
-  //   // showWeather();
-  // }, [])
   //function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async (encodedImage) =>{
     try {
@@ -213,13 +192,16 @@ const TravelCardCreate = () => {
           value={fileState}
             onChange={handleChange}>
         </input>
-        <div className="text-input">
+        <div className="text-input-div">
+          <label className="text-area-label">Notes
           <textarea
+            className="text-area"
             placeholder="Add notes here"
             onChange={(e) => {
               setFormInput({...formInput, notes: e.target.value})
               }}
           />
+          </label>
         </div>
       {/* Should be the last item on the page - Create Card button */}
         <button className='upload-btn' 
@@ -244,7 +226,7 @@ justify-content: space-between;
 align-items: center;
 
 h1 {
-  margin: 10px;
+  margin: 80px 80px 0 80px;
 }
 
 .first-div .second-div {

@@ -21,5 +21,31 @@
         //     })
             
         //   })
+
+
+
+/* GET METHODS cannot have body's */
+//          ^^^^^^^^^^^^^^^^^^^
+         // //this function will fetch the weather of the first day of the trip and display the average weather of the journey
+  // useEffect(() => {
+  //   const showWeather = async (date, location) => {
+  //     try {
+  //       await fetch(`/api/getWeatherHistory`,
+  //       { method: 'GET', 
+  //         body: JSON.stringify({ location: 'hardcoded city'}),
+  //         headers: {
+  //           'Content-type' : 'application/json'
+  //         }
+  //       })
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         console.log(data);
+  //       })
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   }
+  //   // showWeather();
+  // }, [])
           
           
