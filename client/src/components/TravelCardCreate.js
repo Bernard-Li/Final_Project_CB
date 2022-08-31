@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
-import { useContext } from "react";
-import { UserContext } from "./userContext";
 //Import from an NPM packagee called react-datepicker @https://www.npmjs.com/package/react-datepicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -33,7 +31,7 @@ const TravelCardCreate = () => {
 
   const [dateRange, setDateRange] = useState([]);
   const [startDate, endDate] = dateRange;
-  const [dateForWeather, setDateForWeather]  = useState(null);
+  const [weatherSwitch, setWeatherSwitch] = useState(false);
   const [forecastInfo, setForecastInfo] = useState('');
   const [formInput, setFormInput] = useState({
     destination: null,
@@ -53,7 +51,10 @@ const TravelCardCreate = () => {
     const userImage = e.target.files[0];
     previewFile(userImage);
     setFileState(e.target.value);
-    
+  }
+  //This function will handle the on/off true/false of the switch. Stores the capture in a state to determine whether or not the user wants to add the weather history to their travel card
+  const handleWeatherSwitch = (e) => {
+    console.log(e);
   }
   //function that accept the selected date range from the form and return the format: year-month-day
   const handleConversion = (date) => {
@@ -62,7 +63,6 @@ const TravelCardCreate = () => {
     })
     if(validateArray){
       const convertedArray = date.map((date) =>{
-        console.log(date);
         const d = new Date(date);
         const formatedDate = moment(d);
         const returnDate = formatedDate.format("YYYY-MM-DD");
@@ -85,13 +85,14 @@ const TravelCardCreate = () => {
   //**CHANGE THIS** \\
   const handleSubmit = (e) => {
     e.preventDefault();
-    uploadTravelCard(previewSource);
-    // if(!previewSource){
-    //   console.log('no image selected');
-    // }
-    // else {
-    //   uploadTravelCard(previewSource);
-    // }
+    // uploadTravelCard(previewSource);
+    if(!previewSource){
+      uploadTravelCard('no-media-selected');
+      
+    }
+    else {
+      uploadTravelCard(previewSource);
+    }
   }
   //this function will fetch the weather of the first day of the trip and display the average weather of the journey
   useEffect(() => {
@@ -108,21 +109,26 @@ const TravelCardCreate = () => {
       }
     }
     if(dateRange.length > 1){
-      showWeather(dateRange[0], 'Montreal');
+      showWeather(formInput.dateTraveled[0], formInput.destination);
     }
   }, [dateRange])
   //function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async (encodedImage) =>{
+    if(formInput.destination && formInput.dateTraveled){
     try {
-      await fetch('/api/upload-quicklog', {
-        method: 'POST',
-        body: JSON.stringify({ data: encodedImage, user: user, form: formInput}),
-        headers: {
-          'Content-type' : 'application/json'
-        }
-      })
-    } catch (error) {
-      console.log(error.message);
+        await fetch('/api/upload-quicklog', {
+          method: 'POST',
+          body: JSON.stringify({ data: encodedImage, user: user, form: formInput}),
+          headers: {
+            'Content-type' : 'application/json'
+          }
+        })
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    else {
+      window.alert('Missing required information : Destination or Dates');
     }
   }
 
@@ -135,11 +141,12 @@ const TravelCardCreate = () => {
       <div
         className='first-div'>
         <label
-          className='label-destiantion'>Destination
+          className='label-destiantion'>Destination*
           <input
             type='text'
             className='destination-input' 
             placeholder='Enter a city name or postalcode'
+            required='required'
             onChange={(e) => {
               setFormInput({...formInput, destination: e.target.value})
               }}
@@ -149,15 +156,15 @@ const TravelCardCreate = () => {
         <div className='second-div'>
         <label 
           className='label-date'>
-          Date
+          Date*
             <DatePicker
               className='date-picker' 
               closeOnScroll={true}
               selectsRange={true}
               startDate={startDate}
               endDate={endDate}
+              required='required'
               onChange={(update) => {
-                console.log('hello');
                 handleConversion(update);
                 setDateRange(update);
                   }
@@ -167,8 +174,11 @@ const TravelCardCreate = () => {
         </label>
         </div>
         <div className="weather-div">
-          <p>Placeholder for weather temp</p>
-          <p>{forecastInfo.avgtemp_c}</p>
+          <p>Forecast at trip start</p>
+          <p>Average Temp: {forecastInfo.avgtemp_c}C </p>
+          <p>Average humidity: {forecastInfo.avghumidity}%</p>
+          <p>Highest Temp: {forecastInfo.maxtemp_c}C</p>
+          <p>Lowest Temp: {forecastInfo.mintemp_c}C</p>
         </div>
         <div className="select-drop">
         <label>
@@ -224,6 +234,7 @@ display: flex;
 flex-direction: column;
 justify-content: space-between;
 align-items: center;
+margin-bottom: 50px;
 
 h1 {
   margin: 80px 80px 0 80px;

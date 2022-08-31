@@ -27,8 +27,8 @@ const getWeatherHistory = async (req, res) => {
     const history = await axios.get('http://api.weatherapi.com/v1/history.json', {
       params: {
         key: process.env.WEATHERAPI_KEY,
-        q: 'Montreal',
-        dt: '2021-09-20',
+        q: location,
+        dt: date,
       }
     })
     res.status(200).json({status : 200, date, location, data: history.data})
