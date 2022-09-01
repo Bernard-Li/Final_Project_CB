@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { useNavigate } from "react-router-dom";
+
 /* Main feature of the website: 
 The following function will allow the user to store pertinent 
 information about their trip, and send the form to the database.
@@ -23,7 +25,7 @@ const TravelCardCreate = () => {
   //useAuth0 to determine which user is logged in  
   //formInput is a state that will store the user selected date in the input form below
   //previewSource will store a base64 encoded version of the image the user uploads
-  
+  let navigate = useNavigate();
   const { user } = useAuth0();
   const dateCreated = new Date(); 
   //used to format date passed back by the datepicker into more legible data
@@ -75,10 +77,14 @@ const TravelCardCreate = () => {
   //Convert the choosen file into a string -base64 encoding and store the encoded image into the state previewSource
   const previewFile = (file) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () =>{
-        setPreviewSource(reader.result);
-        
+    //BUG, if clicked outside of the file explorer when choosing a file to upload, function will try to read null value of file, crashing the website
+    //truthy check prevents readAsDataURL from running until a file is uploaded.
+    if(file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () =>{
+          setPreviewSource(reader.result);
+          
+      }
     }
   }
   //Function that will handle the final submission of the image, form submission. If no image is selected to be preview, do not trigger the upload image function 
@@ -87,11 +93,11 @@ const TravelCardCreate = () => {
     e.preventDefault();
     // uploadTravelCard(previewSource);
     if(!previewSource){
-      uploadTravelCard('no-media-selected');
-      
+      uploadTravelCard('no-media-selected'); 
     }
     else {
       uploadTravelCard(previewSource);
+      
     }
   }
   //this function will fetch the weather of the first day of the trip and display the average weather of the journey
@@ -108,7 +114,7 @@ const TravelCardCreate = () => {
         console.log(error.message);
       }
     }
-    if(dateRange.length > 1){
+    if(dateRange.length > 2) {
       showWeather(formInput.dateTraveled[0], formInput.destination);
     }
   }, [dateRange])
@@ -123,6 +129,7 @@ const TravelCardCreate = () => {
             'Content-type' : 'application/json'
           }
         })
+        navigate('/');
       } catch (error) {
         console.log(error.message);
       }
