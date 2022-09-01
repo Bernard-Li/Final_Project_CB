@@ -10,6 +10,7 @@ import Weather from "./Weather";
 //This function will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
 const TravelCardSummary = () => {
+  const { user } = useAuth0();
   const navigate = useNavigate();
   const moment = require('moment');
   //State to store all the fetched cards from the database
@@ -48,7 +49,7 @@ const TravelCardSummary = () => {
   useEffect(() =>{
     const getAllCards = async () =>{
       try {
-        await fetch(`/api/all-travelcards/${filter}`)
+        await fetch(`/api/all-travelcards/?filter=${filter}&user=${user.email}`)
         .then(res => res.json())
         .then(data =>{
           // console.log(data);
@@ -101,20 +102,23 @@ const TravelCardSummary = () => {
           onClick={toggleModal}></div>
         <div className="modal-content">
           <h2>{currentCard.data.destination}</h2>
+          { currentCard.data.activity !== 'None selected' &&
+          <p>Activity: {currentCard.data.activity}</p>
+          }
           <p>Arrival date: {
             currentCard.data.date[0][0]
             }</p>
           <p>Duration of trip: {tripDuration()}</p>
-          { currentCard.data.activity !== 'None selected' &&
-          <p>Activity: {currentCard.data.activity}</p>
-          }
           { currentCard.data.notes &&
           <p>Notes: {currentCard.data.notes}</p>
           }
           {/* { currentCard.data.activity !== 'None selected' &&
           <p>Activity: {currentCard.data.activity}</p>
           } */}
-          
+          <button
+            className="fullcard-btn"
+            onClick={() => navigate('/viewtravelcard')}
+            >View full card</button>
         </div>
         <button className="close-modal"
           onClick={toggleModal}> X </button>
@@ -138,7 +142,9 @@ const TravelCardSummary = () => {
               {card.data.destination}
               </span>
               <span className='span-dates'>
-              {card.data.date[0][0] + ' to ' + card.data.date[0][1]}
+              {card.data.date[0][0] === card.data.date[0][1] ?
+                card.data.date[0][0] :
+                card.data.date[0][0] + ' to ' + card.data.date[0][1]}
               </span>
               </Button>
             </li>
@@ -172,7 +178,8 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-max-width: 75vw;
+max-width: 65vw;
+min-width: 45vw;
 
 .span-title {
   padding: 5px;
@@ -241,12 +248,20 @@ max-height: 80%;
   align-items: center;
 }
 
+p {
+  margin: 2px;
+}
 `
 
 /* MODAL CSS */
 
 
 const ModalDiv = styled.div`
+
+.fullcard-btn {
+  color: white;
+  margin: 10px;
+}
 body.active-modal {
     overflow-y: hidden;
 }
@@ -264,6 +279,7 @@ body.active-modal {
 }
 .modal-content {
   position: absolute;
+    
   color: var(--color-font-color);
   top: 40%;
   left: 50%;

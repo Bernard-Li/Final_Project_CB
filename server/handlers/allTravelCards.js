@@ -10,13 +10,15 @@ const options = {
 //Function that will fetch all the travelCards from the databse. the filter param will dictate how the information will be organized
 //By default, the cards will be rendered based on first created - last created
 const allTravelCards = async (req, res) => {
-  const { filter } = req.params;
+  const filter = req.query.filter;
+  const email = req.query.user;
+  console.log(email);
   const client = new MongoClient(MONGO_URI, options);
   await client.connect();
   try {
     
     const db = client.db('SwivyUsers');
-    const travelCardArray = await db.collection('travelCard').find().toArray();
+    const travelCardArray = await db.collection('travelCard').find({ user_id: email}).toArray();
 
     //SWITCH to capture the filter param from the front end. Based on the drop down that the user selects as a filter
     switch (filter) {
