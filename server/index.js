@@ -3,7 +3,7 @@ const morgan = require('morgan');
 
 const { createUser } = require("./handlers/createuser");
 const { getCurrentWeather, getWeatherHistory } = require("./handlers/weatherapi");
-const { quickLogUpload } = require("./handlers/quickLogUpload");
+const { travelCardUpload } = require("./handlers/travelCardUpload");
 const { allTravelCards } = require("./handlers/allTravelCards");
 
 const app = express();
@@ -24,7 +24,7 @@ app.get('/api/currentweather', getCurrentWeather);
 app.get('/api/getWeatherHistory/:date/:location', getWeatherHistory);
 app.get('/api/all-travelcards/', allTravelCards);
 app.post('/api/create-user', createUser);
-app.post('/api/upload-quicklog', quickLogUpload);
+app.post('/api/upload-travelcard', travelCardUpload);
 
 const server = app.listen(PORT, () =>{
   console.info("🌍 Listening on port: " + server.address().port);

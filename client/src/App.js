@@ -27,12 +27,19 @@ const App = () =>{
       <GlobalStyles />
       <BrowserRouter>
         <NavigationBar />
+        {/* <Routes>
+        <Route
+          path="/viewtravelcard"
+          element={ <TravelCard /> }>  
+        </Route>
+        </Routes> */}
       </BrowserRouter>
         <LoadingCircle>
           <Stack sx={{color: 'grey.500'}}>
           <CircularProgress color="inherit" />
           </Stack>
         </LoadingCircle>
+        
       <Footer />
     </Wrapper>
     )
@@ -91,7 +98,7 @@ const App = () =>{
 export default App;
 
 const Wrapper = styled.div`
-background-color: #A3C4BC;
+background-color: var(--color-background);
 .navbar {
   overflow: hidden;
   position: fixed;

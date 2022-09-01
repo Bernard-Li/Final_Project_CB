@@ -13,7 +13,7 @@ const options = {
 
 
 //Handler that will upload the image to cloudinary and store the image URL into the appropriate user quickLog Card
-const quickLogUpload = async (req, res) =>{
+const travelCardUpload = async (req, res) =>{
   const client = new MongoClient(MONGO_URI, options);
 
   try {
@@ -27,9 +27,9 @@ const quickLogUpload = async (req, res) =>{
     const formData = await req.body.form;
     //The following will retrieve the encoded image from the data key, and upload the file to the designated folder in cloudinary
     const fileStr = await req.body.data;
-    // const uploadedReponse = await cloudinary.uploader.upload(fileStr, {
-    //   upload_preset: 'swivy_uploads'
-    // })
+    const uploadedReponse = await cloudinary.uploader.upload(fileStr, {
+      upload_preset: 'swivy_uploads'
+    })
     //**REMOVE** Verification console.logs 
     // console.log(uploadedReponse);
     console.log(currentUser);
@@ -40,7 +40,7 @@ const quickLogUpload = async (req, res) =>{
     db.collection('travelCard').insertOne({
       _id: uniqueId, 
       user_id: currentUser, //email of the current user through request
-      media: 'uploadedReponse.url', //public url of the uploaded photo through request
+      media: uploadedReponse.url, //public url of the uploaded photo through request
       data: {
         destination: formData.destination,
         created: formData.dateCreated,
@@ -59,4 +59,4 @@ const quickLogUpload = async (req, res) =>{
   }
 }
 
-module.exports = { quickLogUpload };
+module.exports = { travelCardUpload };

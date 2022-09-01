@@ -1,16 +1,11 @@
+//NOT USED IN FINAL MVP PRODUCTION
+
 import { createContext, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-
 export const UserContext = createContext(null);
-
 export const UserProvider = ({ children }) => {  
   const { user, isAuthenticated } = useAuth0();
-  const [currentUser, setCurrentUser] = useState("");
-
-  // if(isAuthenticated){
-  //   setCurrentUser(user);
-  // }
-
+  const [currentUser, setCurrentUser] = useState(false);
   return (
     <UserContext.Provider
       value={{

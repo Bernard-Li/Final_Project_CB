@@ -7,6 +7,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { BiAddToQueue } from "react-icons/bi";
 import Weather from "./Weather";
 
+import LoginPage from "./LoginPage";
+
 //This function will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
 const TravelCardSummary = () => {
@@ -68,6 +70,7 @@ const TravelCardSummary = () => {
     <>
     <Wrapper>
     <GlobalStyles />
+      <LoginPage /> 
     <div
       className='header-title'>
       <h1 >My Travel Cards</h1>
@@ -117,7 +120,7 @@ const TravelCardSummary = () => {
           } */}
           <button
             className="fullcard-btn"
-            onClick={() => navigate('/viewtravelcard')}
+            onClick={() => navigate('/viewtravelcard', {state: {travelCard: currentCard}})} 
             >View full card</button>
         </div>
         <button className="close-modal"
@@ -230,15 +233,13 @@ justify-content: center;
 align-items: center;
 padding: 10px;
 margin-bottom: 112px;
-
-border: 2px solid black;
+/* border: 2px solid black; */
 max-height: 80%;
 
 .ul-travelcards .li-travelcards{
   list-style-type: none;
   margin: 5px;
   color: var(--color-font-color);
-
 }
 
 .filter-div {
@@ -252,10 +253,7 @@ p {
   margin: 2px;
 }
 `
-
 /* MODAL CSS */
-
-
 const ModalDiv = styled.div`
 
 .fullcard-btn {
@@ -285,13 +283,12 @@ body.active-modal {
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.4;
-  background: var(--color-main-opal);
+  background: var(--color-main-background);
   padding: 14px 28px;
   border-radius: 3px;
   max-width: 600px;
   min-width: 250px;
 }
-
 .close-modal {
   position: absolute;
   top: 10px;
@@ -306,7 +303,6 @@ body.active-modal {
   font-size: 18px;
 }
 `
-
 const Footer = styled.div`
 display: flex;
 position: fixed;

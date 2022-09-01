@@ -7,6 +7,7 @@ import styled from "styled-components";
 const Homepage = () =>{
   //Taking the required values from Auth0, primarily useful to show the object 'user' which contains all the pertinent information 
   const { user, isAuthenticated } = useAuth0();
+  console.log(`this is user : ${user}`);
   //Hardcoded user to allow the rest of the code to work - Commented out Aug 29 2022 -13h22. Auth0 Google authenticator was non-responsive today
   // const user = {
   //   name: 'Hardcoded User',
@@ -16,29 +17,32 @@ const Homepage = () =>{
   //POST method used to send the logged in user data to the back-end. Verification of new vs existing user will be dealth with in handlers of server.
   //email will the be used to check if they are already stored in the database.
   useEffect(() => {
-    
+    if(user){
       fetch(`/api/create-user`,{
         method: "POST",
         body: JSON.stringify(user),
       headers: {
         "Content-Type" : "application/json",
       }
-    })
-  }, [isAuthenticated])
+    })  
+  }
+}, [isAuthenticated])
 
   return (
     <Wrapper>
+    { !user &&
     <>
       <h1>Welcome to Swivy!</h1>
       <p>🌍 Please login using google 🌍 </p>
       <div className="login-btn">
         <LoginButton />
       </div>
+
     </>
+    }
     { isAuthenticated &&
     <>
-      <h1>Welcome, {user.name}!</h1>
-      <p>🌍 Thank you for using Swivy! 🌍 </p>
+      {/* Calls this entire component 'LoginPage' to make the post request with valid user info */}
     </>
     }
     </Wrapper>

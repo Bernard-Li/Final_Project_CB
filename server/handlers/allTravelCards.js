@@ -66,7 +66,8 @@ const allTravelCards = async (req, res) => {
         return res.status(200).json({status: 200, data: travelCardArray})
       //the default case will be the cards by creation date, which is how they are going to be stored into the mongoDB on creation
       default:
-        res.status(200).json({status: 200, data: travelCardArray})
+        const mostRecentFirst = travelCardArray.reverse();
+        res.status(200).json({status: 200, data: mostRecentFirst})
     }
     
     // const filterByDestination = travelCardArray.map((card, index) =>{

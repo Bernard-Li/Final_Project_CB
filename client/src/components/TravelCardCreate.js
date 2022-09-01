@@ -103,12 +103,15 @@ const TravelCardCreate = () => {
   //this function will fetch the weather of the first day of the trip and display the average weather of the journey
   useEffect(() => {
     const showWeather = async (date, location) => {
+      
       try {
         await fetch(`/api/getWeatherHistory/${date}/${location}`)      //convert to query
         .then(res => res.json())
         .then(data => {
-          console.log(data.data.forecast); //is the object that contains: maxtemp_c, avtemp_c, object: condition: { text, icon}, avghumidity, mintemp_c, maxwind_kph
+          console.log(data.data.forecast.forecastday[0].day); //is the object that contains: maxtemp_c, avtemp_c, object: condition: { text, icon}, avghumidity, mintemp_c, maxwind_kph
           setForecastInfo(data.data.forecast.forecastday[0].day);
+          setFormInput({...formInput, forecast: forecastInfo})
+          
         })
       } catch (error) {
         console.log(error.message);
@@ -122,7 +125,7 @@ const TravelCardCreate = () => {
   const uploadTravelCard = async (encodedImage) =>{
     if(formInput.destination && formInput.dateTraveled){
     try {
-        await fetch('/api/upload-quicklog', {
+        await fetch('/api/upload-travelcard', {
           method: 'POST',
           body: JSON.stringify({ data: encodedImage, user: user, form: formInput}),
           headers: {
@@ -182,11 +185,17 @@ const TravelCardCreate = () => {
         </label>
         </div>
         <div className="weather-div">
+        { forecastInfo ?
+        <>
           <p>Forecast at trip start</p>
           <p>Average Temp: {forecastInfo.avgtemp_c}C </p>
           <p>Average humidity: {forecastInfo.avghumidity}%</p>
           <p>Highest Temp: {forecastInfo.maxtemp_c}C</p>
           <p>Lowest Temp: {forecastInfo.mintemp_c}C</p>
+        </>
+          :
+          <p>Use a valid date on or before today!</p>
+        }
         </div>
         <div className="select-drop">
         <label>
@@ -199,10 +208,12 @@ const TravelCardCreate = () => {
               }}>
             <option value='None selected'>-Select Activity-</option>
             <option value='Hiking & Camp'>Hike & Camp</option>
+            <option value='Run & Fitness'>Run & Fitness</option>
+            <option value='Climb'>Climb</option>
             <option value='Bike'>Bike</option>
             <option value='Water'>Water</option>
-            <option value='Climb'>Climb</option>
-            <option value='Run & Fitness'>Run & Fitness</option>
+            <option value='Ski or Snowboard'>Ski or Snowboard</option>
+            
           </select>
         </div>
         <input className='form-input'
@@ -223,7 +234,6 @@ const TravelCardCreate = () => {
         </div>
       {/* Should be the last item on the page - Create Card button */}
         <button className='upload-btn' 
-          
           type='submit'>
           Create Card
         </button>
@@ -286,8 +296,14 @@ h1 {
   align-items: center;
   margin-left: 20px;
 }
+.upload-btn {
+  color: white;
+  width: 80px;
+}
 .preview-img {
   height: auto;
   width: 100vw;
 }
+
+
 `
