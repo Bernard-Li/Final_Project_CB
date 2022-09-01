@@ -47,6 +47,7 @@ const quickLogUpload = async (req, res) =>{
         date: [formData.dateTraveled],
         forecast: formData.forecast,
         activity: formData.activity,
+        notes: formData.notes,
       }
     })
     
