@@ -16,7 +16,6 @@ const allTravelCards = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   await client.connect();
   try {
-    
     const db = client.db('SwivyUsers');
     const travelCardArray = await db.collection('travelCard').find({ user_id: email}).toArray();
 
@@ -69,21 +68,10 @@ const allTravelCards = async (req, res) => {
         const mostRecentFirst = travelCardArray.reverse();
         res.status(200).json({status: 200, data: mostRecentFirst})
     }
-    
-    // const filterByDestination = travelCardArray.map((card, index) =>{
-    //   return card.data.destination //string that has the city name
-    // })
-    // console.log(filterByDestination.sort());
-    
-    
-    
-    // res.status(200).json({status: 200, data: travelCardArray});
-    //quicker to use mongo query .find vs filter in the backend
-  } catch (error) {
+  } 
+  catch (error) {
       console.log(error.message);
       res.status(400).json({ status: 'error', error: error.message})
   }
-
-
 }
 module.exports = { allTravelCards };

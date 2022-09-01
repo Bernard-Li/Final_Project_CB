@@ -11,7 +11,6 @@ const options = {
   useUnifiedTopology: true,
 }
 
-
 //Handler that will upload the image to cloudinary and store the image URL into the appropriate user quickLog Card
 const travelCardUpload = async (req, res) =>{
   const client = new MongoClient(MONGO_URI, options);
@@ -34,10 +33,6 @@ const travelCardUpload = async (req, res) =>{
         upload_preset: 'swivy_uploads'
       })
     }
-      //**REMOVE** Verification console.logs 
-      // console.log(uploadedReponse);
-      // console.log(currentUser);
-      
     await client.connect();
     const db = client.db('SwivyUsers');
     const uniqueId = uuidv4();

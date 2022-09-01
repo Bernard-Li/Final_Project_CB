@@ -1,6 +1,6 @@
 const axios = require('axios');
 require("dotenv").config();
-
+//API handler that is tied to Weather.js, currently not in use. 
 const getCurrentWeather = async (req, res) => {
   //using (?) the location parameter to receive a specific selection from the user on the front end
   try {
@@ -17,12 +17,9 @@ const getCurrentWeather = async (req, res) => {
     res.status(400).json({status: "error", error: error.message})
   }
 }
-//function that will fetch the weather history of a selected date, based on location. Will return the 24 hour weather
+//Function that will fetch the weather history of a selected date, based on location. Will return the 24 hour weather
 const getWeatherHistory = async (req, res) => {
   const { date, location } = req.params;
-  // console.log(date);
-  // console.log(location);
-
   try {
     const history = await axios.get('http://api.weatherapi.com/v1/history.json', {
       params: {
@@ -37,9 +34,6 @@ const getWeatherHistory = async (req, res) => {
       res.status(400).json({status: "error", error: error.message})
   }
 }
-// getCurrentWeather().then(data => {
-//     return (data.data)
-//       })
 module.exports = { getCurrentWeather, getWeatherHistory };
 //IN THIS FORMAT, data.data returns an object in the following format: (e.g. for the q: "Montreal" param, specifically)
 /*
@@ -84,10 +78,7 @@ module.exports = { getCurrentWeather, getWeatherHistory };
     gust_kph: 15.8
   }
 }
-
-
 */
-
 // axios.get('http://api.weatherapi.com/v1',{
 //   key: WEATHERAPI_KEY,
 //   q: 'Montreal',

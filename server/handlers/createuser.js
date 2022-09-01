@@ -17,8 +17,6 @@ const createUser = async (req, res) =>{
   const client = new MongoClient(MONGO_URI, options);
   await client.connect();
   try {
-    // console.log('connected to client...');
-
     const db = client.db('SwivyUsers');
     const _id = uuidv4();
     const userBody = await req.body;
@@ -43,17 +41,12 @@ const createUser = async (req, res) =>{
     
     db.collection('userData').insertOne(data);
     res.status(200).json({status: 201, _id, status: "User created successfully", data: data});
-    // client.close();
   }
-  
 }
-catch (err){
-  console.log(err.message);
-  res.status(400).json({status: "error", error: err.message});
-  // client.close();
-}
-// client.close();
+  catch (err){
+    console.log(err.message);
+    res.status(400).json({status: "error", error: err.message});
+  }
 };
-
 
 module.exports = { createUser };
