@@ -12,7 +12,7 @@ const options = {
 const allTravelCards = async (req, res) => {
   const filter = req.query.filter;
   const email = req.query.user;
-  console.log(email);
+  // console.log(email);
   const client = new MongoClient(MONGO_URI, options);
   await client.connect();
   try {

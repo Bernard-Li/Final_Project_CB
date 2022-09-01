@@ -9,7 +9,7 @@ const NavigationBar = () => {
   return (
     <Wrapper>
     <GlobalStyles />
-      <h2>Swivy</h2>
+      <h2><a href='/travelcardcreate'>Swivy</a></h2>
       {/* <LoginButton /> */ //Moved to the center of the login page
       }
       {/* <LogoutButton /> */ //Moved to Footer
@@ -48,6 +48,9 @@ background-color: #071013;
 padding: 10px;
 max-height: var(--max-height);
 
+a {
+  text-decoration: none;
+}
 .span-text {
   margin-left: 5px;
 }

@@ -7,7 +7,7 @@ import styled from "styled-components";
 const Homepage = () =>{
   //Taking the required values from Auth0, primarily useful to show the object 'user' which contains all the pertinent information 
   const { user, isAuthenticated } = useAuth0();
-  console.log(`this is user : ${user}`);
+  // console.log(`this is user : ${user}`);
   //Hardcoded user to allow the rest of the code to work - Commented out Aug 29 2022 -13h22. Auth0 Google authenticator was non-responsive today
   // const user = {
   //   name: 'Hardcoded User',

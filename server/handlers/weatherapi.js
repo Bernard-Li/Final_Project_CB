@@ -20,8 +20,8 @@ const getCurrentWeather = async (req, res) => {
 //function that will fetch the weather history of a selected date, based on location. Will return the 24 hour weather
 const getWeatherHistory = async (req, res) => {
   const { date, location } = req.params;
-  console.log(date);
-  console.log(location);
+  // console.log(date);
+  // console.log(location);
 
   try {
     const history = await axios.get('http://api.weatherapi.com/v1/history.json', {

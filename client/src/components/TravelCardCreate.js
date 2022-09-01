@@ -44,19 +44,17 @@ const TravelCardCreate = () => {
     notes: null,
   })
   const [fileState, setFileState] = useState('');
-  const [previewSource, setPreviewSource] = useState('');
+  const [previewSource, setPreviewSource] = useState(null);
 
   //Function that will set the state file to the uploaded image, on change from the input field in the form below
   //userImage will an object from the files array that contains key-value pairs providing information of the upload that the user made
   //We want to: store the image into cloudinary, assign it a value to the backend as well ***** through what type of identifier?
   const handleChange = (e) => {
-    const userImage = e.target.files[0];
-    previewFile(userImage);
-    setFileState(e.target.value);
-  }
-  //This function will handle the on/off true/false of the switch. Stores the capture in a state to determine whether or not the user wants to add the weather history to their travel card
-  const handleWeatherSwitch = (e) => {
-    console.log(e);
+    
+      const userImage = e.target.files[0];
+      previewFile(userImage);
+      setFileState(e.target.value);
+    
   }
   //function that accept the selected date range from the form and return the format: year-month-day
   const handleConversion = (date) => {
@@ -81,9 +79,8 @@ const TravelCardCreate = () => {
     //truthy check prevents readAsDataURL from running until a file is uploaded.
     if(file) {
       reader.readAsDataURL(file);
-      reader.onloadend = () =>{
+      reader.onloadend = () => {
           setPreviewSource(reader.result);
-          
       }
     }
   }
@@ -91,30 +88,27 @@ const TravelCardCreate = () => {
   //**CHANGE THIS** \\
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     // uploadTravelCard(previewSource);
-    if(!previewSource){
-      uploadTravelCard('no-media-selected'); 
-    }
-    else {
-      uploadTravelCard(previewSource);
-      
-    }
+  uploadTravelCard();
+    
   }
   //this function will fetch the weather of the first day of the trip and display the average weather of the journey
   useEffect(() => {
     const showWeather = async (date, location) => {
-      
-      try {
-        await fetch(`/api/getWeatherHistory/${date}/${location}`)      //convert to query
-        .then(res => res.json())
-        .then(data => {
-          console.log(data.data.forecast.forecastday[0].day); //is the object that contains: maxtemp_c, avtemp_c, object: condition: { text, icon}, avghumidity, mintemp_c, maxwind_kph
-          setForecastInfo(data.data.forecast.forecastday[0].day);
-          setFormInput({...formInput, forecast: forecastInfo})
-          
-        })
-      } catch (error) {
-        console.log(error.message);
+      if(date && location){
+        try {
+          await fetch(`/api/getWeatherHistory/${date}/${location}`)      //convert to query
+          .then(res => res.json())
+          .then(data => {
+            // console.log(data.data.forecast.forecastday[0].day); //is the object that contains: maxtemp_c, avtemp_c, object: condition: { text, icon}, avghumidity, mintemp_c, maxwind_kph
+            setForecastInfo(data.data.forecast.forecastday[0].day);
+            setFormInput({...formInput, forecast: forecastInfo})
+            
+          })
+        } catch (error) {
+          console.log(error.message);
+        }
       }
     }
     if(dateRange.length > 1) {
@@ -122,19 +116,20 @@ const TravelCardCreate = () => {
     }
   }, [dateRange])
   //function that will take the encodedImage, formInput state and the user => POST to the backend
-  const uploadTravelCard = async (encodedImage) =>{
+  const uploadTravelCard = async () =>{
+    
     if(formInput.destination && formInput.dateTraveled){
     try {
         await fetch('/api/upload-travelcard', {
           method: 'POST',
-          body: JSON.stringify({ data: encodedImage, user: user, form: formInput}),
+          body: JSON.stringify({ data: previewSource, user: user, form: formInput}),
           headers: {
             'Content-type' : 'application/json'
           }
         })
         navigate('/');
       } catch (error) {
-        console.log(error.message);
+        console.log(`uploadTravelCard error = ${error}`);
       }
     }
     else {

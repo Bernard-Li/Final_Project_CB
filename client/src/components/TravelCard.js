@@ -35,7 +35,7 @@ const TravelCard = () => {
     <Container className="container-div">
       <h1>{userCard.data.destination}</h1>
       <div>{dateToText()}</div>
-      { userCard.media &&
+      { !(userCard.media === 'no-media-selected') &&
       <ImageContainer alt='personal user uploaded file' src={userCard.media}/>
       }
       

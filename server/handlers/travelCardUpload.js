@@ -25,22 +25,26 @@ const travelCardUpload = async (req, res) =>{
     const currentUser = await req.body.user.email;
 
     const formData = await req.body.form;
+    const fileCheck = await req.body.data;
     //The following will retrieve the encoded image from the data key, and upload the file to the designated folder in cloudinary
-    const fileStr = await req.body.data;
-    const uploadedReponse = await cloudinary.uploader.upload(fileStr, {
-      upload_preset: 'swivy_uploads'
-    })
-    //**REMOVE** Verification console.logs 
-    // console.log(uploadedReponse);
-    console.log(currentUser);
-  
+    let uploadedResponse = '';
+    if(fileCheck){
+      const fileStr = await req.body.data;
+      uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+        upload_preset: 'swivy_uploads'
+      })
+    }
+      //**REMOVE** Verification console.logs 
+      // console.log(uploadedReponse);
+      // console.log(currentUser);
+      
     await client.connect();
     const db = client.db('SwivyUsers');
     const uniqueId = uuidv4();
     db.collection('travelCard').insertOne({
       _id: uniqueId, 
       user_id: currentUser, //email of the current user through request
-      media: uploadedReponse.url, //public url of the uploaded photo through request
+      media: uploadedResponse.url || 'no-media-selected', //public url of the uploaded photo through request
       data: {
         destination: formData.destination,
         created: formData.dateCreated,
@@ -50,12 +54,13 @@ const travelCardUpload = async (req, res) =>{
         notes: formData.notes,
       }
     })
+  
     
     res.status(200).json({status: 'success', message: 'Image stored to user account successfully'});
 
   } catch (error) {
-      console.log(error.message);
-      res.status(400).json({ status: 'error', error: error.message})
+      console.log(error);
+      res.status(400).json({ status: 'error', error: error})
   }
 }
 
