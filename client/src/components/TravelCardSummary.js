@@ -152,13 +152,12 @@ const TravelCardSummary = () => {
       </>
     }
     </TravelCardDisplay>
-    </Wrapper>
-    {/* <Footer> */}
-      {/* <button className='newcard-btn'
+      <button className='newcard-btn'
         onClick={() => navigate('/travelcardcreate')}>
           <span>+</span>
-        </button> */}
-    {/* </Footer> */}
+        </button>
+    </Wrapper>
+    
     </>
   )
 }
@@ -183,7 +182,7 @@ const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-border: 2px solid blue;
+/* border: 2px solid blue; */
 h1 {
   margin: 80px 80px 0 80px;
 }
@@ -202,8 +201,8 @@ h1 {
   height: 50px;
   width: 50px;
   border-radius: 25px;
-  margin-top: 30%;
-  margin-left: 80%;
+  margin-top: 145%;
+  margin-right: 80%;
   /* margin-bottom: 50px */
   color: white;
   font-size: 30px;
@@ -292,13 +291,13 @@ body.active-modal {
 }
 `
 
-// const Footer = styled.div`
-// display: flex;
-// position: fixed;
+const Footer = styled.div`
+display: flex;
+position: fixed;
 
-// align-items: center;
-// justify-content: center;
-// border: 1px solid black;
-// width: 100%;
-// height: 55px;
-// bottom: 5;`
+align-items: center;
+justify-content: center;
+border: 1px solid black;
+width: 100%;
+height: 55px;
+bottom: 5;`
