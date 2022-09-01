@@ -1,9 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import LoginButton from "../auth0provider/login";
-import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import Weather from "./Weather";
 
 //This function will render the homepage based on which user is logged in
 const Homepage = () =>{
@@ -39,7 +37,8 @@ const Homepage = () =>{
     </>
     { isAuthenticated &&
     <>
-      <h2>Welcome, {user.name}!</h2>
+      <h1>Welcome, {user.name}!</h1>
+      <p>🌍 Thank you for using Swivy! 🌍 </p>
     </>
     }
     </Wrapper>
