@@ -37,8 +37,8 @@ const TravelCardCreate = () => {
   const [forecastInfo, setForecastInfo] = useState('');
   const [formInput, setFormInput] = useState({
     destination: null,
-    dateCreated: dateCreated, //date that the card was created - filter purposes
-    dateTraveled: null, //will use the date that user is uploading as the default date for the trip, assuming they are creating the card while on the trip
+    dateCreated: dateCreated, 
+    dateTraveled: dateCreated, //default date is the date of creation
     forecast: null,
     activity: 'None selected',
     notes: null,
@@ -114,7 +114,7 @@ const TravelCardCreate = () => {
         console.log(error.message);
       }
     }
-    if(dateRange.length > 2) {
+    if(dateRange.length > 1) {
       showWeather(formInput.dateTraveled[0], formInput.destination);
     }
   }, [dateRange])
@@ -168,6 +168,7 @@ const TravelCardCreate = () => {
               className='date-picker' 
               closeOnScroll={true}
               selectsRange={true}
+              setStartDate={dateCreated}
               startDate={startDate}
               endDate={endDate}
               required='required'

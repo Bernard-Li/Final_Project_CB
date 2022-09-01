@@ -31,8 +31,4 @@ background-color: #071013;
 height: var(--max-height);
 /* height: calc(100% - 612px); //same thing as var--maxheight, where the screen size is 667-55  */
 
-.logout-btn {
-  margin-right: 20px;
-  
-}
 `

@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import NavigationBar from "./components/NavigationBar";
 import TravelCardSummary from "./components/TravelCardSummary";
 import TravelCardCreate from "./components/TravelCardCreate";
+import TravelCard from "./components/TravelCard";
 import LoginPage from "./components/LoginPage";
 
 import Profile from "./auth0provider/Profile";
@@ -73,6 +74,10 @@ const App = () =>{
         <Route
           path="/travelcardcreate"
           element={ <TravelCardCreate /> }>  
+        </Route>
+        <Route
+          path="/viewtravelcard"
+          element={ <TravelCard /> }>  
         </Route>
       </Routes>
       <span className='footer-span'><Footer /></span>
