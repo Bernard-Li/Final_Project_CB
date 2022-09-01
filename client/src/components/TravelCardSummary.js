@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import { BiAddToQueue } from "react-icons/bi";
+import Weather from "./Weather";
 
 //This function will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
@@ -32,7 +33,7 @@ const TravelCardSummary = () => {
     const numOfDays = diffTime / (1000*3600*24);
     //Will return the number of days if the divison !== 0. 0 Means the it was a one day trip (same start and end date), which has no overnight. 
     if(numOfDays){
-      return `${numOfDays} days`;
+      return `${numOfDays+1} days`;
     }
     else {
       return 'Single day trip';
@@ -63,18 +64,21 @@ const TravelCardSummary = () => {
   }, [filter]); //important dependency, will re-render the list, showing a loading animation before displaying the filtered data
   
   return (
+    <>
     <Wrapper>
+    <GlobalStyles />
     <div
       className='header-title'>
       <h1 >My Travel Cards</h1>
     </div>
-    {/* <label
-      className='label-search'>Search cards
-      <input
-        className='input-search'></input>
-    </label> */}
+    
+    { (allCards == false) && //empty array is the initial state, as fetch runs on mount. [] is truthy and we want to render the div below when there are NO cards. Loose equality used
+      <div>
+        <h1>Click + to add a new card!</h1>
+      </div>
+    }
     <div className="filter-div">
-    <label className='filter-label'>Filter
+    <label className='filter-label'>Sort by
       <select
         onChange={handleFilter}
         className="select-dropdown">
@@ -85,6 +89,7 @@ const TravelCardSummary = () => {
         <option value='alphaSortBackwards'>Z-A</option>
       </select>
     </label>
+    
     </div>
       <TravelCardDisplay>
       <>
@@ -102,6 +107,9 @@ const TravelCardSummary = () => {
           <p>Duration of trip: {tripDuration()}</p>
           { currentCard.data.activity !== 'None selected' &&
           <p>Activity: {currentCard.data.activity}</p>
+          }
+          { currentCard.data.notes &&
+          <p>Notes: {currentCard.data.notes}</p>
           }
           {/* { currentCard.data.activity !== 'None selected' &&
           <p>Activity: {currentCard.data.activity}</p>
@@ -144,11 +152,14 @@ const TravelCardSummary = () => {
       </>
     }
     </TravelCardDisplay>
-      <button className='newcard-btn'
+    </Wrapper>
+    {/* <Footer> */}
+      {/* <button className='newcard-btn'
         onClick={() => navigate('/travelcardcreate')}>
           <span>+</span>
-        </button>
-    </Wrapper>
+        </button> */}
+    {/* </Footer> */}
+    </>
   )
 }
 
@@ -172,6 +183,7 @@ const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
+border: 2px solid blue;
 h1 {
   margin: 80px 80px 0 80px;
 }
@@ -190,8 +202,9 @@ h1 {
   height: 50px;
   width: 50px;
   border-radius: 25px;
-  margin-top: 145%;
-  margin-right: 80%;
+  margin-top: 30%;
+  margin-left: 80%;
+  /* margin-bottom: 50px */
   color: white;
   font-size: 30px;
   
@@ -210,9 +223,9 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 padding: 10px;
-margin-bottom: 50px;
+margin-bottom: 112px;
 
-/* border: 2px solid black; */
+border: 2px solid black;
 max-height: 80%;
 
 .ul-travelcards .li-travelcards{
@@ -278,3 +291,14 @@ body.active-modal {
   font-size: 18px;
 }
 `
+
+// const Footer = styled.div`
+// display: flex;
+// position: fixed;
+
+// align-items: center;
+// justify-content: center;
+// border: 1px solid black;
+// width: 100%;
+// height: 55px;
+// bottom: 5;`
