@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+/* INCOMPLETE COMPONENT 2022-09-01 */
+
 //This component will fetch the data received from the api call to Weather_API in the backend
 //The goal is to store a 'snapshot' of the current weather (for future reference) 
 //when the user creates a a quick log => travel card.

@@ -22,19 +22,23 @@ The folder is named "Swivy_uploads" and it stored under the upload_presets in MY
 */
 
 const TravelCardCreate = () => {
+
   //useAuth0 to determine which user is logged in  
   //formInput is a state that will store the user selected date in the input form below
   //previewSource will store a base64 encoded version of the image the user uploads
   let navigate = useNavigate();
   const { user } = useAuth0();
   const dateCreated = new Date(); 
+
   //used to format date passed back by the datepicker into more legible data
   const moment = require('moment');
 
+  //Declare states needed to store information from the fetch and datepicker
   const [dateRange, setDateRange] = useState([]);
   const [startDate, endDate] = dateRange;
-  const [weatherSwitch, setWeatherSwitch] = useState(false);
   const [forecastInfo, setForecastInfo] = useState('');
+
+  //Final state object that will be passed to the backend, and stored in mongoDB
   const [formInput, setFormInput] = useState({
     destination: null,
     dateCreated: dateCreated, 
@@ -50,13 +54,12 @@ const TravelCardCreate = () => {
   //userImage will an object from the files array that contains key-value pairs providing information of the upload that the user made
   //We want to: store the image into cloudinary, assign it a value to the backend as well ***** through what type of identifier?
   const handleChange = (e) => {
-    
-      const userImage = e.target.files[0];
-      previewFile(userImage);
-      setFileState(e.target.value);
-    
+    const userImage = e.target.files[0];
+    previewFile(userImage);
+    setFileState(e.target.value);
   }
-  //function that accept the selected date range from the form and return the format: year-month-day
+
+  //Function that accepts the selected date range from the form and return the format: year-month-day
   const handleConversion = (date) => {
     const validateArray = date.every((value) => { //this function checks the state of date, and once two dates are picked, it will run the conversion. 
       return value;
@@ -71,6 +74,7 @@ const TravelCardCreate = () => {
       setFormInput({...formInput, dateTraveled: convertedArray}); //stores the newly converted array of 2 'string' dates into the formInput, to be sent to the database.
     }
   }
+
   //Function that will allow the user to view the image preview before submitting it to cloudinary/their account travel card
   //Convert the choosen file into a string -base64 encoding and store the encoded image into the state previewSource
   const previewFile = (file) => {
@@ -84,16 +88,13 @@ const TravelCardCreate = () => {
       }
     }
   }
-  //Function that will handle the final submission of the image, form submission. If no image is selected to be preview, do not trigger the upload image function 
-  //**CHANGE THIS** \\
+
+  //Function that will handle the final submission of the form by calling the function containing the POST method (form onSubmit has handleSubmit)
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // uploadTravelCard(previewSource);
-  uploadTravelCard();
-    
+    uploadTravelCard();
   }
-  //this function will fetch the weather of the first day of the trip and display the average weather of the journey
+  //This function will fetch the weather of the first day of the trip and display the average weather of the journey
   useEffect(() => {
     const showWeather = async (date, location) => {
       if(date && location){
@@ -101,10 +102,8 @@ const TravelCardCreate = () => {
           await fetch(`/api/getWeatherHistory/${date}/${location}`)      //convert to query
           .then(res => res.json())
           .then(data => {
-            // console.log(data.data.forecast.forecastday[0].day); //is the object that contains: maxtemp_c, avtemp_c, object: condition: { text, icon}, avghumidity, mintemp_c, maxwind_kph
             setForecastInfo(data.data.forecast.forecastday[0].day);
             setFormInput({...formInput, forecast: forecastInfo})
-            
           })
         } catch (error) {
           console.log(error.message);
@@ -115,9 +114,9 @@ const TravelCardCreate = () => {
       showWeather(formInput.dateTraveled[0], formInput.destination);
     }
   }, [dateRange])
-  //function that will take the encodedImage, formInput state and the user => POST to the backend
+
+  //Function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async () =>{
-    
     if(formInput.destination && formInput.dateTraveled){
     try {
         await fetch('/api/upload-travelcard', {
@@ -248,28 +247,22 @@ flex-direction: column;
 justify-content: space-between;
 align-items: center;
 margin-bottom: 50px;
-
 h1 {
   margin: 80px 80px 0 80px;
 }
-
 .first-div .second-div {
   margin: 10px;
 }
-
 .destination-input {
   margin-left: 20px;
   max-width: 250px;
 }
-
 .form {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: flex-end;
-
   margin: 10px;
-  
 }
 .date-div {
   display: flex;
@@ -298,7 +291,4 @@ h1 {
 .preview-img {
   height: auto;
   width: 100vw;
-}
-
-
-`
+}`

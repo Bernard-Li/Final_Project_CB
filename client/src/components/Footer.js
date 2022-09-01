@@ -2,8 +2,7 @@ import styled from "styled-components"
 import GlobalStyles from "./GlobalStyles"
 import LogoutButton from "../auth0provider/logout";
 
-
-//Create a footer to assist the navigation of different pages - home, profile (insert others?)
+//Create a footer to assist the navigation of different pages - home & profile currently
 const Footer = () => {
   return (
     <Wrapper>
@@ -26,9 +25,6 @@ align-items: center;
 bottom: 0;
 left: 0;
 width: 100%;
-
 background-color: #071013;
 height: var(--max-height);
-/* height: calc(100% - 612px); //same thing as var--maxheight, where the screen size is 667-55  */
-
-`
+/* height: calc(100% - 612px); //same thing as var--maxheight, where the screen size is 667-55  */`

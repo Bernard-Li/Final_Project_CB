@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import NinaW_climbs from "../images/NinaW_climbs.jpg";
 
-//Global Styles file that will store colors and certain presets dimensions
+//Global Styles file that will store colors and certain presets dimensions, used as required
 export default createGlobalStyle`
 :root{
   --color-main-background: #659C8F;//#A3C4BC;
@@ -37,7 +37,7 @@ html, div, span, applet, object, iframe,
     //color: #042A2B;
     color: white;
   }
-
+//lots of different hues of brown brown-red tried
 button {
   border: none;
   border-radius: 5px;

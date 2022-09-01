@@ -3,28 +3,25 @@ import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 import { GiMountaintop, GiFeather} from "react-icons/gi"
 
-//A function that renders the navigation bar, displaying the name of the app and storing the log in / log out buttons. Also has links to Home and Profile - TEMP 
+//A component that renders the navigation bar, displaying the name of the app and storing the log in / log out buttons. Also has links to Home and Profile, Swivy clickable to /travelcardcreate route
 const NavigationBar = () => {
   let navigate = useNavigate();
   return (
     <Wrapper>
     <GlobalStyles />
-      <h2><a href='/travelcardcreate'>Swivy</a></h2>
-      {/* <LoginButton /> */ //Moved to the center of the login page
-      }
-      {/* <LogoutButton /> */ //Moved to Footer
-      }   
+      <h2>
+        <a href='/travelcardcreate'>Swivy</a>
+      </h2>
       <div>
-      <button 
-        className="home-btn"
-        onClick={() => navigate('/')}>
-          <GiMountaintop />
-          <span className="span-text">Home</span>
-      </button>
-      {/* <NavLink to="/">
-        <GiMountaintop />
-        Home
-      </NavLink> */}
+        <button 
+          className="home-btn"
+          onClick={() => navigate('/')}>
+            <GiMountaintop />
+          <span 
+            className="span-text">
+            Home
+          </span>
+        </button>
       </div>
       <button
         className="profile-btn"
@@ -32,9 +29,6 @@ const NavigationBar = () => {
         <GiFeather />
         <span className="span-text">Profile</span>
       </button>
-      {/* <NavLink to="/profile"> 
-        Profile
-      </NavLink> */}
     </Wrapper>
   )
 }
@@ -47,7 +41,6 @@ background-color: #071013;
 /* background-color: transparent; */
 padding: 10px;
 max-height: var(--max-height);
-
 a {
   text-decoration: none;
 }

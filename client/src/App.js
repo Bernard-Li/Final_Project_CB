@@ -27,12 +27,6 @@ const App = () =>{
       <GlobalStyles />
       <BrowserRouter>
         <NavigationBar />
-        {/* <Routes>
-        <Route
-          path="/viewtravelcard"
-          element={ <TravelCard /> }>  
-        </Route>
-        </Routes> */}
       </BrowserRouter>
         <LoadingCircle>
           <Stack sx={{color: 'grey.500'}}>
@@ -110,9 +104,7 @@ background-color: var(--color-background);
   position: fixed;
   bottom: 0;
   width: 100%;
-}
-`
+}`
 const LoadingCircle = styled.div`
 margin-top: 20vh;
-margin-left: 45vw;
-`
+margin-left: 45vw;`

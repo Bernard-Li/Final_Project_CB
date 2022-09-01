@@ -9,26 +9,29 @@ import Weather from "./Weather";
 
 import LoginPage from "./LoginPage";
 
-//This function will GET all the travel cards from the database based on the logged in user.
+//This component will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
 const TravelCardSummary = () => {
   const { user } = useAuth0();
   const navigate = useNavigate();
   const moment = require('moment');
+
   //State to store all the fetched cards from the database
   const [allCards, setAllCards] = useState(null);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const [currentCard, setCurrentCard] = useState('no selection');
+
   //State to store what type of filter has been selected, based on the dropdown option values : none - by default is categorized based on date created, dateNewFirst, dateOldFirst, alphaSort 
   const [filter, setFilter] = useState('none');
-
+  
+  //Function to handle the modal toggle and shows the info based on what the user clicked on - passed in param VALUE
   const toggleModal = (e, value) => {
     setCurrentCard(value);
     setModal(!modal);
   }
 
-  //calculates the number of days that have elapsed on the trip. Function is called when the modal is toggled to true
+  //Calculates the number of days that have elapsed on the trip. Function is called when the modal is toggled to true
   const tripDuration = () => {
     const start = new Date(currentCard.data.date[0][0]);
     const end = new Date(currentCard.data.date[0][1]);
@@ -43,11 +46,11 @@ const TravelCardSummary = () => {
     }
   }
 
-
+  //Function that passes the strig code filtered selected by user to the state filter, will be used in the backend
   const handleFilter = (e) =>{
-    setFilter(e.target.value); //back end receiving the string filter and will sort the data based on what is received
+    setFilter(e.target.value); 
   }
-  //request to get all the travel cards in the database based on the user. Will refetch if the filter is changed e.g. Alphabetical filter appliaed by the user
+  //Request to get all the travel cards in the database based on the user. Will refetch if the filter is changed e.g. Alphabetical filter appliaed by the user
   useEffect(() =>{
     const getAllCards = async () =>{
       try {
@@ -97,7 +100,6 @@ const TravelCardSummary = () => {
     </div>
       <TravelCardDisplay>
       <>
-    {/* <button className="btn-modal" onClick={toggleModal}>remove me, test button</button> */}
     { modal &&
     <ModalDiv>
       <div className="modal"></div>
@@ -115,9 +117,6 @@ const TravelCardSummary = () => {
           { currentCard.data.notes &&
           <p>Notes: {currentCard.data.notes}</p>
           }
-          {/* { currentCard.data.activity !== 'None selected' &&
-          <p>Activity: {currentCard.data.activity}</p>
-          } */}
           <button
             className="fullcard-btn"
             onClick={() => navigate('/viewtravelcard', {state: {travelCard: currentCard}})} 
@@ -183,11 +182,10 @@ justify-content: center;
 align-items: center;
 max-width: 65vw;
 min-width: 45vw;
-
 .span-title {
   padding: 5px;
-}
-`
+}`
+
 const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
@@ -198,9 +196,6 @@ h1 {
 }
 .select-dropdown {
   margin: 10px;
-}
-.header-title {
-  
 }
 .newcard-btn {
   
@@ -216,7 +211,6 @@ h1 {
   /* margin-bottom: 50px */
   color: white;
   font-size: 30px;
-  
 }`
 /*
 @media screen and (min-height: 400px){
@@ -227,7 +221,6 @@ h1 {
 */
 const TravelCardDisplay = styled.div`
 display: flex;
-
 flex-direction: column;
 justify-content: center;
 align-items: center;
@@ -235,27 +228,22 @@ padding: 10px;
 margin-bottom: 112px;
 /* border: 2px solid black; */
 max-height: 80%;
-
 .ul-travelcards .li-travelcards{
   list-style-type: none;
   margin: 5px;
   color: var(--color-font-color);
 }
-
 .filter-div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
 p {
   margin: 2px;
-}
-`
+}`
 /* MODAL CSS */
 const ModalDiv = styled.div`
-
 .fullcard-btn {
   color: white;
   margin: 10px;
@@ -301,8 +289,7 @@ body.active-modal {
   display: block;
   margin: 100px auto 0;
   font-size: 18px;
-}
-`
+}`
 const Footer = styled.div`
 display: flex;
 position: fixed;
