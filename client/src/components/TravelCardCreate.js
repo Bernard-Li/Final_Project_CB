@@ -180,7 +180,7 @@ const TravelCardCreate = () => {
         </label>
         </div>
         <div className="weather-div">
-        { forecastInfo ?
+        {/* { forecastInfo ?
         <>
           <p>Forecast at trip start</p>
           <p>Average Temp: {forecastInfo.avgtemp_c}C </p>
@@ -190,7 +190,7 @@ const TravelCardCreate = () => {
         </>
           :
           <p>Use a valid date on or before today!</p>
-        }
+        } */}
         </div>
         <div className="select-drop">
         <label>
@@ -232,6 +232,16 @@ const TravelCardCreate = () => {
           type='submit'>
           Create Card
         </button>
+      <div>
+        <span>PRODUCTION*** INCOMPLETE SECTION</span>
+        <p>To add weather info: </p>
+        <label>
+          <input 
+            placeholder="Enter nearest city name"
+            type="text">
+          </input>
+        </label>
+      </div>
       </form>
       {previewSource &&
         <img className='preview-img' alt='previewed user upload' src={previewSource} />
