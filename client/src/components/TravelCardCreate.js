@@ -95,28 +95,29 @@ const TravelCardCreate = () => {
     uploadTravelCard();
   }
   //This function will fetch the weather of the first day of the trip and display the average weather of the journey
-  useEffect(() => {
-    const showWeather = async (date, location) => {
-      if(date && location){
-        try {
-          await fetch(`/api/getWeatherHistory/${date}/${location}`)      //convert to query
-          .then(res => res.json())
-          .then(data => {
-            setForecastInfo(data.data.forecast.forecastday[0].day);
-            setFormInput({...formInput, forecast: forecastInfo})
-          })
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
-    }
-    if(dateRange.length > 1) {
-      showWeather(formInput.dateTraveled[0], formInput.destination);
-    }
-  }, [dateRange])
-
+  // useEffect(() => {
+  //   const showWeather = async (date, location) => {
+  //     if(date && location){
+  //       try {
+  //         await fetch(`/api/getWeatherHistory/${date}/${location}`)      //convert to query
+  //         .then(res => res.json())
+  //         .then(data => {
+  //           setForecastInfo(data.data.forecast.forecastday[0].day);
+  //           // setFormInput({...formInput, forecast: forecastInfo})
+  //         })
+  //       } catch (error) {
+  //         console.log(error.message);
+  //       }
+  //     }
+  //   }
+  //   if(dateRange.length > 1) {
+  //     showWeather(formInput.dateTraveled[0], formInput.destination);
+  //   }
+  // }, [dateRange])
+  
   //Function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async () =>{
+    setFormInput({...formInput, forecast: forecastInfo})
     if(formInput.destination && formInput.dateTraveled){
     try {
         await fetch('/api/upload-travelcard', {

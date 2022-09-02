@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import styled from "styled-components";
+
 //Function that contains the login button to allow a redirect with Auth0 once the user is authenticated. 
 const LoginButton = () => {
   const { loginWithRedirect , user} = useAuth0();

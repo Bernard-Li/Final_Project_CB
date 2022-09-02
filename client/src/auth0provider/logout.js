@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import styled from "styled-components";
 import { GiRapidshareArrow } from "react-icons/gi";
+
 //Function containing logout button that will redirect the user to the homepage after they log out
 const LogoutButton = () => {
   const { logout, isAuthenticated } = useAuth0();

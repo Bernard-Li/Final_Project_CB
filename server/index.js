@@ -19,8 +19,8 @@ app.get('/testlogin', (req, res) =>{
   res.status(200).json({status: 'success', data: 'here is the index'})
 })
 
-app.get('/api/currentweather', getCurrentWeather);
-app.get('/api/getWeatherHistory/:date/:location', getWeatherHistory);
+app.get('/api/currentweather/', getCurrentWeather);
+app.get('/api/getWeatherHistory/', getWeatherHistory);
 app.get('/api/all-travelcards/', allTravelCards);
 app.post('/api/create-user', createUser);
 app.post('/api/upload-travelcard', travelCardUpload);

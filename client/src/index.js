@@ -13,7 +13,7 @@ root.render(
   <Auth0Provider  
     domain={domain}
     clientId={clientId}
-    redirectUri={window.location.origin}> //put user page or home page here?
+    redirectUri={window.location.origin}> 
     <App />
     </Auth0Provider>
 );

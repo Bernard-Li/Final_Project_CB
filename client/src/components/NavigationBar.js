@@ -10,7 +10,7 @@ const NavigationBar = () => {
     <Wrapper>
     <GlobalStyles />
       <h2>
-        <a href='/travelcardcreate'>Swivy</a>
+        Swivy
       </h2>
       <div>
         <button 
@@ -41,9 +41,12 @@ background-color: #071013;
 /* background-color: transparent; */
 padding: 10px;
 max-height: var(--max-height);
-a {
-  text-decoration: none;
-}
+/* .swivy-btn {
+  border: none;
+  background-color: #071013;
+  font-size: 20px;
+  color: white;
+} */
 .span-text {
   margin-left: 5px;
 }
