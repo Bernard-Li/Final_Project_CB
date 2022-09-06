@@ -181,7 +181,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 max-width: 65vw;
-min-width: 45vw;
+min-width: 60vw;
 .span-title {
   padding: 5px;
 }`
@@ -192,8 +192,7 @@ flex-direction: column;
 align-items: center;
 /* border: 2px solid blue; */
 h1 {
-  margin: 80px 80px 0 80px;
-}
+  margin: 80px 60px 0 80px;}
 .select-dropdown {
   margin: 10px;
 }

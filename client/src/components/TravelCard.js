@@ -41,23 +41,25 @@ const TravelCard = () => {
   //Fetches from weather API
   useEffect(() => {
     const getWeatherHistory = async () => {
-      try {
-        await fetch(`/api/getWeatherHistory/?location=${userCard.data.destination}&date=${userCard.data.date[0][0]}`)
-        .then(res => res.json())
-        .then(async (data) => {
-          console.log(data);
-          const weatherObject = await data.data.forecast.forecastday[0].day;
-          setWeatherHistory(weatherObject);
-          console.log(weatherObject);
-          setWeatherDisplay(true);
-        })
-      } catch (error) {
-          console.log(error);
-          return (
-            <>
-              <h4>Error occured with the weather history!</h4>
-            </>
-          )
+      if(userCard.data.nearestCity){
+        try {
+          await fetch(`/api/getWeatherHistory/?location=${userCard.data.nearestCity}&date=${userCard.data.date[0][0]}`)
+          .then(res => res.json())
+          .then(async (data) => {
+            console.log(data);
+            const weatherObject = await data.data.forecast.forecastday[0].day;
+            setWeatherHistory(weatherObject);
+            console.log(weatherObject);
+            setWeatherDisplay(true);
+          })
+        } catch (error) {
+            console.log(error);
+            return (
+              <>
+                <h4>Error occured with the weather history!</h4>
+              </>
+            )
+        }
       }
     }
     getWeatherHistory();
@@ -65,22 +67,24 @@ const TravelCard = () => {
 
   //Gets the current weather of the location
   useEffect(() => {
-    const getCurrentWeather = async () =>{
-      try {
-        await fetch(`/api/currentweather/?local=${userCard.data.destination}`)
-        .then(res => res.json())
-        .then(async (data) => {
-          console.log(data);
-          const currentWeather = await data;
-          setCurrentWeather(currentWeather);
-        })
-      } catch (error) {
-          console.log(error);
-          return (
-            <>
-              <h4>Error occured with the weather history!</h4>
-            </>
-          )
+    const getCurrentWeather = async () => {
+      if(userCard.data.nearestCity) {
+        try {
+          await fetch(`/api/currentweather/?local=${userCard.data.nearestCity}`)
+          .then(res => res.json())
+          .then(async (data) => {
+            console.log(data);
+            const currentWeather = await data;
+            setCurrentWeather(currentWeather);
+          })
+        } catch (error) {
+            console.log(error);
+            return (
+              <>
+                <h4>Error occured with the weather history!</h4>
+              </>
+            )
+        }        
       }
     }
     getCurrentWeather();
@@ -111,7 +115,7 @@ const TravelCard = () => {
       }
       { currentWeather &&
         <div className="weather-container">
-        <h3>Current weather in {userCard.data.destination}</h3>
+        <h3>Current weather</h3>
         <span>{currentWeather.data.current.condition.text}</span>
         <img alt='forecast visual representation' src={currentWeather.data.current.condition.icon}></img>
         <p>Feels like: {currentWeather.data.current.feelslike_c} C°</p>
@@ -129,6 +133,7 @@ export default TravelCard;
 const Wrapper = styled.div`
 display: flex;
 justify-content: center;
+margin: 10px;
 
 .activity-div {
   margin: 10px;
