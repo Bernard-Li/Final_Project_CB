@@ -1,20 +1,21 @@
 # Swivy - A quick travel card creator 
-## Concordia Web Development Bootcamp Final Project
 
-When you are traveling, where do you keep track of the places you have visited? In a small notebook that you bought at the beginning of the trip? Or in a notes folder on your phone with scattered titles and timelines? Well Swivy has got you covered.
+Where do you go when you want to remind yourself of mouth-watering that pizza store on that corner street in Venice? What about the walk that led you to the beautiful city skyline of Shanghai after hours of roaming? Is it in a notepad you bought that is now misplaced? Or in a folder of hundresd of photos that you have scroll back and forth in to find? Well, look no further, *Swivy* has got you covered.
 
 ---
 ## Goal
 
-*Swivy*'s goal is to compile all of your information into the same place, while providing you with the necessary tools to track details that *you* want to remember years down the line. The goal of this website is to allow you to keep tabs on the most crucial information of your travels in a swift, logical and  easy to use manner.
+Swivy's goal is to compile all of *your* filtered into the same place, while providing you with the necessary tools to track details that *you* want to remember years down the line. The goal of this website is to allow you to keep tabs on the most crucial information of your travels in a logical and quick to use method.
 ## Features
-Log in, click on the **+** button, and you will be on your way to creating your first *Travel Card*! Each travel card will require the minimum: a destination and a timeline. These two pieces of information will help you sort your cards once you visit your homepage.
+Log in, click on the **+** button and you will be on your way to creating your first *Travel Card*! Each travel card will require the minimum: a destination and a timeline. These two pieces of information will help you sort your cards once you visit your homepage.
 
 
+Do you want to add more information? The basic travel card creation page allows optional criteria such as: 
+- logging an activity
+- uploading a photo
+- even adding your own notes! 
 
-Do you want to add more information? The basic travel card creation page also allows you to log an activity, upload a photo and even add your own notes! 
-
-Finally, you will also be able to keep an eye out on the forecast trends of your travel date with the simple addition of a city name. Here is a sample of a travel card:
+Finally, you can keep an eye out on the forecast trends of your travel dates with the simple addition of the nearest city. Here is a sample of a travel card:
 
 ![sample of travel card, created in the latest MVP version of the site on 2022-09-06](client/src/images/SwivyEXAMPLEcard.png)
 
@@ -36,6 +37,6 @@ Images uploaded to Swivy are saved in a cloud database, Cloudinary - (https://cl
 ## Created by:
 Bernard Li - https://github.com/Bernard-Li 
 
-*Swivy* - A website soon to be hosted on GitPages for all to use. 
+*Swivy* - is a Concordia Web Development Bootcamp final project, soon to be hosted on GitPages for all to use.
 
 
