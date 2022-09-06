@@ -138,6 +138,7 @@ const TravelCardCreate = () => {
   return (
     <Wrapper>
       <h1>New Travel Card</h1>
+      <span>* mandatory fields</span>
       <form 
         className='form'
         onSubmit={handleSubmit}>
@@ -148,7 +149,7 @@ const TravelCardCreate = () => {
           <input
             type='text'
             className='destination-input' 
-            placeholder='Enter a city name or postalcode'
+            placeholder='Enter your destination'
             required='required'
             onChange={(e) => {
               setFormInput({...formInput, destination: e.target.value})
@@ -168,6 +169,7 @@ const TravelCardCreate = () => {
               startDate={startDate}
               endDate={endDate}
               required='required'
+              placeholderText="Select a date"
               onChange={(update) => {
                 handleConversion(update);
                 setDateRange(update);
@@ -203,8 +205,8 @@ const TravelCardCreate = () => {
             onChange={handleChange}>
         </input>
         </label>
-        <div className="text-input-div">
-          <label className="text-area-label">Notes
+          <label>Notes
+          <div className="text-input-div">
           <textarea
             className="text-area"
             placeholder="Add notes here"
@@ -212,9 +214,10 @@ const TravelCardCreate = () => {
               setFormInput({...formInput, notes: e.target.value})
               }}
           />
+          </div>
           </label>
-        </div>
-        <label className="weather-option">Weather
+        <label>Weather
+          <div className="weather-field-input">
           <input
             type='text'
             className='weather-precision-input'
@@ -223,15 +226,21 @@ const TravelCardCreate = () => {
               setFormInput({...formInput, nearestCity: e.target.value});
             }}
             ></input>
+            </div>
             </label>
       {/* Should be the last item on the page - Create Card button */}
+        <div className="upload-btn-div">
         <button className='upload-btn' 
           type='submit'>
           Create Card
         </button>
+        </div>
       </form>
       {previewSource &&
+        <>
+        <span className="image-label">Image preview below</span>
         <img className='preview-img' alt='previewed user upload' src={previewSource} />
+        </>
       }
     </Wrapper>
   )
@@ -240,6 +249,8 @@ const TravelCardCreate = () => {
 export default TravelCardCreate;
 
 const Wrapper = styled.div`
+//todo, fix big screen display
+/* @media screen and (max-width: 667px) { */
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -251,9 +262,11 @@ h1 {
 .first-div .second-div {
   margin: 10px;
 }
+
 .destination-input {
-  margin-left: 20px;
-  max-width: 275px;
+  margin: 10px 0 10px 20px;
+  min-width:  300px;
+  
 }
 .form {
   display: flex;
@@ -261,32 +274,53 @@ h1 {
   flex-direction: column;
   justify-content: flex-end;
   margin: 10px;
+
 }
 .date-div {
   display: flex;
-  justify-content: flex-end;
 }
 .select-drop .select-dropdown {
   display: flex;
   justify-content: flex-end;
   min-width: 150px;
   max-width: 300px;
-}
-.date-div {
-  display: flex;
-  flex-direction: row;
+  margin: 10px 0 10px 20px;
 }
 .date-picker {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 15px;
+  margin: 10px 0 10px 20px;
+  z-index: -1;
+}
+.form-input {
+  margin: 10px 0 10px 20px;
 }
 .upload-btn {
   color: white;
-  width: 80px;
+  width: 100%;
 }
-.preview-img {
-  height: auto;
-  width: 100vw;
+.text-input-div {
+  margin: 10px 0 10px 20px;
+}
+.weather-precision-input {
+  margin: 10px 0 10px 20px;
+}
+.weather-precision-input {
+  width: 300px;
+}
+textarea {
+  resize: none;
+  width: 300px;
+  height: 50px;
+}
+.image-label {
+  margin: 10px;
+}
+  .preview-img {
+    
+    height: auto;
+    width: 100vw;
 }`
+/* } */
+//` //end of @media for 667px max width

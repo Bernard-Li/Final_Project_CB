@@ -27,6 +27,7 @@ const TravelCardSummary = () => {
   
   //Function to handle the modal toggle and shows the info based on what the user clicked on - passed in param VALUE
   const toggleModal = (e, value) => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth'}); //scrolls to top of page to view modal
     setCurrentCard(value);
     setModal(!modal);
   }
@@ -89,7 +90,8 @@ const TravelCardSummary = () => {
       <select
         onChange={handleFilter}
         className="select-dropdown">
-        <option value="none">-options-</option>
+        {/* default option is date created */}
+        <option value="none">Date Created</option>
         <option value='dateNewFirst'>Travel Date (newest - oldest)</option>
         <option value='dateOldFirst'>Travel Date (oldest - newest)</option>
         <option value='alphaSort'>A-Z</option>
@@ -115,7 +117,7 @@ const TravelCardSummary = () => {
             }</p>
           <p>Duration of trip: {tripDuration()}</p>
           { currentCard.data.notes &&
-          <p>Notes: {currentCard.data.notes}</p>
+          <p className="paratag-notes">Notes: {currentCard.data.notes}</p>
           }
           <button
             className="fullcard-btn"
@@ -180,8 +182,13 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-max-width: 65vw;
-min-width: 60vw;
+width: 300px;
+border: 2px solid var(--color-font-color);
+@media screen and (max-width: 375px) {
+  max-width: 200px;
+}
+/* max-width: 65vw;
+min-width: 60vw; */
 .span-title {
   padding: 5px;
 }`
@@ -192,7 +199,8 @@ flex-direction: column;
 align-items: center;
 /* border: 2px solid blue; */
 h1 {
-  margin: 80px 60px 0 80px;}
+  margin: 80px 60px 0 80px;
+}
 .select-dropdown {
   margin: 10px;
 }
@@ -205,11 +213,20 @@ h1 {
   height: 50px;
   width: 50px;
   border-radius: 25px;
-  margin-top: 145%;
-  margin-right: 80%;
+  border: 2px solid var(--color-font-color);
+  //margin-top: 145%;margin-right: 80%;
   /* margin-bottom: 50px */
+  @media screen and (max-width: 375px){
+    margin-right: 80%;
+    
+  }
+  margin-right: 40%;
+  /* For small screens: */
+  margin-top: 80vh;
+  
   color: white;
   font-size: 30px;
+  z-index: 999;
 }`
 /*
 @media screen and (min-height: 400px){
@@ -243,6 +260,15 @@ p {
 }`
 /* MODAL CSS */
 const ModalDiv = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+.paratag-notes {
+  @media screen and (max-width: 375px) {
+    max-width: 50px;  
+  }
+  
+}
 .fullcard-btn {
   color: white;
   margin: 10px;
@@ -271,10 +297,16 @@ body.active-modal {
   transform: translate(-50%, -50%);
   line-height: 1.4;
   background: var(--color-main-background);
-  padding: 14px 28px;
+  padding: 14px 0 14px 28px;
   border-radius: 3px;
   max-width: 600px;
-  min-width: 250px;
+  @media screen and (max-width: 375px) {
+    min-width: 250px;
+  }
+  @media screen and (max-width: 667px){
+    min-width: 350px;
+  }
+  min-width: 550px;
 }
 .close-modal {
   position: absolute;

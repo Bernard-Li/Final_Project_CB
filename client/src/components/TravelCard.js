@@ -88,6 +88,8 @@ const TravelCard = () => {
     getCurrentWeather();
   },[])
 
+  //Conditional rendering of HTML tags depending on whether or not the information was registered by the user
+  //The two mandatory field are the destination and travel date(s). Everything else is going to be option 
   return (
     <Wrapper>
     <GlobalStyles />
@@ -95,12 +97,14 @@ const TravelCard = () => {
       <h1>{userCard.data.destination}</h1>
       <div className="travel-date-div">{dateToText()}</div>
       { !(userCard.media === 'no-media-selected') &&
-      <ImageContainer alt='personal user uploaded file' src={userCard.media}/>
+      <ImageContainer src={userCard.media}/>
       }
       <div className="activity-div">
       <p>Activity: {userCard.data.activity}</p>
       </div>
+      { userCard.data.notes &&
       <p>Notes: {userCard.data.notes}</p>
+      }
       { weatherDisplay &&
       <div className="weather-container">
         <h3>Weather on the first day of travel</h3>
@@ -122,6 +126,10 @@ const TravelCard = () => {
         </div>
       }
       <p>Card created on: {createdOn()}</p>
+      <button
+        className="delete-btn">
+        Delete card
+      </button>
     </Container>
     </Wrapper>
   )
@@ -129,15 +137,21 @@ const TravelCard = () => {
 export default TravelCard;
 
 const Wrapper = styled.div`
+
 display: flex;
 justify-content: center;
 margin: 10px;
-
 .activity-div {
   margin: 10px;
 }
 .weather-container {
   padding: 10px;
+  min-width: 285px;
+}
+.delete-btn {
+  color: white;
+  margin-top: 10px;
+  border: 2px solid var(--color-font-color);
 }`
 
 const Container = styled.div`

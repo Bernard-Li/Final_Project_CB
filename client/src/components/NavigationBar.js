@@ -41,6 +41,7 @@ background-color: #071013;
 /* background-color: transparent; */
 padding: 10px;
 max-height: var(--max-height);
+z-index: 100 !important;
 /* .swivy-btn {
   border: none;
   background-color: #071013;
