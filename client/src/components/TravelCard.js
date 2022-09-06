@@ -93,6 +93,7 @@ const TravelCard = () => {
   //Function that will handle deleting the card. It will send the _id of the card to the endpoint in the backend
   //It will also prompt the user to make sure that they actually want to delete their card. 
   //Entering anything but the string yes will refresh the page and do nothing. DELETE fetch will only trigger with correct confirmation
+  //Redirect to homepage after task is completed.
   useEffect(() => {
     if(travelCardId){
       const answer = prompt('Are you sure you want to delete this card? -yes/no-');
@@ -108,6 +109,7 @@ const TravelCard = () => {
             .then(res => res.json())
             .then(data => {
               if(data.status === 200){
+                alert('Card successfully deleted! Redirecting to homepage');
                 navigate('/');
               }
             })
@@ -168,7 +170,7 @@ const TravelCard = () => {
       }
       { currentWeather &&
         <div className="weather-container">
-        <h3>Current weather</h3>
+        <h3>Current weather in {currentWeather.data.location.name}, {currentWeather.data.location.country} *</h3>
         <span>{currentWeather.data.current.condition.text}</span>
         <img alt='forecast visual representation' src={currentWeather.data.current.condition.icon}></img>
         <p>Feels like: {currentWeather.data.current.feelslike_c} C°</p>
@@ -182,6 +184,9 @@ const TravelCard = () => {
         onClick={() => setTravelCardId(userCard._id)}>
         Delete card
       </button>
+      <div className="linkto-weatherapi">
+      <p>*Weather data supplied by <a href='https://www.weatherapi.com/'>www.weatherapi.com</a> based on nearest city estimation.</p>
+      </div>
     </Container>
     </Wrapper>
   )
@@ -207,6 +212,11 @@ margin: 10px;
   color: white;
   margin-top: 10px;
   border: 2px solid var(--color-font-color);
+}
+
+.linkto-weatherapi {
+  margin: 10px;
+  font-size: 12px;
 }`
 
 const Container = styled.div`

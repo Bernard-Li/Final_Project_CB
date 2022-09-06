@@ -28,15 +28,15 @@ const ImageSliderBar = ({ slides }) => {
     <span> {`Click on the arrow to preview app`}</span>
     <div className="left-right-arrows" >
     {/* <GoArrowLeft size={50} onClick={prevSlide} /> */}
-    <MdDoubleArrow size={50} className="right-arrow" onClick={nextSlide} />
+    <MdDoubleArrow size={42} className="right-arrow" onClick={nextSlide} />
     </div>
       {ImageSlideData.map((slide, index) => {
         return (
           <div className={index === current ? 'slide active' : 'slide'} key={index}>
           { index === current && 
           <ImagePreviewContainer>
-            <p className='subtitle-p'>Previewing: { slide.subtitle }</p>
             <img className='img-preview' src={ slide.image } alt='example import' />
+            <p className='subtitle-p'>Previewing: { slide.subtitle }</p>
           </ImagePreviewContainer> 
           }
           </div>

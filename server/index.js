@@ -32,6 +32,9 @@ app.post('/api/upload-travelcard', travelCardUpload);
 //DEL to erase a complete card in the travel card expanded view
 app.delete('/api/delete-card/:_id', deleteCard);
 
+app.get('*', (req, res) => {
+  res.status(404).json({status: 404, message: 'page not found'});
+})
 const server = app.listen(PORT, () =>{
   console.info("🌍 Listening on port: " + server.address().port);
 });

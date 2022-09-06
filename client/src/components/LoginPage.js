@@ -34,13 +34,15 @@ const Homepage = () =>{
           <h1>Welcome</h1>
         </div>
         <div className="text-div"> 
-          <p>Login with your google account and start logging your travels today!</p>
+          <p>Login with your google account to start tracking your travels today!</p>
           {/* <h4>Quicky and easy to use on the go: </h4> */}
         </div>
           <div className="login-btn">
             <LoginButton />
           </div>
+          <div className="slidebar-div">
           <ImageSliderBar slides={ImageSlideData}/>
+          </div>
           <Footer />
         </>
       }
@@ -73,12 +75,19 @@ align-items: center;
   margin: 10px;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 440px) {
+    max-width: 255px;
+  }
 }
 button {
   padding: 10px;
   border: 2px solid var(--color-font-color);
   color: white;
   margin: 10px;
+}
+
+.slidebar-div {
+  margin-top: 36px;
 }
 
 .example-img1 {

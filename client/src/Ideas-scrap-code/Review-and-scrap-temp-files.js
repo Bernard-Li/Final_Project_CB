@@ -63,3 +63,24 @@
   }
   </div>
           */
+
+  //This function will fetch the weather of the first day of the trip and display the average weather of the journey
+  // useEffect(() => {
+  //   const showWeather = async (date, location) => {
+  //     if(date && location){
+  //       try {
+  //         await fetch(`/api/getWeatherHistory/${date}/${location}`)      //convert to query
+  //         .then(res => res.json())
+  //         .then(data => {
+  //           setForecastInfo(data.data.forecast.forecastday[0].day);
+  //           // setFormInput({...formInput, forecast: forecastInfo})
+  //         })
+  //       } catch (error) {
+  //         console.log(error.message);
+  //       }
+  //     }
+  //   }
+  //   if(dateRange.length > 1) {
+  //     showWeather(formInput.dateTraveled[0], locationPrecision);
+  //   }
+  // }, [locationPrecision])

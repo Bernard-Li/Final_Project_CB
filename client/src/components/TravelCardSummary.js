@@ -1,20 +1,17 @@
-import styled from "styled-components";
-import GlobalStyles from "./GlobalStyles";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+
+import GlobalStyles from "./GlobalStyles";
+import styled from "styled-components";
 import CircularProgress from '@mui/material/CircularProgress';
-import { BiAddToQueue } from "react-icons/bi";
-import Weather from "./Weather";
 
 import LoginPage from "./LoginPage";
-
 //This component will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
 const TravelCardSummary = () => {
   const { user } = useAuth0();
   const navigate = useNavigate();
-  const moment = require('moment');
 
   //State to store all the fetched cards from the database
   const [allCards, setAllCards] = useState(null);
@@ -48,12 +45,12 @@ const TravelCardSummary = () => {
   }
 
   //Function that passes the strig code filtered selected by user to the state filter, will be used in the backend
-  const handleFilter = (e) =>{
+  const handleFilter = (e) => {
     setFilter(e.target.value); 
   }
   //Request to get all the travel cards in the database based on the user. Will refetch if the filter is changed e.g. Alphabetical filter appliaed by the user
   useEffect(() =>{
-    const getAllCards = async () =>{
+    const getAllCards = async () => {
       try {
         await fetch(`/api/all-travelcards/?filter=${filter}&user=${user.email}`)
         .then(res => res.json())
@@ -75,59 +72,58 @@ const TravelCardSummary = () => {
     <Wrapper>
     <GlobalStyles />
       <LoginPage /> 
-    <div
-      className='header-title'>
-      <h1 >My Travel Cards</h1>
-    </div>
-    
-    { (allCards == false) && //empty array is the initial state, as fetch runs on mount. [] is truthy and we want to render the div below when there are NO cards. Loose equality used
+        <div
+          className='header-title'>
+          <h1 >My Travel Cards</h1>
+        </div>
+    {(allCards == false) && //empty array is the initial state, as fetch runs on mount. [] is truthy and we want to render the div below when there are NO cards. Loose equality used
       <div>
         <h1>Click + to add your first card!</h1>
       </div>
     }
     <div className="filter-div">
-    <label className='filter-label'>Sort by
-      <select
-        onChange={handleFilter}
-        className="select-dropdown">
-        {/* default option is date created */}
-        <option value="none">Date Created</option>
-        <option value='dateNewFirst'>Travel Date (newest - oldest)</option>
-        <option value='dateOldFirst'>Travel Date (oldest - newest)</option>
-        <option value='alphaSort'>A-Z</option>
-        <option value='alphaSortBackwards'>Z-A</option>
-      </select>
-    </label>
-    
+      <label className='filter-label'>Sort by
+        <select
+          onChange={handleFilter}
+          className="select-dropdown">
+          {/* default option is date created */}
+          <option value="none">Date Created</option>
+          <option value='dateNewFirst'>Travel Date (newest - oldest)</option>
+          <option value='dateOldFirst'>Travel Date (oldest - newest)</option>
+          <option value='alphaSort'>A-Z</option>
+          <option value='alphaSortBackwards'>Z-A</option>
+        </select>
+      </label>
     </div>
       <TravelCardDisplay>
       <>
-    { modal &&
-    <ModalDiv>
-      <div className="modal"></div>
-        <div className="overlay"
-          onClick={toggleModal}></div>
-        <div className="modal-content">
-          <h2>{currentCard.data.destination}</h2>
-          { currentCard.data.activity !== 'None selected' &&
-          <p><span>Activity</span>: {currentCard.data.activity}</p>
-          }
-          <p><span>Arrival date:</span> {
-            currentCard.data.date[0][0]
-            }</p>
-          <p><span>Duration of trip:</span> {tripDuration()}</p>
-          { currentCard.data.notes &&
-          <p className="paratag-notes"><span>Notes:</span> {currentCard.data.notes}</p>
-          }
-          <button
-            className="fullcard-btn"
-            onClick={() => navigate('/viewtravelcard', {state: {travelCard: currentCard}})} 
-            >View full card</button>
-        </div>
-        <button className="close-modal"
-          onClick={toggleModal}> X </button>
-    </ModalDiv>
-    }
+      { //The modal will have conditional rendering based on the information or lack of information the user chooses to store in their card
+        modal &&
+      <ModalDiv>
+        <div className="modal"></div>
+          <div className="overlay"
+            onClick={toggleModal}></div>
+          <div className="modal-content">
+            <h2>{currentCard.data.destination}</h2>
+            { currentCard.data.activity !== 'None selected' &&
+            <p><span>Activity</span>: {currentCard.data.activity}</p>
+            }
+            <p><span>Arrival date:</span> {
+              currentCard.data.date[0][0]
+              }</p>
+            <p><span>Duration of trip:</span> {tripDuration()}</p>
+            { currentCard.data.notes &&
+            <p className="paratag-notes"><span>Notes:</span> {currentCard.data.notes}</p>
+            }
+            <button
+              className="fullcard-btn"
+              onClick={() => navigate('/viewtravelcard', {state: {travelCard: currentCard}})} 
+              >View full card</button>
+          </div>
+          <button className="close-modal"
+            onClick={toggleModal}> X </button>
+      </ModalDiv>
+      }
   </>
     {
       loading ? allCards.map((card, index) =>{
@@ -184,7 +180,7 @@ justify-content: center;
 align-items: center;
 width: 300px;
 border: 2px solid var(--color-font-color);
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 480px) {
   max-width: 200px;
 }
 /* max-width: 65vw;
@@ -216,11 +212,10 @@ h1 {
   border: 2px solid var(--color-font-color);
   //margin-top: 145%;margin-right: 80%;
   /* margin-bottom: 50px */
-  @media screen and (max-width: 375px){
+  @media screen and (max-width: 440px){
     margin-right: 80%;
-    
   }
-  margin-right: 40%;
+  margin-right: 60%;
   /* For small screens: */
   margin-top: 80vh;
   
@@ -228,13 +223,7 @@ h1 {
   font-size: 30px;
   z-index: 999;
 }`
-/*
-@media screen and (min-height: 400px){
-    .newcard-btn {
-      margin-top: 30vh; //margin top if the screen is rotated to landscape, optimal position 
-    }
-  }
-*/
+
 const TravelCardDisplay = styled.div`
 display: flex;
 flex-direction: column;
@@ -258,6 +247,7 @@ max-height: 80%;
 p {
   margin: 2px;
 }`
+
 /* MODAL CSS */
 const ModalDiv = styled.div`
 display: flex;
@@ -269,8 +259,8 @@ span {
 .paratag-notes {
   @media screen and (max-width: 375px) {
     min-width: 50px;  
+    max-width: 325px;
   }
-  
 }
 .fullcard-btn {
   color: white;
@@ -293,17 +283,16 @@ body.active-modal {
 }
 .modal-content {
   position: absolute;
-    
   color: var(--color-font-color);
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.4;
   background: var(--color-main-background);
-  padding: 14px 0 14px 28px;
-  border-radius: 3px;
+  padding: 14px 28px 14px 28px;
+  border-radius: 8px;
   max-width: 600px;
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 425px) {
     max-width: 250px;
   }
   @media screen and (max-width: 667px){

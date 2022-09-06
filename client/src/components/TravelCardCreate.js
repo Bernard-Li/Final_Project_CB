@@ -37,6 +37,8 @@ const TravelCardCreate = () => {
   const [dateRange, setDateRange] = useState([]);
   const [startDate, endDate] = dateRange;
 
+  const [isDisabled, setIsDisabled] = useState(false);
+
   //Final state object that will be passed to the backend, and stored in mongoDB
   const [formInput, setFormInput] = useState({
     destination: null,
@@ -92,28 +94,9 @@ const TravelCardCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     uploadTravelCard();
+    setIsDisabled(true);
   }
-  //This function will fetch the weather of the first day of the trip and display the average weather of the journey
-  // useEffect(() => {
-  //   const showWeather = async (date, location) => {
-  //     if(date && location){
-  //       try {
-  //         await fetch(`/api/getWeatherHistory/${date}/${location}`)      //convert to query
-  //         .then(res => res.json())
-  //         .then(data => {
-  //           setForecastInfo(data.data.forecast.forecastday[0].day);
-  //           // setFormInput({...formInput, forecast: forecastInfo})
-  //         })
-  //       } catch (error) {
-  //         console.log(error.message);
-  //       }
-  //     }
-  //   }
-  //   if(dateRange.length > 1) {
-  //     showWeather(formInput.dateTraveled[0], locationPrecision);
-  //   }
-  // }, [locationPrecision])
-  
+    
   //Function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async () =>{
     if(formInput.destination && formInput.dateTraveled){
@@ -189,12 +172,12 @@ const TravelCardCreate = () => {
               setFormInput({...formInput, activity: e.target.value})
               }}>
             <option value='None selected'>-Select Activity-</option>
-            <option value='Hiking & Camp'>Hike & Camp</option>
             <option value='Run & Fitness'>Run & Fitness</option>
-            <option value='Climb'>Climb</option>
-            <option value='Bike'>Bike</option>
-            <option value='Water'>Water</option>
+            <option value='Bike Ride'>Bike Ride</option>
+            <option value='Hiking'>Hiking</option>
             <option value='Ski or Snowboard'>Ski or Snowboard</option>
+            <option value='Water'>Water</option>
+            <option value='Climb'>Climb</option>
             <option value='Other'>Other</option>
           </select>
         </div>
@@ -231,7 +214,8 @@ const TravelCardCreate = () => {
       {/* Should be the last item on the page - Create Card button */}
         <div className="upload-btn-div">
         <button className='upload-btn' 
-          type='submit'>
+          type='submit'
+          disabled={isDisabled}>
           Create Card
         </button>
         </div>
@@ -249,8 +233,6 @@ const TravelCardCreate = () => {
 export default TravelCardCreate;
 
 const Wrapper = styled.div`
-//todo, fix big screen display
-/* @media screen and (max-width: 667px) { */
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -319,9 +301,7 @@ textarea {
   margin: 10px;
 }
   .preview-img {
-    
     height: auto;
-    width: 100vw;
+    max-width: 88vw;
 }`
-/* } */
-//` //end of @media for 667px max width
+
