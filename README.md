@@ -1,6 +1,6 @@
 # Swivy - A quick travel card creator 
 
-Where do you go when you want to remind yourself of mouth-watering that pizza store on that corner street in Venice? What about the walk that led you to the beautiful city skyline of Shanghai after hours of roaming? Is it in a notepad you bought that is now misplaced? Or in a folder of hundresd of photos that you have scroll back and forth in to find? Well, look no further, *Swivy* has got you covered.
+Where do you look when you want to remind yourself of the mouth-watering pizza that corner store in Venice served you? What about the walk that led you to the beautiful city skyline of Shanghai after hours of roaming? Is it in a notepad you bought that is now misplaced? Or in a folder of hundreds of photos that you have to scroll back and forth in to find? Well, look no further, *Swivy* has got you covered.
 
 ---
 ## Goal
