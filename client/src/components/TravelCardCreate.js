@@ -45,7 +45,6 @@ const TravelCardCreate = () => {
     activity: 'None selected',
     notes: null,
     nearestCity: null,
-    newKey: 'test in database',
   })
   const [fileState, setFileState] = useState('');
   const [previewSource, setPreviewSource] = useState(null);
