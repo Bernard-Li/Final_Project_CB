@@ -23,5 +23,6 @@ const Wrapper = styled.div`
 .login-btn{
   margin: 10px;
   color: white;
-  width: 80px;
+  width: 88px;
+  height: 40px;
 }`

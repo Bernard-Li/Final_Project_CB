@@ -2,6 +2,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import LoginButton from "../auth0provider/login";
 import styled from "styled-components";
+import ImageSliderBar from "./ImageSliderBar";
+import { ImageSlideData } from "./ExampleImages";
+import Footer from "./Footer";
+
 
 //This component will render the homepage based on which user is logged in (a.k.a login page as the default when the user navigates to the '/' for the first time)
 const Homepage = () =>{
@@ -30,11 +34,14 @@ const Homepage = () =>{
           <h1>Welcome</h1>
         </div>
         <div className="text-div"> 
-          <h4>Login with your google account and start logging your travels today!</h4>
+          <p>Login with your google account and start logging your travels today!</p>
+          {/* <h4>Quicky and easy to use on the go: </h4> */}
         </div>
           <div className="login-btn">
             <LoginButton />
           </div>
+          <ImageSliderBar slides={ImageSlideData}/>
+          <Footer />
         </>
       }
       { isAuthenticated &&
@@ -52,16 +59,31 @@ const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
+
 .title-div {
-  margin: 80px;
+  margin: 65px 65px 0 65px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 .text-div {
+  display: flex;
+  flex-direction: column;
   margin: 10px;
+  justify-content: center;
+  align-items: center;
 }
 button {
   padding: 10px;
+  border: 2px solid var(--color-font-color);
+  color: white;
+  margin: 10px;
+}
+
+.example-img1 {
+  /* transform: rotate(45deg); */
+  width: 300px;
+  height: auto;
+  border: 1px solid var(--color-font-color);
 }`

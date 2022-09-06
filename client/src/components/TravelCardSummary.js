@@ -82,7 +82,7 @@ const TravelCardSummary = () => {
     
     { (allCards == false) && //empty array is the initial state, as fetch runs on mount. [] is truthy and we want to render the div below when there are NO cards. Loose equality used
       <div>
-        <h1>Click + to add a new card!</h1>
+        <h1>Click + to add your first card!</h1>
       </div>
     }
     <div className="filter-div">
@@ -110,14 +110,14 @@ const TravelCardSummary = () => {
         <div className="modal-content">
           <h2>{currentCard.data.destination}</h2>
           { currentCard.data.activity !== 'None selected' &&
-          <p>Activity: {currentCard.data.activity}</p>
+          <p><span>Activity</span>: {currentCard.data.activity}</p>
           }
-          <p>Arrival date: {
+          <p><span>Arrival date:</span> {
             currentCard.data.date[0][0]
             }</p>
-          <p>Duration of trip: {tripDuration()}</p>
+          <p><span>Duration of trip:</span> {tripDuration()}</p>
           { currentCard.data.notes &&
-          <p className="paratag-notes">Notes: {currentCard.data.notes}</p>
+          <p className="paratag-notes"><span>Notes:</span> {currentCard.data.notes}</p>
           }
           <button
             className="fullcard-btn"
@@ -263,9 +263,12 @@ const ModalDiv = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
+span {
+  font-weight: bold;
+}
 .paratag-notes {
   @media screen and (max-width: 375px) {
-    max-width: 50px;  
+    min-width: 50px;  
   }
   
 }
@@ -301,7 +304,7 @@ body.active-modal {
   border-radius: 3px;
   max-width: 600px;
   @media screen and (max-width: 375px) {
-    min-width: 250px;
+    max-width: 250px;
   }
   @media screen and (max-width: 667px){
     min-width: 350px;

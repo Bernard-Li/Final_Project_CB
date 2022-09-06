@@ -53,9 +53,9 @@ z-index: 100 !important;
 }
 .home-btn {
   color: white;
-  width: 80px;
+  width: 88px;
 }
 .profile-btn {
   color: white;
-  width: 80px;
+  width: 88px;
 }`

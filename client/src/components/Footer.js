@@ -8,6 +8,7 @@ const Footer = () => {
     <Wrapper>
       <GlobalStyles />
     <div className="logout-btn">
+    {/* <button>New Card</button> */}
     <LogoutButton />
     </div>
     </Wrapper>
@@ -19,9 +20,10 @@ export default Footer;
 const Wrapper = styled.div`
 display: flex;
 position: fixed;
+/* border: 2px solid pink; */
 justify-content: center;
-/* justify-content: space-evenly; */
 align-items: center;
+/* justify-content: space-evenly; */
 bottom: 0;
 left: 0;
 width: 100%;

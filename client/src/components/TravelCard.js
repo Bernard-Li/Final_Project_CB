@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 //Component used to show the full detailed traveled card, directed from the modal preview of each card on the summary list
 //This is the first time the uploaded image (if applicable) will be shown back to the user from the Cloudinary API.
@@ -8,12 +8,15 @@ import { useEffect, useState } from "react";
 const TravelCard = () => {
   const moment = require('moment');
   const location = useLocation();
+  let navigate = useNavigate();
   const [weatherHistory, setWeatherHistory] = useState(null);
   const [currentWeather, setCurrentWeather] = useState(null);
   const [weatherDisplay, setWeatherDisplay] = useState(false);
+  const [travelCardId, setTravelCardId] = useState(null);
   //represents the card that was sent with useNavigation from the modal "view full card"
   const userCard = location.state.travelCard;
-  
+    
+  //Function that will show the date on which the card was created, in an expanded format using moment
   const createdOn = () => {
     const uploadDate = new Date(userCard.data.created);
     return moment(uploadDate).format('dddd MMMM Do, YYYY');
@@ -87,6 +90,52 @@ const TravelCard = () => {
     }
     getCurrentWeather();
   },[])
+  //Function that will handle deleting the card. It will send the _id of the card to the endpoint in the backend
+  //It will also prompt the user to make sure that they actually want to delete their card. 
+  //Entering anything but the string yes will refresh the page and do nothing. DELETE fetch will only trigger with correct confirmation
+  useEffect(() => {
+    if(travelCardId){
+      const answer = prompt('Are you sure you want to delete this card? -yes/no-');
+      if(answer){
+        if(answer.toLowerCase() === 'yes'){
+          try {
+            fetch(`/api/delete-card/${travelCardId}`, {
+              method: 'DELETE',
+              headers: {
+                'Content-type' : 'application/json'
+              }
+            })
+            .then(res => res.json())
+            .then(data => {
+              if(data.status === 200){
+                navigate('/');
+              }
+            })
+          } catch (error) {
+              console.log(error);
+              return (
+                <>
+                  <p>Unable to delete card. Try again</p>
+                </>
+              )
+          }
+        }
+        else if(answer.toLowerCase() === 'no') {
+          alert('If you would like to edit your card, please go to your profile');
+          window.location.reload();
+        }
+        else {
+          alert('Answer invalid');
+          window.location.reload();
+        }
+      }
+      else {
+        //changes the state from storing the _id of the card to null value, which will allow the button to be clicked again
+        setTravelCardId(null);
+      }
+    }
+    
+  }, [travelCardId])
 
   //Conditional rendering of HTML tags depending on whether or not the information was registered by the user
   //The two mandatory field are the destination and travel date(s). Everything else is going to be option 
@@ -102,9 +151,11 @@ const TravelCard = () => {
       <div className="activity-div">
       <p>Activity: {userCard.data.activity}</p>
       </div>
+      <div className="notes-div">
       { userCard.data.notes &&
       <p>Notes: {userCard.data.notes}</p>
       }
+      </div>
       { weatherDisplay &&
       <div className="weather-container">
         <h3>Weather on the first day of travel</h3>
@@ -127,7 +178,8 @@ const TravelCard = () => {
       }
       <p>Card created on: {createdOn()}</p>
       <button
-        className="delete-btn">
+        className="delete-btn"
+        onClick={() => setTravelCardId(userCard._id)}>
         Delete card
       </button>
     </Container>
@@ -142,6 +194,9 @@ display: flex;
 justify-content: center;
 margin: 10px;
 .activity-div {
+  margin: 10px;
+}
+.notes-div {
   margin: 10px;
 }
 .weather-container {

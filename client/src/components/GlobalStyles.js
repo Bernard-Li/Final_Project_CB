@@ -43,10 +43,10 @@ button {
   border-radius: 5px;
   padding: 10px;
   ${'' /* background-color: #352315; //Umber, orange=#D77A61 //Umber maybe second choice */}
-  ${'' /* backrgound-color: #432676; //walnut */}
+  ${'' /* background-color: #432676; //walnut */}
   ${'' /* background-color: #3b1e08; //brunette */}
   ${'' /* background-color: #2B0504; */}
-  ${'' /* background-color: #652A0E; //cinnamon */}
+  ${'' /* background-color: #652A0E; //cinnamon */} //ok to cinnamon
   ${'' /* background-color: #481F01; //syrup ****** Maybe first choice? */}
 background-color: #A52A2A; //red-brown
 }`

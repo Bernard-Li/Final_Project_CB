@@ -2,18 +2,19 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 import styled from "styled-components";
 import GlobalStyles from "../components/GlobalStyles";
+import Footer from "../components/Footer";
 
 //This function build the profile page once a user logs in. Details like account icon, profile name and email are displayed onto the profile page
 const Profile = () => {
   const { user, isAuthenticated } = useAuth0();
   //Will conditionally render based on Auth0 state
   
-  console.log(user);
   //referrerPolicy was preventing the loading of google account images. No-referrer property allowed the icons to be fetched from google icon URL
   return (
     <Wrapper>
     <GlobalStyles />
     { isAuthenticated ? 
+    <>
       <div className="profile-div">
           <img className='user-icon' src={user.picture} alt={user.name} referrerPolicy="no-referrer" />
         <div className="name-div">
@@ -24,10 +25,15 @@ const Profile = () => {
         </div>
         <p>Add user preferences and settings here</p>
       </div>
+      <Footer />
+      </>
       :
+      <>
       <div className="no-user">
         <h2>Please login to view profile</h2>
       </div>
+      <Footer />
+      </>
     }
     </Wrapper>
   )

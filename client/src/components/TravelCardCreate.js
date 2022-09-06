@@ -299,6 +299,7 @@ h1 {
 .upload-btn {
   color: white;
   width: 100%;
+  border: 2px solid var(--color-font-color);
 }
 .text-input-div {
   margin: 10px 0 10px 20px;
