@@ -1,4 +1,4 @@
-# Swivy - A quick travel card creator 
+# Swivy - A Quick Travel Card Creator 
 ## Concordia Web Development Bootcamp Final Project
 
 When you are traveling, where do you keep track of the places you have visited? In a small notebook that you bought at the beginning of the trip? Or in a notes folder on your phone with scattered titles and timelines? Well Swivy has got you covered.
