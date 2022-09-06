@@ -40,8 +40,8 @@ const allTravelCards = async (req, res) => {
       //A-Z sorting, in this case a function that sorts the destination by alphabetical order
       case 'alphaSort':
         travelCardArray.sort(( a, b ) => {
-          const first = a.data.destination;
-          const second = b.data.destination;
+          const first = a.data.destination.toLowerCase();
+          const second = b.data.destination.toLowerCase();
           if(first < second){
             return -1;
           }
@@ -53,8 +53,8 @@ const allTravelCards = async (req, res) => {
       //this case will reverse the alphabetical order
       case 'alphaSortBackwards':
         travelCardArray.sort(( a, b ) => {
-          const first = a.data.destination;
-          const second = b.data.destination;
+          const first = a.data.destination.toLowerCase();
+          const second = b.data.destination.toLowerCase();
           if(first < second){
             return 1;
           }

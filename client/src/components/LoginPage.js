@@ -26,8 +26,12 @@ const Homepage = () =>{
     <Wrapper>
       { !user &&
         <>
-          <h1>Welcome to Swivy!</h1>
-          <p>🌍 Please login using google 🌍 </p>
+        <div className="title-div">
+          <h1>Welcome</h1>
+        </div>
+        <div className="text-div"> 
+          <h4>Login with your google account and start logging your travels today!</h4>
+        </div>
           <div className="login-btn">
             <LoginButton />
           </div>
@@ -48,8 +52,15 @@ const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-h1 {
-  margin: 80px 80px 0 80px;
+.title-div {
+  margin: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.text-div {
+  margin: 10px;
 }
 button {
   padding: 10px;
