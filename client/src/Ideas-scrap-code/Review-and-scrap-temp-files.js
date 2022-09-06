@@ -48,4 +48,18 @@
   //   // showWeather();
   // }, [])
           
-          
+/*  belongs to travel card, old data display on the travelcardcreate page
+  <div className="weather-div">
+  { forecastInfo ?
+  <>
+    <p>Forecast at trip start</p>
+    <p>Average Temp: {forecastInfo.avgtemp_c}C </p>
+    <p>Average humidity: {forecastInfo.avghumidity}%</p>
+    <p>Highest Temp: {forecastInfo.maxtemp_c}C</p>
+    <p>Lowest Temp: {forecastInfo.mintemp_c}C</p>
+  </>
+    :
+    <p>Use a valid date on or before today!</p>
+  }
+  </div>
+          */

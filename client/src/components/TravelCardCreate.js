@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 //Import from an NPM packagee called react-datepicker @https://www.npmjs.com/package/react-datepicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -36,16 +36,16 @@ const TravelCardCreate = () => {
   //Declare states needed to store information from the fetch and datepicker
   const [dateRange, setDateRange] = useState([]);
   const [startDate, endDate] = dateRange;
-  const [forecastInfo, setForecastInfo] = useState('');
 
   //Final state object that will be passed to the backend, and stored in mongoDB
   const [formInput, setFormInput] = useState({
     destination: null,
     dateCreated: dateCreated, 
     dateTraveled: dateCreated, //default date is the date of creation
-    forecast: null,
     activity: 'None selected',
     notes: null,
+    nearestCity: null,
+    newKey: 'test in database',
   })
   const [fileState, setFileState] = useState('');
   const [previewSource, setPreviewSource] = useState(null);
@@ -111,13 +111,12 @@ const TravelCardCreate = () => {
   //     }
   //   }
   //   if(dateRange.length > 1) {
-  //     showWeather(formInput.dateTraveled[0], formInput.destination);
+  //     showWeather(formInput.dateTraveled[0], locationPrecision);
   //   }
-  // }, [dateRange])
+  // }, [locationPrecision])
   
   //Function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async () =>{
-    setFormInput({...formInput, forecast: forecastInfo})
     if(formInput.destination && formInput.dateTraveled){
     try {
         await fetch('/api/upload-travelcard', {
@@ -179,19 +178,6 @@ const TravelCardCreate = () => {
                 />
         </label>
         </div>
-        <div className="weather-div">
-        { forecastInfo ?
-        <>
-          <p>Forecast at trip start</p>
-          <p>Average Temp: {forecastInfo.avgtemp_c}C </p>
-          <p>Average humidity: {forecastInfo.avghumidity}%</p>
-          <p>Highest Temp: {forecastInfo.maxtemp_c}C</p>
-          <p>Lowest Temp: {forecastInfo.mintemp_c}C</p>
-        </>
-          :
-          <p>Use a valid date on or before today!</p>
-        }
-        </div>
         <div className="select-drop">
         <label>
           Activity
@@ -208,14 +194,16 @@ const TravelCardCreate = () => {
             <option value='Bike'>Bike</option>
             <option value='Water'>Water</option>
             <option value='Ski or Snowboard'>Ski or Snowboard</option>
-            
+            <option value='Other'>Other</option>
           </select>
         </div>
+        <label>Upload Image
         <input className='form-input'
           type='file'
           value={fileState}
             onChange={handleChange}>
         </input>
+        </label>
         <div className="text-input-div">
           <label className="text-area-label">Notes
           <textarea
@@ -227,6 +215,18 @@ const TravelCardCreate = () => {
           />
           </label>
         </div>
+        <label className="weather-option">Weather
+          <input
+            type='text'
+            className='weather-precision-input'
+            placeholder='Enter closest city for weather history'
+            onChange={(e) => {
+              console.log(e.target.value);
+              setFormInput({...formInput, nearestCity: e.target.value});
+              console.log(formInput);
+            }}
+            ></input>
+            </label>
       {/* Should be the last item on the page - Create Card button */}
         <button className='upload-btn' 
           type='submit'>
@@ -249,14 +249,14 @@ justify-content: space-between;
 align-items: center;
 margin-bottom: 50px;
 h1 {
-  margin: 80px 80px 0 80px;
+  margin: 80px 60px 0 80px;
 }
 .first-div .second-div {
   margin: 10px;
 }
 .destination-input {
   margin-left: 20px;
-  max-width: 250px;
+  max-width: 275px;
 }
 .form {
   display: flex;
@@ -283,7 +283,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 15px;
 }
 .upload-btn {
   color: white;
