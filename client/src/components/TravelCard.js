@@ -46,10 +46,8 @@ const TravelCard = () => {
           await fetch(`/api/getWeatherHistory/?location=${userCard.data.nearestCity}&date=${userCard.data.date[0][0]}`)
           .then(res => res.json())
           .then(async (data) => {
-            console.log(data);
             const weatherObject = await data.data.forecast.forecastday[0].day;
             setWeatherHistory(weatherObject);
-            console.log(weatherObject);
             setWeatherDisplay(true);
           })
         } catch (error) {

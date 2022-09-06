@@ -196,7 +196,7 @@ const TravelCardCreate = () => {
             <option value='Other'>Other</option>
           </select>
         </div>
-        <label>Upload Image
+        <label>Upload an image
         <input className='form-input'
           type='file'
           value={fileState}
@@ -220,9 +220,7 @@ const TravelCardCreate = () => {
             className='weather-precision-input'
             placeholder='Enter closest city for weather history'
             onChange={(e) => {
-              console.log(e.target.value);
               setFormInput({...formInput, nearestCity: e.target.value});
-              console.log(formInput);
             }}
             ></input>
             </label>
