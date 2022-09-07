@@ -31,13 +31,13 @@ const TravelCard = () => {
       const textDateEnd = (moment(finish).format('dddd MMMM Do, YYYY'));
       return (
         <>
-          <p>Start Date: {textDateStart}</p>
-          <p>End Date: {textDateEnd}</p>
+          <p><span>Start Date:</span> {textDateStart}</p>
+          <p><span>End Date:</span> {textDateEnd}</p>
         </>
       );
     }
     else {
-      return ( <p>Start Date: {textDateStart}</p> );
+      return ( <p><span>Start Date</span>: {textDateStart}</p> );
     }
   }
   //Gets the weather on the day of the travel (using first day as reference only), goal is a gentle reminder of the conditions (easy to forget a few months later)
@@ -123,7 +123,6 @@ const TravelCard = () => {
           }
         }
         else if(answer.toLowerCase() === 'no') {
-          alert('If you would like to edit your card, please go to your profile');
           window.location.reload();
         }
         else {
@@ -151,11 +150,11 @@ const TravelCard = () => {
       <ImageContainer src={userCard.media}/>
       }
       <div className="activity-div">
-      <p>Activity: {userCard.data.activity}</p>
+      <p><span>Activity</span>: {userCard.data.activity}</p>
       </div>
       <div className="notes-div">
       { userCard.data.notes &&
-      <p>Notes: {userCard.data.notes}</p>
+      <p><span>Notes</span>: {userCard.data.notes}</p>
       }
       </div>
       { weatherDisplay &&
@@ -178,15 +177,18 @@ const TravelCard = () => {
         <p>Humidy of: {currentWeather.data.current.humidity} %</p>
         </div>
       }
-      <p>Card created on: {createdOn()}</p>
+      <p><span>Card created on</span>: {createdOn()}</p>
       <button
         className="delete-btn"
         onClick={() => setTravelCardId(userCard._id)}>
         Delete card
       </button>
+      { currentWeather &&
       <div className="linkto-weatherapi">
-      <p>*Weather data supplied by <a href='https://www.weatherapi.com/'>www.weatherapi.com</a> based on nearest city estimation.</p>
+      <p>*Weather data supplied by <a href='https://www.weatherapi.com/'>www.weatherapi.com</a> based on nearest city.</p>
       </div>
+
+      }
     </Container>
     </Wrapper>
   )
@@ -198,6 +200,9 @@ const Wrapper = styled.div`
 display: flex;
 justify-content: center;
 margin: 10px;
+span {
+  font-weight: bold;
+}
 .activity-div {
   margin: 10px;
 }

@@ -16,6 +16,7 @@ const Profile = () => {
     { isAuthenticated ? 
     <>
       <div className="profile-div">
+      <h1>My Profile</h1>
           <img className='user-icon' src={user.picture} alt={user.name} referrerPolicy="no-referrer" />
         <div className="name-div">
           <h2>{user.name}</h2>
@@ -23,7 +24,6 @@ const Profile = () => {
         <div className="email-div">
         <p>{user.email}</p>
         </div>
-        <p>Add user preferences and settings here</p>
       </div>
       <Footer />
       </>
@@ -47,7 +47,9 @@ flex-direction: column;
 flex-wrap: wrap;
 justify-content: center;
 align-items: center;
-
+h1 {
+  margin: 80px;
+}
 .profile-div {
   display: flex;
   flex-direction: column;

@@ -100,6 +100,7 @@ const TravelCardCreate = () => {
   //Function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async () =>{
     if(formInput.destination && formInput.dateTraveled){
+      setIsDisabled(true);
     try {
         await fetch('/api/upload-travelcard', {
           method: 'POST',
@@ -199,12 +200,12 @@ const TravelCardCreate = () => {
           />
           </div>
           </label>
-        <label>Weather
+        <label>Weather <span className="subtext-span">{'(city & country required for accurate forecast)'}</span>
           <div className="weather-field-input">
           <input
             type='text'
             className='weather-precision-input'
-            placeholder='Enter closest city for weather history'
+            placeholder='Enter city & country here'
             onChange={(e) => {
               setFormInput({...formInput, nearestCity: e.target.value});
             }}
@@ -244,7 +245,9 @@ h1 {
 .first-div .second-div {
   margin: 10px;
 }
-
+.subtext-span {
+  font-size: small;
+}
 .destination-input {
   margin: 10px 0 10px 20px;
   min-width:  300px;
