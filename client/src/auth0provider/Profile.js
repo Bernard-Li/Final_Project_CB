@@ -55,9 +55,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
-
 .user-icon {
   border-radius: 50px;
   max-height: 100px;
