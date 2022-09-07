@@ -6,6 +6,9 @@ import GlobalStyles from "./GlobalStyles";
 import styled from "styled-components";
 import CircularProgress from '@mui/material/CircularProgress';
 
+import Post from "./Post";
+import Pagination from "./Pagination";
+
 import LoginPage from "./LoginPage";
 //This component will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
@@ -22,6 +25,23 @@ const TravelCardSummary = () => {
   //State to store what type of filter has been selected, based on the dropdown option values : none - by default is categorized based on date created, dateNewFirst, dateOldFirst, alphaSort 
   const [filter, setFilter] = useState('none');
   
+  /* Stretch goals, pagination */
+  const [posts, setPosts] = useState([]);
+  const [stateLoading, setStateLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(8);
+  
+  //Function to get current posts
+  const indexOfLastPost = currentPage + postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
+  
+  //Function to change the page that the user is currently viewing
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  }
+
+  /* Stretch pagination above ^ */
   //Function to handle the modal toggle and shows the info based on what the user clicked on - passed in param VALUE
   const toggleModal = (e, value) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth'}); //scrolls to top of page to view modal
@@ -54,10 +74,13 @@ const TravelCardSummary = () => {
       try {
         await fetch(`/api/all-travelcards/?filter=${filter}&user=${user.email}`)
         .then(res => res.json())
-        .then(data =>{
-          // console.log(data);
-          setAllCards(data.data);
+        .then(data => {
+          setAllCards(data.data); //contains an array of objects, with each object representing the individual cards
           setLoading(true);
+          //Stretch pagination
+          setStateLoading(true);
+          setPosts(data.data);
+          setStateLoading(false);
         })
       } catch (error) {
         console.log(error.message);
@@ -95,6 +118,7 @@ const TravelCardSummary = () => {
         </select>
       </label>
     </div>
+      {/* <Post posts={currentPosts} stateLoading={stateLoading} /> */}
       <TravelCardDisplay>
       <>
       { //The modal will have conditional rendering based on the information or lack of information the user chooses to store in their card
@@ -125,34 +149,31 @@ const TravelCardSummary = () => {
       </ModalDiv>
       }
   </>
-    {
-      loading ? allCards.map((card, index) =>{
-      return (
-        <>
-        <ul
-          className="ul-travelcards">
-          <li 
-            className='li-travelcards'
-            key={`Card# ${index}`}>
+    { loading ?
+    <>
+      <ul className="ul-travelcards">
+        {
+          currentPosts.map((post, index) => {
+            return (
+              <div className="card-container">
+            <li key={post._id} className="li-travelcards">
             <Button
-              
-              onClick={(e) => toggleModal(e, card)}
-              >
-              <span className='span-title'>
-              {card.data.destination}
-              </span>
-              <span className='span-dates'>
-              {card.data.date[0][0] === card.data.date[0][1] ?
-                card.data.date[0][0] :
-                card.data.date[0][0] + ' to ' + card.data.date[0][1]}
-              </span>
-              </Button>
+              onClick={(e) => toggleModal(e, post)}>
+              <p>New {post.data.destination}</p>
+              <p>{post.data.date[0][0] + '-' + post.data.date[0][1]}</p>
+            </Button>
             </li>
-        </ul>
-        </>
-      )
-      })
-      :
+            </div>
+            )
+          })
+        }
+      </ul>
+      <Pagination 
+        postsPerPage={postsPerPage} 
+          totalPosts={posts.length} 
+          paginate={paginate} />
+      </>
+    :
       <>
         <CircularProgress />
       </>
