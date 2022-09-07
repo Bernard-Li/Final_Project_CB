@@ -10,7 +10,7 @@ const LoginButton = () => {
   {!user &&
   <button 
     className="login-btn"
-    onClick={() => loginWithRedirect()}>Log In</button>
+    onClick={() => loginWithRedirect()}>Start Tracking</button>
   }
   </Wrapper>
   )
@@ -19,10 +19,11 @@ const LoginButton = () => {
 export default LoginButton;
 
 const Wrapper = styled.div`
+display: flex;
 
-.login-btn{
+.login-btn {
   margin: 10px;
   color: white;
-  width: 88px;
+  width: 108px;
   height: 40px;
 }`

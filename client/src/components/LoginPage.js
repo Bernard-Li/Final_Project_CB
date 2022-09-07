@@ -34,7 +34,7 @@ const Homepage = () =>{
           <h1>Welcome</h1>
         </div>
         <div className="text-div"> 
-          <p>Login with your google account to start tracking your travels today!</p>
+          <p>Click the button below to login with your google account</p>
           {/* <h4>Quicky and easy to use on the go: </h4> */}
         </div>
           <div className="login-btn">

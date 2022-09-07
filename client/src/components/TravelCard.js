@@ -169,7 +169,8 @@ const TravelCard = () => {
       }
       { currentWeather &&
         <div className="weather-container">
-        <h3>Current weather in {currentWeather.data.location.name}, {currentWeather.data.location.country} *</h3>
+        <h3>Today in {currentWeather.data.location.name}</h3>
+        <h3>{currentWeather.data.location.country} *</h3>
         <span>{currentWeather.data.current.condition.text}</span>
         <img alt='forecast visual representation' src={currentWeather.data.current.condition.icon}></img>
         <p>Feels like: {currentWeather.data.current.feelslike_c} C°</p>
@@ -236,4 +237,4 @@ margin-bottom: 75px;`
 const ImageContainer = styled.img`
 display: flex;
 height: auto;
-width: 375px;`
+max-width: 350px;`
