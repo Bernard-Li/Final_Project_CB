@@ -37,6 +37,22 @@ const getWeatherHistory = async (req, res) => {
       res.status(400).json({status: "error", error: error.message})
   }
 }
+
+// const searchLocation = async (req, res) => {
+//   const location = req.query.location;
+//   try {
+//     const searchArray = await axios.get('http://api.weatherapi.com/v1/search.json', {
+//       params: {
+//         key: process.env.WEATHERAPI_KEY,
+//         q: location,
+//       }
+//     })
+//     res.status(200).json({status: 200, data: searchArray})
+//   } catch (error) {
+//       console.log(error);
+//       res.status(400).json({status: 'error', error: error});
+//   }
+// } //searchLocation
 module.exports = { getCurrentWeather, getWeatherHistory };
 //IN THIS FORMAT, data.data returns an object in the following format: (e.g. for the q: "Montreal" param, specifically)
 /*
