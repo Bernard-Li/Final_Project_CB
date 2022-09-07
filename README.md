@@ -5,7 +5,7 @@ Where do you look when you want to remind yourself of the mouth-watering pizza t
 ---
 ## Goal
 
-Swivy's goal is to compile all of *your* filtered information into the same place, while providing you with the necessary tools to track details that *you* want to remember years down the line. The goal of this website is to allow you to keep tabs on the most crucial information of your travels in a logical and quick to use method.
+Swivy's goal is to compile all of *your* filtered information into the same place, while providing you with the necessary tools to track details that *you* want to remember years down the line. This website allows you to keep track of the most crucial information from your travels in a logical and quick to use method.
 ## Features
 Log in, click on the **+** button and you will be on your way to creating your first *Travel Card*! Each travel card will require the minimum: a destination and a timeline. These two pieces of information will help you sort your cards once you visit your homepage.
 
