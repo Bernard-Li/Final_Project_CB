@@ -13,9 +13,10 @@ Log in, click on the **+** button and you will be on your way to creating your f
 Do you want to add more information? The travel card creation page allows optional criteria such as: 
 - logging an activity
 - uploading a photo
-- even adding your own notes! 
+- adding your own notes
+- adding historical weather data and viewing current weather forecast
 
-Finally, you can keep an eye out on the forecast trends of your travel dates with the simple addition of the nearest city. Here is a sample of a travel card:
+Here is a sample of a travel card:
 
 ![sample of travel card, created in the latest MVP version of the site on 2022-09-06](client/src/images/SwivyEXAMPLEcard.png)
 
