@@ -217,7 +217,10 @@ const TravelCardCreate = () => {
         <button className='upload-btn' 
           type='submit'
           disabled={isDisabled}>
-          Create Card
+          {
+            isDisabled ?
+          'Generating Card...': 'Create Card'
+          }
         </button>
         </div>
       </form>
