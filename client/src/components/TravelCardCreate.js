@@ -38,6 +38,7 @@ const TravelCardCreate = () => {
   const [startDate, endDate] = dateRange;
 
   const [isDisabled, setIsDisabled] = useState(false);
+  const [otherActivity, setOtherActivity] = useState(false);
 
   //Final state object that will be passed to the backend, and stored in mongoDB
   const [formInput, setFormInput] = useState({
@@ -58,6 +59,16 @@ const TravelCardCreate = () => {
     const userImage = e.target.files[0];
     previewFile(userImage);
     setFileState(e.target.value);
+  }
+  //Function that will allow the user to add their own activity if the pre decided choices do not fit , option -other-
+  const handleActivity = (e) => {
+    if(e.target.value === 'Other'){
+      setOtherActivity(true);
+    }
+    else {
+      setOtherActivity(false);
+      setFormInput({...formInput, activity: e.target.value})
+    }
   }
 
   //Function that accepts the selected date range from the form and return the format: year-month-day
@@ -169,9 +180,11 @@ const TravelCardCreate = () => {
         </label>
           <select 
             className="select-dropdown"
-            onChange={(e) => {
-              setFormInput({...formInput, activity: e.target.value})
-              }}>
+            // onChange={(e) => {
+            //   setFormInput({...formInput, activity: e.target.value})
+            //   }}
+            onChange={handleActivity}
+              >
             <option value='None selected'>-Select Activity-</option>
             <option value='Run & Fitness'>Run & Fitness</option>
             <option value='Bike Ride'>Bike Ride</option>
@@ -181,6 +194,20 @@ const TravelCardCreate = () => {
             <option value='Climb'>Climb</option>
             <option value='Other'>Other</option>
           </select>
+          { otherActivity &&
+          <label>Other Activity 
+          <div>
+          <input
+            className="input-other"
+            placeholder="Enter activity name"
+            type='text' 
+            onChange={(e) => {
+              setFormInput({...formInput, activity: e.target.value})
+            }}
+              ></input>
+            </div>
+            </label>
+          }
         </div>
         <label>Upload an image
         <input className='form-input'
@@ -282,6 +309,9 @@ h1 {
   z-index: -1;
 }
 .form-input {
+  margin: 10px 0 10px 20px;
+}
+.input-other {
   margin: 10px 0 10px 20px;
 }
 .upload-btn {
