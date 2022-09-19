@@ -61,6 +61,8 @@ const TravelCardCreate = () => {
     setFileState(e.target.value);
   }
   //Function that will allow the user to add their own activity if the pre decided choices do not fit , option -other-
+
+  /* USE ICONS */
   const handleActivity = (e) => {
     if(e.target.value === 'Other'){
       setOtherActivity(true);
