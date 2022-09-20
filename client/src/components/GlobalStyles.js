@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import NinaW_climbs from "../images/NinaW_climbs.jpg";
+import MtnBanner from "../images/swiss-mtn-banner.jpg";
 
 //Global Styles file that will store colors and certain presets dimensions, used as required
 export default createGlobalStyle`
@@ -19,6 +20,8 @@ body {
   ${'' /* background-color:  #659C8F;//#A3C4BC; */}
   background-color: white;
   //background-image: url(${NinaW_climbs});
+  background-image: url(${MtnBanner});
+  background-repeat: no-repeat;
 }
 
 html, div, span, applet, object, iframe,

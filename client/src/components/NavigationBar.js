@@ -12,20 +12,20 @@ const NavigationBar = () => {
     <Wrapper>
     <GlobalStyles />
       <div className="nav-dropdown">
-      <DashboardBtn />
-      <AppTitle>
-        Swivy
-      </AppTitle>
+        <DashboardBtn />
+        <AppTitle>
+          Swivy
+        </AppTitle>
       </div>
-      <div>
+      {/* <div>
         <button 
           className="home-btn"
           onClick={() => navigate('/')}>
             <GiMountaintop />
-          <span 
-            className="span-text">
-            Home
-          </span>
+            <span 
+              className="span-text">
+                Home
+            </span>
         </button>
       </div>
       <button
@@ -33,20 +33,23 @@ const NavigationBar = () => {
         onClick={() => navigate('/profile')}>
         <GiFeather />
         <span className="span-text">Profile</span>
-      </button>
+      </button> */}
     </Wrapper>
   )
 }
 export default NavigationBar;
 
 const AppTitle = styled.div`
-color: white;
+@media screen and (max-width: 600px){
+  display: none;
+}
+color: black;
 font-size: 34px;
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif`
 
 const Wrapper = styled.div`
 display: flex;
-justify-content: space-evenly;
+flex-direction: flex-start;
 /* background-color: #071013; */
 /* background-color: transparent; */
 padding: 10px;
@@ -60,14 +63,14 @@ max-height: var(--max-height);
 } */
 .nav-dropdown {
   display: flex;
-  background-color: var(--color-black-blue);
+  /* background-color: var(--color-black-blue); */
   gap: 10px;
 }
 .menu-btn {
-    &:hover {
+    /* &:hover {
       background-color: var(--color-main-opal);
       cursor: pointer;
-    }
+    } */
   }
 .span-text {
   margin-left: 5px;

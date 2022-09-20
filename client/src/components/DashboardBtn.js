@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 //Component that creates a drop down menu on on any page to allow the user to navigate to the home, profile and other links
-export default function DashboardBtn() {
+const DashboardBtn = () => {
 	const { logout } = useAuth0();
 	let navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -18,14 +18,14 @@ export default function DashboardBtn() {
   };
   const handleClose = (e, value) => {
 		setAnchorEl(null);
-		if(value === 'profile'){
+		if(value === 'profile') {
 			console.log('if statement');
 			navigate('/profile');
 		}
-		else if(value === 'home'){
+		else if(value === 'home') {
 			navigate('/');
 		}
-		else if(value === 'logout'){
+		else if(value === 'logout') {
 			logout({returnTo: window.location.origin})
 		}
   };
@@ -38,9 +38,8 @@ export default function DashboardBtn() {
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        <BsThreeDotsVertical />
+        onClick={handleClick}>
+          <BsThreeDotsVertical />
       </Button>
       <Menu
         id="basic-menu"
@@ -49,8 +48,7 @@ export default function DashboardBtn() {
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
-        }}
-      >
+        }}>
         <MenuItem 
 					// onClick={(e) => handleClose(e)}>Profile</MenuItem>
 					onClick={(e) => handleClose(e, 'profile')}>Profile</MenuItem>
@@ -61,12 +59,24 @@ export default function DashboardBtn() {
   );
 }
 
+export default DashboardBtn;
+
 const Wrapper = styled.div`
-display: flex;
+  display: flex;
+
 .button-style {
-	background-color: white;
+	background-color: transparent;
 	color: black;
-	&:hover {
+  border: 2px solid black;
+  border-radius: 30px;
+  min-width: 20px;
+  min-height: 15px;
+  @media screen and (max-width: 440px) {
+    border-radius: 15px;
+    min-width: 8px;
+    min-height: 30px;
+  }
+	/* &:hover {
 		background-color: var(--color-main-opal);
-	}
+	} */
 }`

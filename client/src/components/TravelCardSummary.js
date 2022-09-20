@@ -7,6 +7,8 @@ import styled from "styled-components";
 import CircularProgress from '@mui/material/CircularProgress';
 
 import LoginPage from "./LoginPage";
+import CardButton from "./CardButton";
+
 //This component will GET all the travel cards from the database based on the logged in user.
 //Displays fetched cards in an organized list. The user will then be able to search or filter based on what they are looking for.
 const TravelCardSummary = () => {
@@ -57,6 +59,7 @@ const TravelCardSummary = () => {
         .then(data =>{
           // console.log(data);
           setAllCards(data.data);
+          console.log(data.data);
           setLoading(true);
         })
       } catch (error) {
@@ -125,6 +128,8 @@ const TravelCardSummary = () => {
       </ModalDiv>
       }
   </>
+    {/* <Banner alt='banner' src={MtnBanner}> */}
+    <CardButton />
     {
       loading ? allCards.map((card, index) =>{
       return (
@@ -173,6 +178,12 @@ export default TravelCardSummary;
 /* for search: Application adapted to iOS, needs responsive CSS. Testing phone size: https://kinsta.com/blog/responsive-web-design/
 STYLED COMPONENTS WILL REQUIRE mobile adapting 
 Currently adapted to 375 x 667 @ 100%, no throttling, portrait mode*/
+
+// const Banner = styled.img`
+// width: auto;
+// height: 950px;
+// z-index: -1;
+// `
 const Button = styled.button`
 display: flex;
 flex-direction: column;
