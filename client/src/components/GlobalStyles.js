@@ -22,6 +22,7 @@ body {
   //background-image: url(${NinaW_climbs});
   background-image: url(${MtnBanner});
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 html, div, span, applet, object, iframe,
