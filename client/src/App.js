@@ -98,13 +98,13 @@ background-color: var(--color-background);
   position: fixed;
   top: 0;
   width: 100%;
-}
-.footer-span {
-  overflow: auto;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
 }`
+// .footer-span {
+//   overflow: auto;
+//   position: fixed;
+//   bottom: 0;
+//   width: 100%;
+// }
 const LoadingCircle = styled.div`
 margin-top: 20vh;
 margin-left: 45vw;`

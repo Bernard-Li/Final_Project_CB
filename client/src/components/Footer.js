@@ -19,13 +19,11 @@ export default Footer;
 
 const Wrapper = styled.div`
 display: flex;
-position: fixed;
+/* position: fixed; */
 /* border: 2px solid pink; */
 justify-content: center;
 align-items: center;
 /* justify-content: space-evenly; */
-bottom: 0;
-left: 0;
 width: 100%;
 background-color: #071013;
 height: var(--max-height);
