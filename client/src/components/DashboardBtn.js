@@ -71,12 +71,14 @@ const Wrapper = styled.div`
   border-radius: 30px;
   min-width: 20px;
   min-height: 15px;
+  transition: 0.5s ease-in-out;
   @media screen and (max-width: 440px) {
     border-radius: 15px;
     min-width: 8px;
     min-height: 30px;
   }
-	/* &:hover {
-		background-color: var(--color-main-opal);
-	} */
+	&:hover {
+		background-color: white;
+    opacity: 0.8;
+	}
 }`

@@ -271,6 +271,8 @@ flex-direction: column;
 justify-content: space-between;
 align-items: center;
 margin-bottom: 50px;
+font-weight: bolder;
+background-color: rgba(255, 255, 255, 0.25); //decimal dictates opacity of the background frame
 h1 {
   margin: 80px 60px 0 80px;
 }
@@ -317,9 +319,14 @@ h1 {
   margin: 10px 0 10px 20px;
 }
 .upload-btn {
-  color: white;
+  color: black;
+  font-weight: bold;
   width: 100%;
   border: 2px solid var(--color-font-color);
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.4); //decimal dictates opacity of the background frame
+  }
 }
 .text-input-div {
   margin: 10px 0 10px 20px;

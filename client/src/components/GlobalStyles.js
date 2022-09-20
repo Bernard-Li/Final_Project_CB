@@ -41,12 +41,17 @@ html, div, span, applet, object, iframe,
     margin: 0px;
     //color: #042A2B;
     color: black;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    ${'' /* font-family: 'Mr Dafoe', cursive; */}
   }
 //lots of different hues of brown brown-red tried
 button {
   border: none;
-  border-radius: 5px;
-  padding: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+  ${'' /* border-radius: 5px; */}
+  ${'' /* padding: 10px; */}
   ${'' /* background-color: #352315; //Umber, orange=#D77A61 //Umber maybe second choice */}
   ${'' /* background-color: #432676; //walnut */}
   ${'' /* background-color: #3b1e08; //brunette */}
@@ -54,7 +59,7 @@ button {
   ${'' /* background-color: #652A0E; //cinnamon */} //ok to cinnamon
   ${'' /* background-color: #481F01; //syrup ****** Maybe first choice? */}
 ${'' /* background-color: #A52A2A; //red-brown */}
-background-color: #659C8F; // opal
+${'' /* background-color: #659C8F; // opal */}
 }`
 
 

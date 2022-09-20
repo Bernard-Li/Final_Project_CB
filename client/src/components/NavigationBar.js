@@ -44,8 +44,12 @@ const AppTitle = styled.div`
   display: none;
 }
 color: black;
-font-size: 34px;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif`
+font-size: 46px;
+font-weight: bolder;
+font-family: 'Dancing Script', cursive;
+/* font-family: 'Mr Dafoe', cursive; */
+//font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif` //DANCING SCRIPT, GOOGLE
+
 
 const Wrapper = styled.div`
 display: flex;

@@ -16,6 +16,7 @@ const TravelCard = () => {
   const [travelCardId, setTravelCardId] = useState(null);
   //represents the card that was sent with useNavigation from the modal "view full card"
   const userCard = location.state.travelCard;
+  console.log(userCard);
     
   //Function that will show the date on which the card was created, in an expanded format using moment
   const createdOn = () => {
@@ -216,7 +217,7 @@ span {
   min-width: 285px;
 }
 .delete-btn {
-  color: white;
+  color: black;
   margin-top: 10px;
   border: 2px solid var(--color-font-color);
 }
@@ -231,6 +232,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+background-color: rgba(255, 255, 255, 0.8); //decimal dictates opacity of the background frame
 margin-top: 75px;
 max-width: 375px;
 margin-bottom: 75px;`
