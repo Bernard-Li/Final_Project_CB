@@ -23,6 +23,7 @@ const CardButton = (props) => { //Will take in destination and date? for the cus
 	return (
     <Wrapper
 			onClick={() => navigate('/viewtravelcard', {state: {travelCard: props.currentCard}})}>
+			<GoGlobe size={20}/>
 			<span
 				className="title-span">
 					{props.destination}</span>
@@ -31,7 +32,6 @@ const CardButton = (props) => { //Will take in destination and date? for the cus
 					{props.date}</span>
 			<div
 				className="goglobe-icon">
-			{/* <GoGlobe size={50}/> */}
 			</div>
     </Wrapper>
   )
@@ -45,8 +45,9 @@ flex-direction: row;
 /* justify-content: center; */
 align-items: center;
 min-height: 60px;
-min-width: 280px;
-max-width: 420px;
+/* min-width: 400px;
+max-width: 400px; */
+width: 375px;
 margin: 8px;
 padding: 8px;
 border: 4px solid black;
@@ -65,6 +66,7 @@ background-color: white;
 	font-size: 28px;
 	font-weight: bolder;
 	margin-right: 16px;
+	margin-left: 16px;
 }
 .date-span {
 	font-style: italic;

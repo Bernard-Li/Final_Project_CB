@@ -1,3 +1,4 @@
+//Pagination resource : https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";

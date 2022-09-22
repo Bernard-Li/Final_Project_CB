@@ -9,6 +9,7 @@
     "@cloudinary/url-gen": "^1.8.6",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@geoapify/geocoder-autocomplete": "^1.4.2",
     "@mui/material": "^5.10.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
