@@ -47,6 +47,7 @@ const travelCardUpload = async (req, res) =>{
         activity: formData.activity,
         notes: formData.notes,
         nearestCity: formData.nearestCity,
+        weatherInfo: formData.weather,
       }
     })
   

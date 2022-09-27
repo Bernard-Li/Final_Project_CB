@@ -25,14 +25,14 @@ const Profile = () => {
         <p>{user.email}</p>
         </div>
       </div>
-      <Footer />
+      
       </>
       :
       <>
       <div className="no-user">
         <h2>Please login to view profile</h2>
       </div>
-      <Footer />
+      
       </>
     }
     </Wrapper>

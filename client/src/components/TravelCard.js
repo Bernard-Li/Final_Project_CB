@@ -2,6 +2,7 @@ import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 //Component used to show the full detailed traveled card, directed from the modal preview of each card on the summary list
 //This is the first time the uploaded image (if applicable) will be shown back to the user from the Cloudinary API.
 //STRETCH if time: allow the user to upload or delete their card from this page
@@ -15,6 +16,7 @@ const TravelCard = () => {
   const [travelCardId, setTravelCardId] = useState(null);
   //represents the card that was sent with useNavigation from the modal "view full card"
   const userCard = location.state.travelCard;
+  console.log(userCard);
     
   //Function that will show the date on which the card was created, in an expanded format using moment
   const createdOn = () => {
@@ -95,10 +97,10 @@ const TravelCard = () => {
   //Entering anything but the string yes will refresh the page and do nothing. DELETE fetch will only trigger with correct confirmation
   //Redirect to homepage after task is completed.
   useEffect(() => {
-    if(travelCardId){
+    if(travelCardId) {
       const answer = prompt('Are you sure you want to delete this card? -yes/no-');
-      if(answer){
-        if(answer.toLowerCase() === 'yes'){
+      if(answer) {
+        if(answer.toLowerCase() === 'yes') {
           try {
             fetch(`/api/delete-card/${travelCardId}`, {
               method: 'DELETE',
@@ -108,7 +110,7 @@ const TravelCard = () => {
             })
             .then(res => res.json())
             .then(data => {
-              if(data.status === 200){
+              if(data.status === 200) {
                 alert('Card successfully deleted! Redirecting to homepage');
                 navigate('/');
               }
@@ -142,55 +144,55 @@ const TravelCard = () => {
   //The two mandatory field are the destination and travel date(s). Everything else is going to be option 
   return (
     <Wrapper>
-    <GlobalStyles />
-    <Container className="container-div">
-      <h1>{userCard.data.destination}</h1>
-      <div className="travel-date-div">{dateToText()}</div>
-      { !(userCard.media === 'no-media-selected') &&
-      <ImageContainer src={userCard.media}/>
-      }
-      <div className="activity-div">
-      <p><span>Activity</span>: {userCard.data.activity}</p>
-      </div>
-      <div className="notes-div">
-      { userCard.data.notes &&
-      <p><span>Notes</span>: {userCard.data.notes}</p>
-      }
-      </div>
-      { weatherDisplay &&
-      <div className="weather-container">
-        <h3>Weather on the first day of travel</h3>
-        <span>{weatherHistory.condition.text}</span>
-        <img alt='forecast visual representation' src={weatherHistory.condition.icon}></img>
-        <p>High of: {weatherHistory.maxtemp_c} C°</p>
-        <p>Low of: {weatherHistory.mintemp_c} C°</p>
-        <p>Humidy of: {weatherHistory.avghumidity} %</p>
-      </div>
-      }
-      { currentWeather &&
-        <div className="weather-container">
-        <h3>Today in {currentWeather.data.location.name}</h3>
-        <h3>{currentWeather.data.location.country} *</h3>
-        <span>{currentWeather.data.current.condition.text}</span>
-        <img alt='forecast visual representation' src={currentWeather.data.current.condition.icon}></img>
-        <p>Feels like: {currentWeather.data.current.feelslike_c} C°</p>
-        <p>Rain: {currentWeather.data.current.precip_mm} mm</p>
-        <p>Humidy of: {currentWeather.data.current.humidity} %</p>
+      <GlobalStyles />
+      <Container className="container-div">
+        <h1>{userCard.data.destination}</h1>
+        <div className="travel-date-div">{dateToText()}</div>
+          { !(userCard.media === 'no-media-selected') &&
+          <ImageContainer src={userCard.media}/>
+          }
+        <div className="activity-div">
+          <p><span>Activity</span>: {userCard.data.activity}</p>
+          </div>
+        <div className="notes-div">
+          { userCard.data.notes &&
+          <p><span>Notes</span>: {userCard.data.notes}</p>
+          }
         </div>
-      }
-      <p><span>Card created on</span>: {createdOn()}</p>
-      <button
-        className="delete-btn"
-        onClick={() => setTravelCardId(userCard._id)}>
-        Delete card
-      </button>
-      { currentWeather &&
-      <div className="linkto-weatherapi">
-      <p>*Weather data supplied by <a href='https://www.weatherapi.com/'>www.weatherapi.com</a> based on nearest city.</p>
-      </div>
+        { weatherDisplay &&
+        <div className="weather-container">
+          <h3>Weather on the first day of travel</h3>
+            <span>{weatherHistory.condition.text}</span>
+          <img alt='forecast visual representation' src={weatherHistory.condition.icon}></img>
+          <p>High of: {weatherHistory.maxtemp_c} C°</p>
+          <p>Low of: {weatherHistory.mintemp_c} C°</p>
+          <p>Humidy of: {weatherHistory.avghumidity} %</p>
+        </div>
+        }
+        { currentWeather &&
+          <div className="weather-container">
+            <h3>Today in {currentWeather.data.location.name}</h3>
+            <h3>{currentWeather.data.location.country} *</h3>
+              <span>{currentWeather.data.current.condition.text}</span>
+            <img alt='forecast visual representation' src={currentWeather.data.current.condition.icon}></img>
+            <p>Feels like: {currentWeather.data.current.feelslike_c} C°</p>
+            <p>Rain: {currentWeather.data.current.precip_mm} mm</p>
+            <p>Humidy of: {currentWeather.data.current.humidity} %</p>
+          </div>
+        }
+        <p><span>Card created on</span>: {createdOn()}</p>
+        <button
+          className="delete-btn"
+          onClick={() => setTravelCardId(userCard._id)}>
+          Delete card
+        </button>
+        { currentWeather &&
+        <div className="linkto-weatherapi">
+        <p>*Weather data supplied by <a href='https://www.weatherapi.com/'>www.weatherapi.com</a> based on nearest city.</p>
+        </div>
 
-      }
-    </Container>
+        }
+      </Container>
     </Wrapper>
   )
 }
@@ -215,7 +217,7 @@ span {
   min-width: 285px;
 }
 .delete-btn {
-  color: white;
+  color: black;
   margin-top: 10px;
   border: 2px solid var(--color-font-color);
 }
@@ -230,6 +232,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+background-color: rgba(255, 255, 255, 0.8); //decimal dictates opacity of the background frame
 margin-top: 75px;
 max-width: 375px;
 margin-bottom: 75px;`

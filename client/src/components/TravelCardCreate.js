@@ -23,13 +23,17 @@ The folder is named "Swivy_uploads" and it stored under the upload_presets in MY
 
 const TravelCardCreate = () => {
 
+  // const geoapifyAuto = process.env.GEOAPIFY_AUTOCOMPLETE;
+  
   //useAuth0 to determine which user is logged in  
   //formInput is a state that will store the user selected date in the input form below
   //previewSource will store a base64 encoded version of the image the user uploads
   let navigate = useNavigate();
   const { user } = useAuth0();
   const dateCreated = new Date(); 
-
+  const visualCrossingKey = process.env.VISUAL_CROSSING;
+  // console.log(visualCrossingKey);
+  
   //used to format date passed back by the datepicker into more legible data
   const moment = require('moment');
 
@@ -39,6 +43,7 @@ const TravelCardCreate = () => {
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [otherActivity, setOtherActivity] = useState(false);
+  const [weatherInfo, setWeatherInfo] = useState(null);
 
   //Final state object that will be passed to the backend, and stored in mongoDB
   const [formInput, setFormInput] = useState({
@@ -48,6 +53,7 @@ const TravelCardCreate = () => {
     activity: 'None selected',
     notes: null,
     nearestCity: null,
+    weatherInfo : {},
   })
   const [fileState, setFileState] = useState('');
   const [previewSource, setPreviewSource] = useState(null);
@@ -108,21 +114,93 @@ const TravelCardCreate = () => {
     e.preventDefault();
     uploadTravelCard();
     setIsDisabled(true);
+    // fetchWeatherData();
   }
+  // const fetchWeatherData = async () => {
+  //   try {
+  //     //call weather data here
+  //     console.log(formInput.dateTraveled);
+  //     await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${formInput.destination}/${formInput.dateTraveled[0]}/${formInput.dateTraveled[1]}?unitGroup=metric&key=6D2AJEPNQC7PTS6B47VNVC26A&contentType=json`)
+  //     .then(res => res.json())
+  //     .then( async (data) => {
+  //       // console.log(data); //data.resolvedAddress "city, province, country"
+  //       //data.days[array] data.days[0] for one day ++ for other days.
+  //       // const numberOfDays = data.days.length;
+        
+  //       await data.days.forEach(day => {
+  //         setWeatherInfo({...weatherInfo, 
+  //           tempMax : day.tempmax,
+  //           tempMin : day.tempmin,
+  //           conditions: day.conditions,
+  //           description: day.description,
+  //           humidity: day.humidity,
+  //           precipType: day.preciptype,
+  //           precipitation: day.precip,
+  //           uvIndex: day.uvindex,
+  //           icon: day.icon,
+  //       })
+  //       })
+  //       console.log(weatherInfo);
+  //     })
+  //   }
+  //   catch (error) {
+  //     console.log(error);
+  //     setWeatherInfo({...weatherInfo,
+  //       error: 400,
+  //       errorMessage: error,
+  //       message: 'Unable to find weather information for specified location'
+  //     })
+  //   }
+  // }
     
   //Function that will take the encodedImage, formInput state and the user => POST to the backend
-  const uploadTravelCard = async () =>{
+  const uploadTravelCard = async () => {
+    try {
+      //call weather data here
+      console.log(formInput.dateTraveled);
+      await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${formInput.destination}/${formInput.dateTraveled[0]}/${formInput.dateTraveled[1]}?unitGroup=metric&key=6D2AJEPNQC7PTS6B47VNVC26A&contentType=json`)
+      .then(res => res.json())
+      .then((data) => {
+        // console.log(data); //data.resolvedAddress "city, province, country"
+        //data.days[array] data.days[0] for one day ++ for other days.
+        // const numberOfDays = data.days.length;
+        setFormInput({...formInput, 
+        weatherInfo: data.days});
+        // data.days.forEach(day => {
+        //   setWeatherInfo({...weatherInfo, 
+        //     tempMax : day.tempmax,
+        //     tempMin : day.tempmin,
+        //     conditions: day.conditions,
+        //     description: day.description,
+        //     humidity: day.humidity,
+        //     precipType: day.preciptype,
+        //     precipitation: day.precip,
+        //     uvIndex: day.uvindex,
+        //     icon: day.icon,
+        // })
+        // })
+        // console.log(weatherInfo);
+      })
+    }
+    catch (error) {
+      console.log(error);
+      setWeatherInfo({...weatherInfo,
+        error: 400,
+        errorMessage: error,
+        message: 'Unable to find weather information for specified location'
+      })
+    }
     if(formInput.destination && formInput.dateTraveled){
       setIsDisabled(true);
     try {
         await fetch('/api/upload-travelcard', {
           method: 'POST',
-          body: JSON.stringify({ data: previewSource, user: user, form: formInput}),
+          body: JSON.stringify({ data: previewSource, user: user, form: formInput, weather: weatherInfo}),
           headers: {
             'Content-type' : 'application/json'
           }
         })
-        navigate('/');
+        // navigate('/');
       } catch (error) {
         console.log(`uploadTravelCard error = ${error}`);
       }
@@ -132,10 +210,22 @@ const TravelCardCreate = () => {
     }
   }
 
+  // const autocomplete = new GeocoderAutocomplete(
+  //   document.getElementById("autocomplete"),
+  //   geoapifyAuto,
+  //   {
+  //     //Geoapify options
+  //   });
+  // autocomplete.on('select', (location) => {
+  //   //check selected location here
+  // });
+  // autocomplete.on('suggestions', (suggestions) => {
+  //   //check suggestions here
+  // });
+
   return (
     <Wrapper>
       <h1>New Travel Card</h1>
-      <span>* mandatory fields</span>
       <form 
         className='form'
         onSubmit={handleSubmit}>
@@ -253,6 +343,7 @@ const TravelCardCreate = () => {
         </button>
         </div>
       </form>
+      <p>* mandatory fields</p>
       {previewSource &&
         <>
         <span className="image-label">Image preview below</span>
@@ -271,6 +362,10 @@ flex-direction: column;
 justify-content: space-between;
 align-items: center;
 margin-bottom: 50px;
+
+label {
+  font-weight: bolder;
+}
 h1 {
   margin: 80px 60px 0 80px;
 }
@@ -290,8 +385,15 @@ h1 {
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: flex-end;
+  background-color: rgba(255, 255, 255, 0.25); //decimal dictates opacity of the background frame
   margin: 10px;
-
+  padding: 8px;
+  @media screen and (max-width: 375px) {
+    padding: 38px;
+  }
+}
+.autocomplete-container {
+  position: relative;
 }
 .date-div {
   display: flex;
@@ -308,6 +410,7 @@ h1 {
   justify-content: center;
   align-items: center;
   margin: 10px 0 10px 20px;
+  font-weight: normal !important;
   z-index: -1;
 }
 .form-input {
@@ -317,9 +420,14 @@ h1 {
   margin: 10px 0 10px 20px;
 }
 .upload-btn {
-  color: white;
+  color: black;
+  font-weight: bold;
   width: 100%;
   border: 2px solid var(--color-font-color);
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.4); //decimal dictates opacity of the background frame
+  }
 }
 .text-input-div {
   margin: 10px 0 10px 20px;
