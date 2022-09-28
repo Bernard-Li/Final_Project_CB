@@ -42,56 +42,7 @@ const TravelCard = () => {
       return ( <p><span>Start Date</span>: {textDateStart}</p> );
     }
   }
-  //Gets the weather on the day of the travel (using first day as reference only), goal is a gentle reminder of the conditions (easy to forget a few months later)
-  //Fetches from weather API
-  // useEffect(() => {
-  //   const getWeatherHistory = async () => {
-  //     if(userCard.data.nearestCity){
-  //       try {
-  //         await fetch(`/api/getWeatherHistory/?location=${userCard.data.nearestCity}&date=${userCard.data.date[0][0]}`)
-  //         .then(res => res.json())
-  //         .then(async (data) => {
-  //           const weatherObject = await data.data.forecast.forecastday[0].day;
-  //           setWeatherHistory(weatherObject);
-  //           setWeatherDisplay(true);
-  //         })
-  //       } catch (error) {
-  //           console.log(error);
-  //           return (
-  //             <>
-  //               <h4>Error occured with the weather history!</h4>
-  //             </>
-  //           )
-  //       }
-  //     }
-  //   }
-  //   getWeatherHistory();
-  // },[])
 
-  //Gets the current weather of the location
-  // useEffect(() => {
-  //   const getCurrentWeather = async () => {
-  //     if(userCard.data.nearestCity) {
-  //       try {
-  //         await fetch(`/api/currentweather/?local=${userCard.data.nearestCity}`)
-  //         .then(res => res.json())
-  //         .then(async (data) => {
-  //           console.log(data);
-  //           const currentWeather = await data;
-  //           setCurrentWeather(currentWeather);
-  //         })
-  //       } catch (error) {
-  //           console.log(error);
-  //           return (
-  //             <>
-  //               <h4>Error occured with the weather history!</h4>
-  //             </>
-  //           )
-  //       }        
-  //     }
-  //   }
-  //   getCurrentWeather();
-  // },[])
   //Function that will handle deleting the card. It will send the _id of the card to the endpoint in the backend
   //It will also prompt the user to make sure that they actually want to delete their card. 
   //Entering anything but the string yes will refresh the page and do nothing. DELETE fetch will only trigger with correct confirmation
@@ -137,7 +88,6 @@ const TravelCard = () => {
         setTravelCardId(null);
       }
     }
-    
   }, [travelCardId])
 
   //Conditional rendering of HTML tags depending on whether or not the information was registered by the user
@@ -219,24 +169,32 @@ span {
 .delete-btn {
   color: black;
   margin-top: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  font-weight: bold;
   border: 2px solid var(--color-font-color);
+  &:hover{
+    background-color: #D12404; //hex 'candy'
+    opacity: 0.5;
+  }
 }
-
 .linkto-weatherapi {
   margin: 10px;
   font-size: 12px;
 }`
-
+ 
 const Container = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+border-radius: 8px;
 background-color: rgba(255, 255, 255, 0.8); //decimal dictates opacity of the background frame
 margin-top: 75px;
 max-width: 375px;
-margin-bottom: 75px;`
-
+margin-bottom: 75px;
+padding: 16px;
+`
 const ImageContainer = styled.img`
 display: flex;
 height: auto;

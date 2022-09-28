@@ -210,19 +210,6 @@ const TravelCardCreate = () => {
     }
   }
 
-  // const autocomplete = new GeocoderAutocomplete(
-  //   document.getElementById("autocomplete"),
-  //   geoapifyAuto,
-  //   {
-  //     //Geoapify options
-  //   });
-  // autocomplete.on('select', (location) => {
-  //   //check selected location here
-  // });
-  // autocomplete.on('suggestions', (suggestions) => {
-  //   //check suggestions here
-  // });
-
   return (
     <Wrapper>
       <h1>New Travel Card</h1>
@@ -272,9 +259,6 @@ const TravelCardCreate = () => {
         </label>
           <select 
             className="select-dropdown"
-            // onChange={(e) => {
-            //   setFormInput({...formInput, activity: e.target.value})
-            //   }}
             onChange={handleActivity}
               >
             <option value='None selected'>-Select Activity-</option>
@@ -342,11 +326,15 @@ const TravelCardCreate = () => {
           }
         </button>
         </div>
-      </form>
       <p>* mandatory fields</p>
+      {
+        previewSource &&
+        <span className="image-label">Image preview below</span>
+      }
+      </form>
       {previewSource &&
         <>
-        <span className="image-label">Image preview below</span>
+        {/* <span className="image-label">Image preview below</span> */}
         <img className='preview-img' alt='previewed user upload' src={previewSource} />
         </>
       }
@@ -362,7 +350,6 @@ flex-direction: column;
 justify-content: space-between;
 align-items: center;
 margin-bottom: 50px;
-
 label {
   font-weight: bolder;
 }
@@ -378,14 +365,14 @@ h1 {
 .destination-input {
   margin: 10px 0 10px 20px;
   min-width:  300px;
-  
 }
 .form {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: rgba(255, 255, 255, 0.25); //decimal dictates opacity of the background frame
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.8); //decimal dictates opacity of the background frame
   margin: 10px;
   padding: 8px;
   @media screen and (max-width: 375px) {
@@ -419,14 +406,21 @@ h1 {
 .input-other {
   margin: 10px 0 10px 20px;
 }
+.upload-btn-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .upload-btn {
   color: black;
   font-weight: bold;
-  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  /* width: 100%; */
   border: 2px solid var(--color-font-color);
   &:hover {
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.4); //decimal dictates opacity of the background frame
+    background-color: rgba(155, 255, 255, 0.4); //decimal dictates opacity of the background frame
   }
 }
 .text-input-div {
@@ -445,9 +439,14 @@ textarea {
 }
 .image-label {
   margin: 10px;
+  font-weight: bolder;
+  
 }
   .preview-img {
     height: auto;
     max-width: 88vw;
+    @media screen and (min-width: 575px){
+      max-width: 30%;
+    }
 }`
 

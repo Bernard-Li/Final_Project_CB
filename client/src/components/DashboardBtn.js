@@ -66,8 +66,8 @@ const Wrapper = styled.div`
 
 .button-style {
 	background-color: transparent;
-	color: black;
-  border: 2px solid black;
+	color: white;
+  border: 2px solid white;
   border-radius: 30px;
   min-width: 20px;
   min-height: 15px;

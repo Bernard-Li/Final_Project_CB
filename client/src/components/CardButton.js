@@ -51,6 +51,7 @@ width: 375px;
 margin: 8px;
 padding: 8px;
 border: 4px solid black;
+border-radius: 8px;
 border-top-right-radius: 5px;
 border-bottom-right-radius: 5px;
 border-bottom-left-radius: 5px;
