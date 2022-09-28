@@ -202,7 +202,7 @@ const TravelCardCreate = () => {
             'Content-type' : 'application/json'
           }
         })
-        // navigate('/');
+        navigate('/');
       } catch (error) {
         console.log(`uploadTravelCard error = ${error}`);
       }
