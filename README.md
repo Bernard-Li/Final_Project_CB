@@ -14,7 +14,6 @@ Do you want to add more information? The travel card creation page allows option
 - logging an activity
 - uploading a photo
 - adding your own notes
-- adding historical weather data and viewing current weather forecast
 
 Here is a sample of a user creating a new 'Travel Card':
 
