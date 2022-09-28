@@ -25,13 +25,6 @@ const TravelCardSummary = () => {
 
   //State to store what type of filter has been selected, based on the dropdown option values : none - by default is categorized based on date created, dateNewFirst, dateOldFirst, alphaSort 
   const [filter, setFilter] = useState('none');
-  
-  //Function to handle the modal toggle and shows the info based on what the user clicked on - passed in param VALUE
-  const toggleModal = (e, value) => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth'}); //scrolls to top of page to view modal
-    setCurrentCard(value);
-    setModal(!modal);
-  }
 
   //Calculates the number of days that have elapsed on the trip. Function is called when the modal is toggled to true
   const tripDuration = () => {
@@ -51,7 +44,7 @@ const TravelCardSummary = () => {
   //Function that passes the strig code filtered selected by user to the state filter, will be used in the backend
   const handleFilter = (e, filter) => {
     // setFilter(e.target.value); 
-    console.log(e.target.value);
+    console.log(e.target);
     setFilter(filter); 
   }
   //Request to get all the travel cards in the database based on the user. Will refetch if the filter is changed e.g. Alphabetical filter appliaed by the user
@@ -63,7 +56,7 @@ const TravelCardSummary = () => {
         .then(data =>{
           // console.log(data);
           setAllCards(data.data);
-          console.log(data.data);
+          // console.log(data.data);
           setLoading(true);
         })
       } catch (error) {
@@ -109,6 +102,7 @@ const TravelCardSummary = () => {
       className="alpha-span">
       <button
         className="sort-btn"
+        value="atoz"
         onClick={(e) => handleFilter(e, 'alphaSort')}>
         <BsSortAlphaDown size={30} />
       </button>
@@ -206,19 +200,31 @@ span {
 }
 .sort-btn {
   border-radius: 8px;
+  border: 2px solid black;
+  transition: 0.5s ease;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(155, 255, 255, 0.4); //decimal dictates opacity of the background frame
+  }
 }
 `
 const CreateCard = styled.button`
   border: none;
   background-color: white;
+  border: 2px solid black;
   border-radius: 8px;
+  font-weight: bolder;
   margin: 8px;
-  transition: all 0.25s ease;
   padding: 8px;
+  transition: all 0.25s ease;
   &:hover {
+    cursor: pointer;
+    background-color: rgba(155, 255, 255, 0.4); //decimal dictates opacity of the background frame
+  }
+  /* &:hover {
     background-color: rgba(255, 255, 255, 0.4); //decimal dictates opacity of the background frame
     font-weight: bolder;
-}
+} */
 &:active {
   transform: translateY(2px);
 }`

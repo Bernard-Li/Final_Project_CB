@@ -29,4 +29,12 @@ display: flex;
   font-weight: bolder;
   width: 108px;
   height: 40px;
+  border-radius: 8px;
+  border: 2px solid black;
+  transition: 0.5s ease;
+  &:hover{
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.4);
+    
+  }
 }`

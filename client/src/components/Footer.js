@@ -33,6 +33,7 @@ align-items: center;
 width: 100%;
 background-color: #071013;
 height: var(--max-height);
+height: 75px;
 /* height: calc(100% - 612px); //same thing as var--maxheight, where the screen size is 667-55  */
 .github-btn {
   border-radius: 15px;

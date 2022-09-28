@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
+import { MdDirectionsRun, MdDownhillSkiing, MdSnowboarding, MdWater, MdOutlineHiking, MdOutlineCreate, MdOutlineDirectionsBike } from "react-icons/md";
 //Import from an NPM packagee called react-datepicker @https://www.npmjs.com/package/react-datepicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -70,6 +71,7 @@ const TravelCardCreate = () => {
 
   /* USE ICONS */
   const handleActivity = (e) => {
+    e.preventDefault();
     if(e.target.value === 'Other'){
       setOtherActivity(true);
     }
@@ -155,41 +157,41 @@ const TravelCardCreate = () => {
     
   //Function that will take the encodedImage, formInput state and the user => POST to the backend
   const uploadTravelCard = async () => {
-    try {
-      //call weather data here
-      console.log(formInput.dateTraveled);
-      await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${formInput.destination}/${formInput.dateTraveled[0]}/${formInput.dateTraveled[1]}?unitGroup=metric&key=6D2AJEPNQC7PTS6B47VNVC26A&contentType=json`)
-      .then(res => res.json())
-      .then((data) => {
-        // console.log(data); //data.resolvedAddress "city, province, country"
-        //data.days[array] data.days[0] for one day ++ for other days.
-        // const numberOfDays = data.days.length;
-        setFormInput({...formInput, 
-        weatherInfo: data.days});
-        // data.days.forEach(day => {
-        //   setWeatherInfo({...weatherInfo, 
-        //     tempMax : day.tempmax,
-        //     tempMin : day.tempmin,
-        //     conditions: day.conditions,
-        //     description: day.description,
-        //     humidity: day.humidity,
-        //     precipType: day.preciptype,
-        //     precipitation: day.precip,
-        //     uvIndex: day.uvindex,
-        //     icon: day.icon,
-        // })
-        // })
-        // console.log(weatherInfo);
-      })
-    }
-    catch (error) {
-      console.log(error);
-      setWeatherInfo({...weatherInfo,
-        error: 400,
-        errorMessage: error,
-        message: 'Unable to find weather information for specified location'
-      })
-    }
+    // try {
+    //   //call weather data here
+    //   console.log(formInput.dateTraveled);
+    //   await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${formInput.destination}/${formInput.dateTraveled[0]}/${formInput.dateTraveled[1]}?unitGroup=metric&key=6D2AJEPNQC7PTS6B47VNVC26A&contentType=json`)
+    //   .then(res => res.json())
+    //   .then((data) => {
+    //     // console.log(data); //data.resolvedAddress "city, province, country"
+    //     //data.days[array] data.days[0] for one day ++ for other days.
+    //     // const numberOfDays = data.days.length;
+    //     setFormInput({...formInput, 
+    //     weatherInfo: data.days});
+    //     // data.days.forEach(day => {
+    //     //   setWeatherInfo({...weatherInfo, 
+    //     //     tempMax : day.tempmax,
+    //     //     tempMin : day.tempmin,
+    //     //     conditions: day.conditions,
+    //     //     description: day.description,
+    //     //     humidity: day.humidity,
+    //     //     precipType: day.preciptype,
+    //     //     precipitation: day.precip,
+    //     //     uvIndex: day.uvindex,
+    //     //     icon: day.icon,
+    //     // })
+    //     // })
+    //     // console.log(weatherInfo);
+    //   })
+    // }
+    // catch (error) {
+    //   console.log(error);
+    //   setWeatherInfo({...weatherInfo,
+    //     error: 400,
+    //     errorMessage: error,
+    //     message: 'Unable to find weather information for specified location'
+    //   })
+    // }
     if(formInput.destination && formInput.dateTraveled){
       setIsDisabled(true);
     try {
@@ -243,7 +245,7 @@ const TravelCardCreate = () => {
               startDate={startDate}
               endDate={endDate}
               required='required'
-              placeholderText="Select a date"
+              placeholderText="MM/DD/YYYY"
               onChange={(update) => {
                 handleConversion(update);
                 setDateRange(update);
@@ -270,6 +272,39 @@ const TravelCardCreate = () => {
             <option value='Climb'>Climb</option>
             <option value='Other'>Other</option>
           </select>
+          <ActivityContainer>
+            <button
+              className="activity-btn"
+              onClick={handleActivity}>
+            <MdDownhillSkiing size={16}/> /
+            <MdSnowboarding size={16}/>
+            </button>
+            <button
+              className="activity-btn"
+              onClick={handleActivity}>
+            <MdDirectionsRun size={16}/>
+            </button>
+            <button
+              className="activity-btn"
+              onClick={handleActivity}>
+            <MdWater size={16}/>
+            </button>
+            <button
+              className="activity-btn"
+              onClick={handleActivity}>
+            <MdOutlineHiking size={16}/>
+            </button>
+            <button
+              className="activity-btn"
+              onClick={handleActivity}>
+            <MdOutlineDirectionsBike size={16} />
+            </button>
+            <button
+              className="activity-btn"
+              onClick={handleActivity}>
+            <MdOutlineCreate size={16} />
+            </button>
+          </ActivityContainer>
           { otherActivity &&
           <label>Other Activity 
           <div>
@@ -343,6 +378,17 @@ const TravelCardCreate = () => {
 }
 
 export default TravelCardCreate;
+
+const ActivityContainer = styled.div`
+display: flex;
+border: 2px solid black;
+padding: 16px;
+justify-content: center;
+align-items: center;
+.activity-btn {
+  margin: 8px;
+}
+`
 
 const Wrapper = styled.div`
 display: flex;
@@ -440,7 +486,6 @@ textarea {
 .image-label {
   margin: 10px;
   font-weight: bolder;
-  
 }
   .preview-img {
     height: auto;

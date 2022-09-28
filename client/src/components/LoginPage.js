@@ -29,10 +29,11 @@ const Homepage = () =>{
   return (
     <Wrapper>
       { !user &&
-        <>
+      <>
         <div className="title-div">
           <h1>Welcome</h1>
         </div>
+        <Container>
         <div className="text-div"> 
           <p>Please use your Google account to get started</p>
           {/* <h4>Quicky and easy to use on the go: </h4> */}
@@ -44,7 +45,8 @@ const Homepage = () =>{
           <ImageSliderBar slides={ImageSlideData}/>
           </div>
           <Footer />
-        </>
+        </Container>
+      </>
       }
       { isAuthenticated &&
         <>
@@ -57,11 +59,34 @@ const Homepage = () =>{
 
 export default Homepage;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px; 
+  align-items: center;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.4);
+`
 const Wrapper = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+h1 {
+  margin-bottom: 8px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 52px;
+}
+p {
+  font-weight: bolder;
+  font-size: 16px;
+}
+button {
+  padding: 10px;
+  color: white;
+  margin: 10px;
+}
 .title-div {
   margin: 65px 65px 0 65px;
   display: flex;
@@ -73,25 +98,17 @@ align-items: center;
   display: flex;
   flex-direction: column;
   margin: 10px;
+  margin-bottom: 16px;
   justify-content: center;
   align-items: center;
   @media screen and (max-width: 440px) {
     max-width: 255px;
   }
 }
-button {
-  padding: 10px;
-  border: 2px solid var(--color-font-color);
-  color: white;
-  margin: 10px;
-}
-
 .slidebar-div {
   margin-top: 36px;
 }
-
 .example-img1 {
-  /* transform: rotate(45deg); */
   width: 300px;
   height: auto;
   border: 1px solid var(--color-font-color);

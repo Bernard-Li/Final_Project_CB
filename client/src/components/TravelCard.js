@@ -198,4 +198,6 @@ padding: 16px;
 const ImageContainer = styled.img`
 display: flex;
 height: auto;
-max-width: 350px;`
+max-width: 350px;
+padding: 8px;
+border-radius: 8px;`

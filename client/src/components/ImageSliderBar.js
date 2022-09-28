@@ -25,7 +25,7 @@ const ImageSliderBar = ({ slides }) => {
 
   return (
     <Wrapper>
-    <span> {`Click on the arrow to preview app`}</span>
+    <span> {`Click on the arrow to preview previous version of the app`}</span>
     <div className="left-right-arrows" >
     {/* <GoArrowLeft size={50} onClick={prevSlide} /> */}
     <MdDoubleArrow size={42} className="right-arrow" onClick={nextSlide} />
@@ -54,25 +54,25 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 margin-bottom: 65px;
+span {
+  font-weight: bolder;
+}
 .left-arrow {
   height: 50px;
   width: 50px;
 }
-
 .img-preview {
   height: auto;
   width: 600px;
   border-radius: 10px;
   border: 4px solid var(--color-font-color);
   margin: 10px;
-
   @media screen and (max-width: 450px) {
     width: 300px;
   }
-}
-`
+}`
+
 const ImagePreviewContainer = styled.div`
 display: flex;
 flex-direction: column;
-align-items: center;
-`
+align-items: center;`

@@ -37,7 +37,10 @@ flex-direction: flex-start;
 /* background-color: transparent; */
 padding: 10px;
 max-height: var(--max-height);
-background-color: black;
+@media screen and (max-width: 350px) {
+ max-height: 52px;
+}
+background-color: #071013;
 .nav-dropdown {
   display: flex;
   gap: 10px;
