@@ -21,7 +21,7 @@ body {
   background-color: white;
   //background-image: url(${NinaW_climbs});
   background-image: url(${MtnBanner});
-  background-position: 0% 31%;
+  background-position: 0% 28%;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }

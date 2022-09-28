@@ -18,7 +18,7 @@ Do you want to add more information? The travel card creation page allows option
 
 Here is a sample of a travel card:
 
-![sample of travel card, created in the latest MVP version of the site on 2022-09-06](client/src/images/SwivyEXAMPLEcard.png)
+![sample of travel card, created in the latest MVP version of the site on 2022-09-06](client/src/images/Swivy_mobile2.PNG)
 
 ---
 ## Swivy is a website that uses the MERN stack:

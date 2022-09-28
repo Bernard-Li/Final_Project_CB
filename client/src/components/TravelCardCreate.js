@@ -272,7 +272,7 @@ const TravelCardCreate = () => {
             <option value='Climb'>Climb</option>
             <option value='Other'>Other</option>
           </select>
-          <ActivityContainer>
+          {/* <ActivityContainer>
             <button
               className="activity-btn"
               onClick={handleActivity}>
@@ -304,7 +304,7 @@ const TravelCardCreate = () => {
               onClick={handleActivity}>
             <MdOutlineCreate size={16} />
             </button>
-          </ActivityContainer>
+          </ActivityContainer> */}
           { otherActivity &&
           <label>Other Activity 
           <div>
@@ -338,7 +338,7 @@ const TravelCardCreate = () => {
           />
           </div>
           </label>
-        <label>Weather <span className="subtext-span">{'(city & country required for accurate forecast)'}</span>
+        {/* <label>Weather <span className="subtext-span">{'(city & country required for accurate forecast)'}</span>
           <div className="weather-field-input">
           <input
             type='text'
@@ -349,7 +349,7 @@ const TravelCardCreate = () => {
             }}
             ></input>
             </div>
-            </label>
+            </label> */}
       {/* Should be the last item on the page - Create Card button */}
         <div className="upload-btn-div">
         <button className='upload-btn' 
