@@ -30,8 +30,6 @@ Here is a sample of a travel card:
 ## APIs involved
 Swivy uses the power of **Auth0** - (https://auth0.com/) to verify users via their google accounts. In a day and age where your information is valuable, Swivy only requires your google email for verification and use of the website.
 
-The weather data is powered by Weather API - (https://www.weatherapi.com/) and renders accurate historical weather, as well as the current forecast of a specified city. 
-
 Images uploaded to Swivy are saved in a cloud database, Cloudinary - (https://cloudinary.com/) and returns shows off your media in each travel card.
 
 ---
