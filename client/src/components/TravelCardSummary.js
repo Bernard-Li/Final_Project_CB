@@ -100,25 +100,28 @@ const TravelCardSummary = () => {
     <span
       className="time-span">
       <button
-        className="create-btn"
+        className="sort-btn"
         onClick={(e) => handleFilter(e, 'dateNewFirst')}>
         <TbCalendarTime size={30} />
       </button>
     </span>
     <span
-      className="alphadown-span">
-      <button
-        onClick={(e) => handleFilter(e, 'alphaSort')}>
-        <BsSortAlphaDownAlt size={30}/>
-      </button>
-    </span>
-    <span
       className="alpha-span">
       <button
+        className="sort-btn"
         onClick={(e) => handleFilter(e, 'alphaSort')}>
         <BsSortAlphaDown size={30} />
       </button>
     </span>
+    <span
+      className="alphadown-span">
+      <button
+        className="sort-btn"
+        onClick={(e) => handleFilter(e, 'alphaSortBackwards')}>
+        <BsSortAlphaDownAlt size={30}/>
+      </button>
+    </span>
+    
     </SortButton>
     { /*
     <div className="filter-div">
@@ -136,36 +139,6 @@ const TravelCardSummary = () => {
     </div>
     */ }
       <TravelCardDisplay>
-      
-      <>
-      { //The modal will have conditional rendering based on the information or lack of information the user chooses to store in their card
-        modal &&
-      <ModalDiv>
-        <div className="modal"></div>
-          <div className="overlay"
-            onClick={toggleModal}></div>
-          <div className="modal-content">
-            <h2>{currentCard.data.destination}</h2>
-            { currentCard.data.activity !== 'None selected' &&
-            <p><span>Activity</span>: {currentCard.data.activity}</p>
-            }
-            <p><span>Arrival date:</span> {
-              currentCard.data.date[0][0]
-              }</p>
-            <p><span>Duration of trip:</span> {tripDuration()}</p>
-            { currentCard.data.notes &&
-            <p className="paratag-notes"><span>Notes:</span> {currentCard.data.notes}</p>
-            }
-            <button
-              className="fullcard-btn"
-              onClick={() => navigate('/viewtravelcard', {state: {travelCard: currentCard}})} 
-              >View full card</button>
-          </div>
-          <button className="close-modal"
-            onClick={toggleModal}> X </button>
-      </ModalDiv>
-      }
-  </>
     {/* <Banner alt='banner' src={MtnBanner}> */}
     {/*PROP only required if Cardbutton receives a location based on destination search e.g.  country={'BR'} */}
     {
@@ -223,23 +196,18 @@ export default TravelCardSummary;
 /* for search: Application adapted to iOS, needs responsive CSS. Testing phone size: https://kinsta.com/blog/responsive-web-design/
 STYLED COMPONENTS WILL REQUIRE mobile adapting 
 Currently adapted to 375 x 667 @ 100%, no throttling, portrait mode*/
-
-// const Banner = styled.img`
-// width: auto;
-// height: 950px;
-// z-index: -1;
-// `
 const SortButton = styled.div`
 display: flex;
-border: 2px solid black;
 justify-content: space-evenly;
 margin: 10px;
 span {
   margin-left: 8px;
   margin-right: 8px;
 }
+.sort-btn {
+  border-radius: 8px;
+}
 `
-
 const CreateCard = styled.button`
   border: none;
   background-color: white;
@@ -249,26 +217,16 @@ const CreateCard = styled.button`
   padding: 8px;
   &:hover {
     background-color: rgba(255, 255, 255, 0.4); //decimal dictates opacity of the background frame
-    /* -webkit-box-shadow: 0px 0px 21px 12px #305AF0; 
-    box-shadow: 0px 0px 21px 12px #305AF0; */
-    /* -webkit-box-shadow: 0px 0px 21px 12px #9EC9FF; 
-    box-shadow: 0px 0px 21px 12px #9EC9FF; */
     font-weight: bolder;
 }
 &:active {
   transform: translateY(2px);
-}
-  /* &hover span:after {
-    content: '  Click to add new card!';
-    opacity: 1;
-  } */
-`
+}`
 
 const Wrapper = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-/* border: 2px solid blue; */
 h1 {
   margin: 80px 60px 0 60px;
 }
@@ -277,15 +235,11 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 2px black solid; */
 }
-
-
 .select-dropdown {
   margin: 8px;
 }
 .newcard-btn {
-  
   display: flex;
   position: fixed;
   justify-content: center;
@@ -293,16 +247,12 @@ h1 {
   height: 50px;
   width: 50px;
   border-radius: 25px;
-  /* border: 2px solid var(--color-font-color); */
-  //margin-top: 145%;margin-right: 80%;
-  /* margin-bottom: 50px */
   @media screen and (max-width: 440px){
     margin-right: 80%;
   }
   margin-right: 60%;
   /* For small screens: */
   margin-top: 80vh;
-  
   color: white;
   font-size: 30px;
   z-index: 999;
@@ -315,10 +265,9 @@ justify-content: center;
 align-items: center;
 padding: 10px;
 margin-bottom: 112px;
+border-radius: 8px;
 /* border: 2px solid black; */
 background-color: rgba(255, 255, 255, 0.4); //decimal dictates opacity of the background frame
-
-
 max-height: 80%;
 .ul-travelcards .li-travelcards{
   list-style-type: none;
@@ -335,68 +284,3 @@ p {
   margin: 2px;
 }`
 
-/* MODAL CSS */
-const ModalDiv = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-span {
-  font-weight: bold;
-}
-.paratag-notes {
-  @media screen and (max-width: 375px) {
-    min-width: 50px;  
-    max-width: 325px;
-  }
-}
-.fullcard-btn {
-  color: white;
-  margin: 10px;
-}
-body.active-modal {
-    overflow-y: hidden;
-}
-.modal, .overlay {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
-}
-.overlay {
-  background: rgba(49,49,49,0.8);
-}
-.modal-content {
-  position: absolute;
-  color: var(--color-font-color);
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  line-height: 1.4;
-  background: var(--color-main-opal);
-  padding: 14px 28px 14px 28px;
-  border-radius: 8px;
-  max-width: 600px;
-  @media screen and (max-width: 425px) {
-    max-width: 250px;
-  }
-  @media screen and (max-width: 667px){
-    min-width: 350px;
-  }
-  min-width: 550px;
-}
-.close-modal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px 7px;
-  color: white;
-}
-.btn-modal {
-  padding: 10px 20px;
-  display: block;
-  margin: 100px auto 0;
-  font-size: 18px;
-}`
