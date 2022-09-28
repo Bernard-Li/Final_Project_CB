@@ -16,7 +16,7 @@ Do you want to add more information? The travel card creation page allows option
 - adding your own notes
 - adding historical weather data and viewing current weather forecast
 
-Here is a sample of a travel card:
+Here is a sample of a user creating a new 'Travel Card':
 
 ![sample of travel card, created in the latest MVP version of the site on 2022-09-06](client/src/images/Swivy_mobile2.PNG)
 
